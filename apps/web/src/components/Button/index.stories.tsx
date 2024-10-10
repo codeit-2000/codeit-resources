@@ -14,22 +14,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Primary: Story = {
   args: {
-    variant: "primary",
     children: "기본 버튼",
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    variant: "secondary",
-    children: "버튼",
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    variant: "secondary",
-    children: "버튼",
-    disabled: true,
   },
 };
