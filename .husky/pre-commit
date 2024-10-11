@@ -1,3 +1,8 @@
-pnpm lint-staged
+#npx lint-staged
+pnpm run lint:fix
 
 echo "🚚 finished linting.."
+
+
+#npx lint-staged
+#pnpm run lint:fix
