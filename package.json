@@ -7,7 +7,9 @@
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
-    "lint:fix": "turbo run lint -- --fix"
+    "lint:fix": "turbo run lint -- --fix",
+    "storybook:web": "pnpm --filter=web storybook",
+    "chromatic:web": "pnpm --filter=web chromatic"
   },
   "devDependencies": {
     "husky": "^9.1.6",
