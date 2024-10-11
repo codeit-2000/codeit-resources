@@ -1,0 +1,95 @@
+import { Meta, Typeset } from '@storybook/blocks';
+
+<Meta title="Typography" />
+
+export const typography = {
+  type: {
+    primary: '"Pretendard-Regular", Arial, sans-serif',
+  },
+  weight: {
+    bold: '700',
+    semibold: '600',
+    medium: '500',
+    regular: '400',
+  },
+  sizes: {
+    '3xl': 32,
+    '2xl': 24,
+    xl: 20,
+    '2lg': 18,
+    lg: 16,
+    md: 14,
+    sm: 13,
+    xs: 12,
+  },
+};
+
+export const SampleText = 'Codeit Resources의 타이포그라피입니다.';
+
+# 📝 Typography
+
+**Font:** Pretendard
+
+**Weights:** 700(bold), 600(semibold), 500 (medium), 400(regular)
+
+**Sizes:** 32px, 24px, 20px, 18px, 16px, 14px, 13px, 12px
+
+<Typeset
+  fontSizes={[
+    Number(typography.sizes['3xl']),
+    Number(typography.sizes['2xl']),
+    Number(typography.sizes['xl']),
+    Number(typography.sizes['2lg']),
+    Number(typography.sizes['lg']),
+    Number(typography.sizes['md']),
+  ]}
+  fontWeight={typography.weight.bold}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
+<Typeset
+  fontSizes={[
+    Number(typography.sizes['3xl']),
+    Number(typography.sizes['2xl']),
+    Number(typography.sizes['xl']),
+    Number(typography.sizes['2lg']),
+    Number(typography.sizes['lg']),
+    Number(typography.sizes['md']),
+    Number(typography.sizes['sm']),
+    Number(typography.sizes['xs']),
+  ]}
+  fontWeight={typography.weight.semibold}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
+<Typeset
+  fontSizes={[
+    Number(typography.sizes['2xl']),
+    Number(typography.sizes['xl']),
+    Number(typography.sizes['2lg']),
+    Number(typography.sizes['lg']),
+    Number(typography.sizes['md']),
+    Number(typography.sizes['sm']),
+    Number(typography.sizes['xs']),
+  ]}
+  fontWeight={typography.weight.regular}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>
+
+<Typeset
+  fontSizes={[
+    Number(typography.sizes['2xl']),
+    Number(typography.sizes['xl']),
+    Number(typography.sizes['2lg']),
+    Number(typography.sizes['lg']),
+    Number(typography.sizes['md']),
+    Number(typography.sizes['sm']),
+    Number(typography.sizes['xs']),
+  ]}
+  fontWeight={typography.weight.medium}
+  sampleText={SampleText}
+  fontFamily={typography.type.primary}
+/>

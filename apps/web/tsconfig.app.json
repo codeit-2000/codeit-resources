@@ -25,7 +25,13 @@
       "@src/*": ["src/*"]
     },
     /* for emotion */
-    "jsxImportSource": "@emotion/react"
+    "jsxImportSource": "@emotion/react",
+
+    "noFallthroughCasesInSwitch": true,
+
+    /* Storybook types */
+    "types": ["vite/client", "@storybook/react"]
   },
-  "include": ["src"]
+  "include": ["src", ".storybook", "../../packages/ui/src"],
+  "exclude": ["node_modules"]
 }
