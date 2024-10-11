@@ -37,7 +37,7 @@ jobs:
 
       - name: Chromatic에 게시
         id: chromatic
-        run: pnpm --filter=web chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-once-uploaded --auto-accept-changes --only-changed
+        run: pnpm --filter=web chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }} --exit-once-uploaded --auto-accept-changes --only-changed | tee chromatic_output.txt
 
       - name: Chromatic URL 추출
         id: extract-url
