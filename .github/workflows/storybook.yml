@@ -45,7 +45,6 @@ jobs:
           # 'View your Storybook at'로 시작하는 URL을 추출합니다.
           URL=$(grep -o 'https://[a-zA-Z0-9.-]*.chromatic.com/' chromatic_output.txt)
           echo "storybook_url=$URL" >> $GITHUB_ENV
-          echo "::set-output name=storybook_url::$URL"
 
       - name: 현재 시간 가져오기
         uses: josStorer/get-current-time@v2
