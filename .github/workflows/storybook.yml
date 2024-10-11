@@ -42,13 +42,13 @@ jobs:
       - name: Chromatic URL 추출
         id: extract-url
         run: |
-          URL=$(grep -oP 'https://[a-zA-Z0-9.-]+\.chromatic\.com/' chromatic_output.txt | head -n 1)
+          URL=$(grep -oP 'https://(?!www\.)[a-zA-Z0-9-]+\.chromatic\.com/' chromatic_output.txt | head -n 1)
           echo "storybook_url=$URL" >> $GITHUB_ENV
-          echo "Chromatic URL: $URL"
+          echo "storybook_url=$URL"
 
-      - name: 저장된 Storybook URL 확인
-        run: |
-          echo "Chromatic URL: ${{ env.storybook_url }}"
+      - name: Storybook URL을 outputs로 설정
+        run: echo "storybook_url=${{ env.storybook_url }}" >> $GITHUB_ENV
+        id: set-output
 
       - name: 현재 시간 가져오기
         uses: josStorer/get-current-time@v2
