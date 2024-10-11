@@ -43,7 +43,7 @@ jobs:
         id: extract-url
         run: |
           # 'View your Storybook at'로 시작하는 URL을 추출합니다.
-          URL=$(grep -o 'https://[a-zA-Z0-9.-]*.chromatic.com/' chromatic_output.txt)
+          URL=$(grep -oP '(https://[a-zA-Z0-9.-]+\.chromatic\.com/)' chromatic_output.txt | head -n 1)
           echo "storybook_url=$URL" >> $GITHUB_ENV
 
       - name: 현재 시간 가져오기
