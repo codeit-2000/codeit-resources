@@ -1,23 +1,5 @@
 version: 1
 applications:
-  - appRoot: apps/web
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - npm install -g pnpm
-            - pnpm install
-        build:
-          commands:
-            - pnpm run build
-      artifacts:
-        baseDirectory: dist
-        files:
-          - "**/*"
-      cache:
-        paths:
-          - node_modules/**/*
-          - .turbo
   - appRoot: packages/shared-backend
     backend:
       phases:
