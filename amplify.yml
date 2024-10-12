@@ -14,3 +14,13 @@ applications:
         paths:
           - node_modules/**/*
           - .turbo
+    frontend:
+      phases:
+        preBuild:
+          commands: []
+        build:
+          commands: []
+      artifacts:
+        files: []
+      cache:
+        paths: []
