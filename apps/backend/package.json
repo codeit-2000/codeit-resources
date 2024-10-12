@@ -5,7 +5,7 @@
   "main": "index.js",
   "exports": {
     "./amplify/data/resource": "./amplify/data/resource.ts",
-    "./outpus": "./amplify_outputs.json"
+    "./outputs": "./amplify_outputs.json"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

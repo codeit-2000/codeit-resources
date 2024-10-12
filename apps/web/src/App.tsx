@@ -10,12 +10,7 @@ function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
   function createTodo() {
-    client.models.Todo.create(
-      { content: window.prompt("Todo content") },
-      {
-        authMode: "apiKey",
-      },
-    );
+    client.models.Todo.create({ content: window.prompt("Todo content") });
   }
 
   useEffect(() => {
@@ -26,12 +21,14 @@ function App() {
 
   return (
     <Authenticator>
-      <button onClick={createTodo} style={{ color: "red" }}>
-        + asdfasdf
+      <button onClick={createTodo} style={{ color: "white" }}>
+        + todo 추가하기
       </button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id}>{todo.content}</li>
+          <li key={todo.id} style={{ color: "white" }}>
+            {todo.content}
+          </li>
         ))}
       </ul>
     </Authenticator>
