@@ -1,0 +1,26 @@
+{
+  "name": "@repo/backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "exports": {
+    "./amplify/data/resource": "./amplify/data/resource.ts",
+    "./outpus": "./amplify_outputs.json"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "aws-amplify": "^6.6.4"
+  },
+  "devDependencies": {
+    "@aws-amplify/backend": "^1.4.0",
+    "@aws-amplify/backend-cli": "^1.2.9",
+    "aws-cdk": "^2.162.0",
+    "aws-cdk-lib": "^2.162.0",
+    "constructs": "^10.3.1",
+    "esbuild": "^0.24.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}
