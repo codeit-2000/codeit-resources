@@ -18,7 +18,7 @@ applications:
         paths:
           - node_modules/**/*
           - .turbo
-  - appRoot: packages/backend
+  - appRoot: packages/shared-backend
     backend:
       phases:
         preBuild:
