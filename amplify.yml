@@ -1,30 +1,31 @@
 version: 1
 applications:
-  - appRoot: apps/web
+  - appRoot: apps
     frontend:
       phases:
         preBuild:
           commands:
+            - cd web
             - npm install -g pnpm
             - pnpm install
         build:
           commands:
             - pnpm run build
       artifacts:
-        baseDirectory: .next
+        baseDirectory: web/dist
         files:
           - "**/*"
-  - appRoot: apps/backend
     backend:
       phases:
         preBuild:
           commands:
+            - cd backend
             - npm install -g pnpm
             - pnpm install
         build:
           commands:
             - pnpm run build
       artifacts:
-        baseDirectory: dist
+        baseDirectory: backend/dist
         files:
           - "**/*"
