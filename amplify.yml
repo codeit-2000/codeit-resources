@@ -22,5 +22,6 @@ applications:
           commands: []
       artifacts:
         files: []
+        baseDirectory: ""
       cache:
         paths: []
