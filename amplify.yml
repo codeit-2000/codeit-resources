@@ -1,6 +1,7 @@
 version: 1
 applications:
-  - frontend:
+  - appRoot: packages/shared-backend
+    backend:
       phases:
         preBuild:
           commands:
