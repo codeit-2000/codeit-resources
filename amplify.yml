@@ -1,6 +1,7 @@
 version: 1
 applications:
-  - frontend:
+  - appRoot: apps/web
+    frontend:
       phases:
         preBuild:
           commands:
@@ -13,12 +14,15 @@ applications:
         baseDirectory: .next
         files:
           - "**/*"
-  - backend:
+  - appRoot: apps/backend
+    backend:
       phases:
-        build:
+        preBuild:
           commands:
             - npm install -g pnpm
             - pnpm install
+        build:
+          commands:
             - pnpm run build
       artifacts:
         baseDirectory: dist
