@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.5.3",
-    "@repo/backend": "workspace:*",
+    "@repo/backend": "file:../../packages/shared-backend",
     "aws-amplify": "^6.6.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
@@ -24,7 +24,7 @@
     "@aws-amplify/backend-cli": "^1.2.9",
     "@chromatic-com/storybook": "^1.9.0",
     "@eslint/js": "^9.11.1",
-    "@repo/eslint-config": "workspace:*",
+    "@repo/eslint-config": "file:../../packages/eslint-config",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-interactions": "^8.3.5",
     "@storybook/addon-links": "^8.3.5",

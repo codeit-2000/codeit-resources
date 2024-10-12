@@ -8,8 +8,8 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install",
     "lint:fix": "turbo run lint -- --fix",
-    "storybook:web": "pnpm --filter=web storybook",
-    "chromatic:web": "pnpm --filter=web chromatic"
+    "storybook:web": "npm --workspace=web run storybook",
+    "chromatic:web": "npm --workspace=web run chromatic"
   },
   "devDependencies": {
     "husky": "^9.1.6",
@@ -17,9 +17,9 @@
     "prettier": "^3.3.3",
     "turbo": "^2.1.3",
     "typescript": "^5.4.5",
-    "eslint": "^ 8.57.1"
+    "eslint": "^8.57.1"
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "npm@8.19.4",
   "engines": {
     "node": ">=18"
   },
