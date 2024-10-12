@@ -20,6 +20,8 @@ applications:
         preBuild:
           commands:
             - cd backend
+            - npm install -g pnpm
+            - pnpm install
         build:
           commands:
             - pnpm install --frozen-lockfile --prefer-offline
