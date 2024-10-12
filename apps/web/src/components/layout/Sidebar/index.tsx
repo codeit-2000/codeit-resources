@@ -15,18 +15,18 @@ export default function Sidebar() {
       `}
     >
       <ul>
-        <Link to="/dashboard">
-          <li>대시보드</li>
-        </Link>
-        <Link to="/meeting-rooms">
-          <li>회의실</li>
-        </Link>
-        <Link to="/seats">
-          <li>좌석</li>
-        </Link>
-        <Link to="/equipments">
-          <li>장비</li>
-        </Link>
+        <li>
+          <Link to="/dashboard">대시보드</Link>
+        </li>
+        <li>
+          <Link to="/meeting-rooms">회의실</Link>
+        </li>
+        <li>
+          <Link to="/seats">좌석</Link>
+        </li>
+        <li>
+          <Link to="/equipments">장비</Link>
+        </li>
       </ul>
     </nav>
   );
