@@ -2,6 +2,7 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Schema } from "@repo/backend/amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
+import { Authenticator } from "@aws-amplify/ui-react";
 
 const client = generateClient<Schema>();
 
@@ -24,7 +25,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <Authenticator>
       <button onClick={createTodo} style={{ color: "red" }}>
         + asdfasdf
       </button>
@@ -33,7 +34,7 @@ function App() {
           <li key={todo.id}>{todo.content}</li>
         ))}
       </ul>
-    </>
+    </Authenticator>
   );
 }
 
