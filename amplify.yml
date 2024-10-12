@@ -1,7 +1,7 @@
 version: 1
 applications:
-  - appRoot: packages/shared-backend
-    backend:
+  - appRoot: apps/web
+    frontend:
       phases:
         preBuild:
           commands:
@@ -14,6 +14,20 @@ applications:
         baseDirectory: dist
         files:
           - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
+          - .turbo
+  - appRoot: packages/backend
+    backend:
+      phases:
+        preBuild:
+          commands:
+            - npm install -g pnpm
+            - pnpm install
+        build:
+          commands:
+            - amplify push --yes
       cache:
         paths:
           - node_modules/**/*
