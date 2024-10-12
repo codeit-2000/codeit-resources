@@ -9,7 +9,12 @@ function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
   function createTodo() {
-    client.models.Todo.create({ content: window.prompt("Todo content") });
+    client.models.Todo.create(
+      { content: window.prompt("Todo content") },
+      {
+        authMode: "apiKey",
+      },
+    );
   }
 
   useEffect(() => {
