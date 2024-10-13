@@ -121,7 +121,7 @@ importers:
   apps/web:
     dependencies:
       '@aws-amplify/ui-react':
-        specifier: ^6.5.3
+        specifier: ^6.2.0
         version: 6.5.3(@aws-amplify/core@6.4.4)(@types/react@18.3.11)(aws-amplify@6.6.4)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(xstate@4.38.3)
       '@repo/backend':
         specifier: workspace:*

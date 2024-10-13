@@ -2,15 +2,20 @@ import "./App.css";
 import { useEffect, useState } from "react";
 import { Schema } from "@repo/backend/amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { Authenticator } from "@aws-amplify/ui-react";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 const client = generateClient<Schema>();
 
 function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
+  const { signOut, user } = useAuthenticator();
 
   function createTodo() {
     client.models.Todo.create({ content: window.prompt("Todo content") });
+  }
+
+  function deleteTodo(id: string) {
+    client.models.Todo.delete({ id });
   }
 
   useEffect(() => {
@@ -20,18 +25,24 @@ function App() {
   }, []);
 
   return (
-    <Authenticator>
+    <>
+      {user.username}
       <button onClick={createTodo} style={{ color: "white" }}>
         + todo 추가하기
       </button>
       <ul>
         {todos.map((todo) => (
-          <li key={todo.id} style={{ color: "white" }}>
+          <li
+            key={todo.id}
+            onClick={() => deleteTodo(todo.id)}
+            style={{ color: "white" }}
+          >
             {todo.content}
           </li>
         ))}
       </ul>
-    </Authenticator>
+      <button onClick={signOut}>Sign out</button>
+    </>
   );
 }
 
