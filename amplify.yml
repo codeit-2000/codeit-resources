@@ -27,3 +27,4 @@ applications:
       cache:
         paths:
           - node_modules/**/*
+    appRoot: "packages/shared-backend"
