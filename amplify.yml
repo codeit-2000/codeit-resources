@@ -10,21 +10,20 @@ applications:
           commands:
             - pnpm install --frozen-lockfile --prefer-offline
             - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+      artifacts:
+        files:
+          - amplify_outputs.json
+      cache:
+        paths:
+          - node_modules/**/*
     frontend:
       phases:
-        preBuild:
-          commands:
-            - pnpm install --prefer-offline
         build:
           commands:
-            - pnpm turbo run build --filter=@repo/backend
+            - echo "No frontend to build"
       artifacts:
-        baseDirectory: dist
         files:
           - "**/*"
       cache:
         paths:
           - node_modules/**/*
-          - packages/shared-backend/node_modules/**/*
-      buildPath: packages/shared-backend
-    appRoot: packages/shared-backend
