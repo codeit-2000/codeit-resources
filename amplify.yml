@@ -1,32 +1,37 @@
 version: 1
 applications:
-  - appRoot: apps
+  - appRoot: packages/shared-backend
     backend:
       phases:
         preBuild:
           commands:
-            - cd backend
             - npm install -g pnpm
-            - pnpm install
+            - pnpm install --prefer-offline
         build:
           commands:
             - pnpm install --frozen-lockfile --prefer-offline
             - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
       artifacts:
-        baseDirectory: backend/dist
+        baseDirectory: build
         files:
-          - "**/*"
+          - amplify_outputs.json
+      cache:
+        paths:
+          - node_modules/**/*
     frontend:
       phases:
         preBuild:
           commands:
-            - cd web
+            - cd ../../apps/web
             - npm install -g pnpm
             - pnpm install
         build:
           commands:
             - pnpm run build
       artifacts:
-        baseDirectory: web/dist
+        baseDirectory: dist
         files:
           - "**/*"
+      cache:
+        paths:
+          - node_modules/**/*
