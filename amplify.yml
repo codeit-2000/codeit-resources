@@ -10,18 +10,6 @@ applications:
           commands:
             - pnpm install --frozen-lockfile --prefer-offline
             - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
-    frontend:
-      phases:
-        preBuild:
-          commands:
-            - pnpm install --prefer-offline
-        build:
-          commands:
-            - pnpm turbo run build --filter=shared-backend
-      artifacts:
-        baseDirectory: dist
-        files:
-          - "**/*"
       cache:
         paths:
           - node_modules/**/*
