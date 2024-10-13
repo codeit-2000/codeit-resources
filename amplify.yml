@@ -11,6 +11,7 @@ applications:
             - pnpm install --frozen-lockfile --prefer-offline
             - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
       artifacts:
+        baseDirectory: build
         files:
           - amplify_outputs.json
       cache:
@@ -22,6 +23,7 @@ applications:
           commands:
             - echo "No frontend to build"
       artifacts:
+        baseDirectory: dist
         files:
           - "**/*"
       cache:
