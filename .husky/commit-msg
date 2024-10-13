@@ -1,4 +1,7 @@
 #!/bin/bash
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+RESET='\033[0m'
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.URF-8
@@ -31,10 +34,12 @@ format_commit_message() {
     test) EXPECTED_EMOJI="✅";;
     chore) EXPECTED_EMOJI="📦";;
     *)
-      echo "------------------------ERROR------------------------"
-      echo "올바른 커밋메세지 타입을 입력해주세요(대소문자구분)"
-      echo "👌 feat,fix,hotfix,build,docs,design,merge,rename,style,refactor,remove,test,chore 👌"
-      echo
+      printf "\n${RED}🚫 [Commit Blocked] 커밋 메시지는 'type: summary' 형식이어야 합니다!${RESET}\n"
+      printf "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+      printf "💡 올바른 타입을 소문자로 입력해주세요.\n"
+      printf "   ▶️ feat,fix,hotfix,build,docs,design,merge,rename,style,refactor,remove,test,chore \n\n"
+      printf "${GREEN}   (현재 커밋 메시지) $COMMIT_MSG \n${RESET}"
+      printf "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
       exit 1
       ;;
   esac
@@ -46,24 +51,28 @@ format_commit_message() {
 validate_commit_message() {
   # 형식 검증
   if ! echo "$COMMIT_MSG" | grep -qE "$COMMIT_MESSAGE_REGEX"; then
-    echo
-    echo "------------------------ERROR------------------------"
-    echo "커밋 메시지는 'type: summary' 형식이어야 합니다. 띄어쓰기 확인해 주세요!"
-    echo "🍙 예시: feat: add login feature 🍙"
-    echo "❗️ (현재 커밋 메시지) $COMMIT_MSG ❗️"
+    printf "\n${RED}🚫 [Commit Blocked] 커밋 메시지는 'type: summary' 형식이어야 합니다!${RESET}\n"
+    printf "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+    printf "💡 올바른 타입을 소문자로 입력해주세요.\n"
+    printf "   ▶️ feat,fix,hotfix,build,docs,design,merge,rename,style,refactor,remove,test,chore \n\n"
+    printf "${GREEN}   (현재 커밋 메시지) $COMMIT_MSG \n${RESET}"
+    printf "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
     exit 1
   fi
 }
 
-# Merge로 시작하는 커밋은 형식 검사를 생략
-if ! echo "$ORIGINAL_COMMIT_MSG" | grep -q "^Merge"; then
+handle_merge_commit() {
+  # Merge 커밋 처리
+  COMMIT_MSG="🔀 merge: $ORIGINAL_COMMIT_MSG"
+}
+
+# Merge로 시작하는 커밋은 특별 처리
+if echo "$ORIGINAL_COMMIT_MSG" | grep -q "^Merge"; then
+  handle_merge_commit
+else
   validate_commit_message
   format_commit_message
-  echo "$COMMIT_MSG" > "$COMMIT_MSG_FILE"
 fi
-
-echo
-echo '✈️ ✈️ ✈️ 🛫 wait add Gitmoji 🛬 ✈️ ✈️ ✈️'
 
 echo "$COMMIT_MSG" > $COMMIT_MSG_FILE
 echo
