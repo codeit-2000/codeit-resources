@@ -24,7 +24,7 @@
     "node": ">=18"
   },
   "lint-staged": {
-    "apps/**/*.tsx": [
+    "apps/**/*.{ts,js,tsx,jsx}": [
       "prettier --write",
       "eslint --fix"
     ]
