@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
+import Logo from "@src/assets/icons/logo.svg?react";
 
 export default function Sidebar() {
   return (
@@ -14,6 +15,7 @@ export default function Sidebar() {
         padding: 10px;
       `}
     >
+      <Logo />
       <ul>
         <li>
           <Link to="/dashboard">대시보드</Link>
