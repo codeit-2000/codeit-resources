@@ -18,6 +18,15 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+
+    /* 절대 경로 */
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["src/*"]
+    },
+    /* for emotion */
+    "jsxImportSource": "@emotion/react",
+
     "noFallthroughCasesInSwitch": true,
 
     /* Storybook types */
