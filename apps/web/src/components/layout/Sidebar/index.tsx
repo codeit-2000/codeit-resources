@@ -1,19 +1,8 @@
 import { Link } from "react-router-dom";
-import { css } from "@emotion/react";
 
 export default function Sidebar() {
   return (
-    <nav
-      css={css`
-        position: fixed;
-        left: 0;
-        top: 0;
-        width: 100px;
-        height: 100%;
-        background-color: #f0f0f0;
-        padding: 10px;
-      `}
-    >
+    <nav>
       <ul>
         <li>
           <Link to="/dashboard">대시보드</Link>
