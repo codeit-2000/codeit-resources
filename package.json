@@ -6,7 +6,7 @@
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install",
+    "prepare": "husky",
     "lint:fix": "turbo run lint -- --fix",
     "storybook:web": "pnpm --filter=web storybook",
     "chromatic:web": "pnpm --filter=web chromatic"
@@ -24,7 +24,7 @@
     "node": ">=18"
   },
   "lint-staged": {
-    "apps/**/*.tsx": [
+    "apps/**/*.{ts,js,tsx,jsx}": [
       "prettier --write",
       "eslint --fix"
     ]
