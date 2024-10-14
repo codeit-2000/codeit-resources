@@ -1,0 +1,20 @@
+name: Review Assign Action
+
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+permissions:
+  pull-requests: write
+  contents: write
+  packages: write
+
+jobs:
+  assign:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hkusu/review-assign-action@v1.4.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: ${{ github.actor }}
+          reviewers: alexgoni, easyhyun00, oceanlee-seoul, oris8, tkddbs587
