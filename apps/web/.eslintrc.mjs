@@ -32,7 +32,7 @@ module.exports = {
       extends: ["plugin:@typescript-eslint/recommended"],
     },
   ],
-  plugins: ["react-refresh", "simple-import-sort"],
+  plugins: ["react-refresh", "simple-import-sort", "@emotion"],
   rules: {
     "no-console": "error",
     "react-refresh/only-export-components": [
@@ -49,5 +49,9 @@ module.exports = {
       },
     ],
     "simple-import-sort/exports": "error",
+    "@emotion/jsx-import": "error",
+    "@emotion/no-vanilla": "error",
+    "@emotion/import-from-emotion": "error",
+    "@emotion/styled-import": "error",
   },
 };
