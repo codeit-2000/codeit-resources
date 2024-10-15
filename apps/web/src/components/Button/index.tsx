@@ -7,7 +7,7 @@ interface ButtonProps extends ComponentProps<"button"> {
 }
 
 const Button = ({ children, ...props }: ButtonProps) => (
-  <button className="bg-red-300 p-4" type="button" {...props}>
+  <button className="bg-red-300 p-4 text-28-700" type="button" {...props}>
     {children}
   </button>
 );
