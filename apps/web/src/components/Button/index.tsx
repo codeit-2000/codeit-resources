@@ -1,5 +1,4 @@
 import { ComponentProps, ReactNode } from "react";
-import "./index.css";
 
 // 아래처럼 주석 달면, 스토리북에도 반영이 됩니다.
 interface ButtonProps extends ComponentProps<"button"> {
@@ -8,7 +7,7 @@ interface ButtonProps extends ComponentProps<"button"> {
 }
 
 const Button = ({ children, ...props }: ButtonProps) => (
-  <button type="button" {...props}>
+  <button className="bg-red-300 p-4 text-28-700" type="button" {...props}>
     {children}
   </button>
 );

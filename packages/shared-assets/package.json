@@ -2,6 +2,7 @@
   "name": "@repo/assets",
   "type": "module",
   "files": [
-    "images/"
+    "images/",
+    "icons/"
   ]
 }
