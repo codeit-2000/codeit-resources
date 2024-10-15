@@ -22,7 +22,8 @@
     /* 절대 경로 */
     "baseUrl": ".",
     "paths": {
-      "@src/*": ["src/*"]
+      "@src/*": ["src/*"],
+      "@shared-assets/*": ["../../packages/shared-assets/*"]
     },
     /* for emotion */
     "jsxImportSource": "@emotion/react",

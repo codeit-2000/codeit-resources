@@ -17,6 +17,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@src": resolve(__dirname, "src"), // 절대 경로 설정
+      "@shared-assets": resolve(__dirname, "../../packages/shared-assets"), // 절대 경로 설정
     },
   },
 });
