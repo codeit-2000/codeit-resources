@@ -5,12 +5,6 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
-        // 32px
-        "32-700": [
-          "32px",
-          { lineHeight: "44px", letterSpacing: "-0.3px", fontWeight: "700" },
-        ],
-
         // 28px
         "28-700": [
           "28px",
