@@ -1,9 +1,15 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+
+import colors from "@repo/constants/constants/colors";
+
+export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   presets: [require("tailwindcss-preset-px-to-rem")],
   theme: {
     extend: {
+      colors: {
+        ...colors,
+      },
       fontSize: {
         // 28px
         "28-700": [
