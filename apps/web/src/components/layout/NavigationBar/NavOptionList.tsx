@@ -3,38 +3,38 @@ import Meeting from "@repo/assets/icons/icon-meeting.svg?react";
 import Seats from "@repo/assets/icons/icon-seats.svg?react";
 import Equipment from "@repo/assets/icons/icon-equipment.svg?react";
 
-interface NavOptionListProps {
-  id: number;
+export interface NavOptionProps {
+  id: string;
   imgSrc: ({ stroke }: { stroke: string }) => JSX.Element;
   text: string;
   path: string;
 }
 
-const navOptionList: NavOptionListProps[] = [
+const NAV_OPTION_LIST: NavOptionProps[] = [
   {
-    id: 1,
+    id: "dashboard",
     imgSrc: ({ stroke }) => <Person stroke={stroke} />,
     text: "대시보드",
     path: "/dashboard",
   },
   {
-    id: 2,
+    id: "meeting-rooms",
     imgSrc: ({ stroke }) => <Meeting stroke={stroke} />,
     text: "회의실",
     path: "/meeting-rooms",
   },
   {
-    id: 3,
+    id: "seats",
     imgSrc: ({ stroke }) => <Seats stroke={stroke} />,
     text: "좌석",
     path: "/seats",
   },
   {
-    id: 4,
+    id: "equipments",
     imgSrc: ({ stroke }) => <Equipment stroke={stroke} />,
     text: "장비",
     path: "/equipments",
   },
 ];
 
-export default navOptionList;
+export default NAV_OPTION_LIST;

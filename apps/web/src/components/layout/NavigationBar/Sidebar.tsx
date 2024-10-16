@@ -1,15 +1,38 @@
 import CodeitLogo from "@repo/assets/images/codeit.svg?react";
 import CodeitTextLogo from "@repo/assets/images/codeit-resources.svg?react";
-import navOptionList from "./NavOptionList";
-import { Link, useLocation } from "react-router-dom";
+import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
+import { Link, NavLink } from "react-router-dom";
 import useDeviceSize from "@src/hooks/useDeviceSize";
+
+interface NavBarOptionProps {
+  navOption: NavOptionProps;
+  isMobile: boolean;
+}
+
+const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
+  return (
+    <NavLink
+      key={navOption.id}
+      to={navOption.path}
+      className={`flex hover:bg-[#FFFFFF0D] ${isMobile ? "hover:rounded-10 w-60 flex-col items-center py-8" : "hover:rounded-10 flex-row items-center gap-10 py-10 pl-16"}`}
+    >
+      {({ isActive }) => (
+        <>
+          {navOption.imgSrc({ stroke: isActive ? "#FFFFFF" : "#888893" })}
+          <span
+            className={`${isMobile ? "text-12-400" : "text-16-400"} ${isActive ? "text-white" : "text-[#FFFFFF99]"}`}
+          >
+            {navOption.text}
+          </span>
+        </>
+      )}
+    </NavLink>
+  );
+};
 
 const Sidebar = () => {
   const deviceSize = useDeviceSize();
   const isMobile = deviceSize === "mobile";
-  const location = useLocation();
-
-  const isActive = (path: string) => location.pathname === path;
 
   return (
     <nav
@@ -22,27 +45,15 @@ const Sidebar = () => {
         </Link>
       )}
       <ul
-        className={`flex justify-evenly ${!isMobile && "flex-col gap-10 border-t border-white border-opacity-10 pt-12"} justify-evenly`}
+        className={`flex justify-evenly ${!isMobile && "flex-col gap-10 border-t border-white border-opacity-10 pt-12"}`}
       >
-        {navOptionList.map((navOption) => {
-          const active = isActive(navOption.path);
-          return (
-            <Link
-              key={navOption.id}
-              to={navOption.path}
-              className={`flex hover:bg-[#FFFFFF0D] ${isMobile ? "hover:rounded-10 w-60 flex-col items-center py-8" : "hover:rounded-10 flex-row items-center gap-10 py-10 pl-16"}`}
-            >
-              <div>
-                {navOption.imgSrc({ stroke: active ? "#FFFFFF" : "#888893" })}
-              </div>
-              <span
-                className={`${isMobile ? "text-12-400" : "text-16-400"} ${active ? "text-white" : "text-[#FFFFFF99]"}`}
-              >
-                {navOption.text}
-              </span>
-            </Link>
-          );
-        })}
+        {NAV_OPTION_LIST.map((navOption) => (
+          <NavBarOption
+            key={navOption.id}
+            navOption={navOption}
+            isMobile={isMobile}
+          />
+        ))}
       </ul>
     </nav>
   );
