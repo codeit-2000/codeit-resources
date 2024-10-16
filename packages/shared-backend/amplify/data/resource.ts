@@ -6,20 +6,20 @@ const schema = a.schema({
   // Resource Table
   Resource: a
     .model({
+      resourceId: a.id().required(),
       resourceType: a.enum(["Room", "Seat", "Equipment"]),
       resourceSubtype: a.string(),
       name: a.string().required(),
       date: a.date().required(),
       participants: a.string().array(),
-
-      // belongsTo
-      // hasMany
-      // SecondaryIndexes
+      reservations: a.hasMany("Reservation", "resourceId")
     })
+    .identifier(["resourceId"])
     .secondaryIndexes((index) => [index("resourceType")])
     // ex) resourceType 기준으로 쿼리
     // const { data, errors } = await client.models.Resource.listResourceByResourceType({
     //   resourceType: 'Seat',
+    // });
 
     .authorization((allow) => [allow.owner()]),
 
