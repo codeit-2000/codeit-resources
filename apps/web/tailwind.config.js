@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
+  presets: [require("tailwindcss-preset-px-to-rem")],
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   presets: [require("tailwindcss-preset-px-to-rem")],
   theme: {

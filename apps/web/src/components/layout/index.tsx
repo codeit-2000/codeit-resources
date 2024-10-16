@@ -1,9 +1,9 @@
 import Dashboard from "@src/pages/dashboard";
-import Sidebar from "./Sidebar";
 import { Routes, Route } from "react-router-dom";
 import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
 import Equipments from "@src/pages/equipments";
+import Sidebar from "./NavigationBar/Sidebar";
 
 export default function Layout() {
   return (
