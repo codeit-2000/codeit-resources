@@ -4,6 +4,7 @@ import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
 import Equipments from "@src/pages/equipments";
 import NavigationBar from "@src/components/layout/NavigationBar";
+import AuthTestPage from "@src/pages/auth-test";
 
 export default function Layout() {
   return (
@@ -15,6 +16,7 @@ export default function Layout() {
           <Route path="/meeting-rooms" element={<MeetingRooms />} />
           <Route path="/seats" element={<Seats />} />
           <Route path="/equipments" element={<Equipments />} />
+          <Route path="/auth-test" element={<AuthTestPage />} />
         </Routes>
       </div>
     </div>
