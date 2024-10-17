@@ -1,4 +1,5 @@
 import { ComponentProps, ReactNode } from "react";
+import clsx from "clsx";
 
 // 아래처럼 주석 달면, 스토리북에도 반영이 됩니다.
 interface ButtonProps extends ComponentProps<"button"> {
@@ -25,17 +26,24 @@ const Button = ({
   disabled = false,
   ...buttonProps
 }: ButtonProps) => {
-  const buttonStyle =
-    variant === "primary"
-      ? "bg-purple-70 text-gray-0 hover:bg-[#7200CC]"
-      : "bg-gray-00-opacity-40 text-gray-100-opacity-80 border-gray-100-opacity-20 border hover:bg-gray-100-opacity-20 hover:text-[#333236]";
-  const disabledStyle = disabled
-    ? "bg-gray-100-opacity-10 text-gray-100-opacity-30 cursor-not-allowed pointer-events-none border-none"
-    : "";
+  const buttonStyle = clsx(
+    "rounded-8 text-16-500 px-24 py-8 transition-all", // 기본 스타일
+    {
+      "bg-purple-70 text-gray-0 hover:bg-[#7200CC]": variant === "primary",
+      "bg-gray-00-opacity-40 text-gray-100-opacity-80 border-gray-100-opacity-20 border hover:bg-gray-100-opacity-20 hover:text-[#333236]":
+        variant === "secondary",
+    },
+    {
+      "!bg-gray-100-opacity-10 !text-gray-100-opacity-30  pointer-events-none border-none":
+        disabled,
+    },
+    width,
+    height,
+  );
 
   return (
     <button
-      className={`rounded-8 text-16-500 px-24 py-8 transition-all ${buttonStyle} ${width} ${height} ${disabledStyle}`}
+      className={buttonStyle}
       style={{ width, height }}
       type={type}
       disabled={disabled}
