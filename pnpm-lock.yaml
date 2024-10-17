@@ -159,9 +159,6 @@ importers:
       react-router-dom:
         specifier: ^6.26.2
         version: 6.26.2(react-dom@18.2.0)(react@18.2.0)
-      tailwind-merge:
-        specifier: ^2.5.4
-        version: 2.5.4
       tailwindcss-preset-px-to-rem:
         specifier: ^1.2.1
         version: 1.2.1
@@ -20077,10 +20074,6 @@ packages:
       '@pkgr/core': 0.1.1
       tslib: 2.7.0
     dev: true
-
-  /tailwind-merge@2.5.4:
-    resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
-    dev: false
 
   /tailwindcss-preset-px-to-rem@1.2.1:
     resolution: {integrity: sha512-m3GHwciFiXZviaN7WvOiiMjRBT7razJxgPTY6h2KcOvzvkOTysOV6gN3HkejfXUyL4DKx6YjiPcLCqv6yMeXHw==}
