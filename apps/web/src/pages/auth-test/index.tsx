@@ -63,8 +63,8 @@ const AuthTestPage = () => {
       client.models.User.create({
         id: result.userId,
         username: name,
-        email: email,
-        role: "MEMBER",
+        email: newEmail,
+        role: "ADMIN",
         team: "개발팀",
       });
     } catch (error) {
