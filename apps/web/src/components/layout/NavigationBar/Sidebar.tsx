@@ -2,7 +2,7 @@ import CodeitLogo from "@repo/assets/images/codeit.svg?react";
 import CodeitTextLogo from "@repo/assets/images/codeit-resources.svg?react";
 import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
 import { Link, NavLink } from "react-router-dom";
-import useDeviceSize from "@src/hooks/useDeviceSize";
+import useIsMobile from "@src/hooks/useIsMobile";
 
 interface NavBarOptionProps {
   navOption: NavOptionProps;
@@ -14,7 +14,7 @@ const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
     <NavLink
       key={navOption.id}
       to={navOption.path}
-      className={`flex hover:bg-[#FFFFFF0D] ${isMobile ? "hover:rounded-10 w-60 flex-col items-center py-8" : "hover:rounded-10 flex-row items-center gap-10 py-10 pl-16"}`}
+      className={`hover:rounded-10 flex items-center hover:bg-[#FFFFFF0D] ${isMobile ? "w-60 flex-col py-8" : "flex-row gap-10 py-10 pl-16"}`}
     >
       {({ isActive }) => (
         <>
@@ -31,8 +31,7 @@ const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
 };
 
 const Sidebar = () => {
-  const deviceSize = useDeviceSize();
-  const isMobile = deviceSize === "mobile";
+  const isMobile = useIsMobile();
 
   return (
     <nav
