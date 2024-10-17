@@ -1,5 +1,6 @@
 import { ComponentProps, ReactNode } from "react";
 import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
 
 // 아래처럼 주석 달면, 스토리북에도 반영이 됩니다.
 interface ButtonProps extends ComponentProps<"button"> {
@@ -26,19 +27,20 @@ const Button = ({
   disabled = false,
   ...buttonProps
 }: ButtonProps) => {
-  const buttonStyle = clsx(
-    "rounded-8 text-16-500 px-24 py-8 transition-all", // 기본 스타일
-    {
-      "bg-purple-70 text-gray-0 hover:bg-[#7200CC]": variant === "primary",
-      "bg-gray-00-opacity-40 text-gray-100-opacity-80 border-gray-100-opacity-20 border hover:bg-gray-100-opacity-20 hover:text-[#333236]":
-        variant === "secondary",
-    },
-    {
-      "!bg-gray-100-opacity-10 !text-gray-100-opacity-30  pointer-events-none border-none":
-        disabled,
-    },
-    width,
-    height,
+  const buttonStyle = twMerge(
+    clsx(
+      "rounded-8 text-16-500 px-24 py-8 transition-all", // 기본 스타일
+      width, // 너비 관련 클래스
+      height, // 높이 관련 클래스
+      {
+        "bg-purple-70 text-gray-0 hover:bg-[#7200CC]": variant === "primary",
+        "bg-gray-00-opacity-40 text-gray-100-opacity-80 border-gray-100-opacity-20 border hover:bg-gray-100-opacity-20 hover:text-[#333236]":
+          variant === "secondary",
+      },
+      // disabled 스타일을 마지막에 적용
+      disabled &&
+        "bg-gray-100-opacity-10 text-gray-100-opacity-30 pointer-events-none border-none",
+    ),
   );
 
   return (
