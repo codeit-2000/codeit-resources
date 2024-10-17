@@ -32,6 +32,11 @@
     /* Storybook types */
     "types": ["vite/client", "@storybook/react"]
   },
-  "include": ["src", ".storybook", "../../packages/ui/src"],
+  "include": [
+    "src",
+    ".storybook",
+    "../../packages/ui/src",
+    "src/components/layout/NavigationBar/.tsx"
+  ],
   "exclude": ["node_modules"]
 }
