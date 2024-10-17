@@ -1,0 +1,8 @@
+{
+  "name": "@repo/assets",
+  "type": "module",
+  "files": [
+    "images/",
+    "icons/"
+  ]
+}
