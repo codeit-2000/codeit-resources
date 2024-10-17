@@ -39,10 +39,31 @@ const schema = a.schema({
     .authorization((allow) => [allow.owner()]),
 
   // Reservation Table
-  Reservation: a.model({
-    resourceId: a.id().required(),
-    resource: a.belongsTo("Resource", "resourceId"), // 예약과 리소스의 관계
-  }),
+  ReservationStatus: a.enum(["CONFIRMED", "CANCELED", "PASSED"]),
+
+  Reservation: a
+    .model({
+      resourceId: a.id().required(), // 연결된 리소스 id
+      resource: a.belongsTo("Resource", "resourceId"), // Resource 컬렉션(테이블)에서 [Reservation의 resourceId]를 사용해서 리소스를 연결
+      date: a.date().required(), // DATE,SO 8601 확장 날짜 문자열 (형식: YYYY-MM-DD)
+      startTime: a.time().required(), // TIME, ISO 8601 확장 시간 문자열 (형식: hh:mm:ss.sss)
+      endTime: a.time().required(), // TIME, ISO 8601 확장 시간 문자열 (형식: hh:mm:ss.sss)
+      status: a.ref("ReservationStatus").required(), // 예약 상태
+      participants: a.string().array(), // 참여자 목록, 유저 id를 배열로 저장
+    })
+    .secondaryIndexes((index) => [
+      //  ** 리소스 id 별 예약 데이터 index **
+      //  await client.models.Reservation.listByResource({
+      //   resourceId: 'RESOURCE_ID',
+      //   date: {
+      //     eq: "2024-10-15",
+      //   }
+      index("resourceId")
+        .sortKeys(["date", "startTime", "status"])
+        .queryField("listByResource"),
+    ])
+    //TODO participants에 속한 유저만 수정 가능하도록 수정
+    .authorization((allow) => [allow.authenticated()]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
