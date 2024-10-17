@@ -10,9 +10,9 @@ const schema = a.schema({
       resourceType: a.enum(["Room", "Seat", "Equipment"]),
       resourceSubtype: a.string(),
       name: a.string().required(),
-      date: a.date().required(),
-      participants: a.string().array(),
-      reservations: a.hasMany("Reservation", "resourceId")
+      description: a.string(),
+      image: a.url(),
+      reservations: a.hasMany("Reservation", "resourceId"),
     })
     .identifier(["resourceId"])
     .secondaryIndexes((index) => [index("resourceType")])
@@ -24,6 +24,10 @@ const schema = a.schema({
     .authorization((allow) => [allow.owner()]),
 
   // Reservation Table
+  Reservation: a.model({
+    resourceId: a.id().required(),
+    resource: a.belongsTo("Resource", "resourceId"), // 예약과 리소스의 관계
+  }),
 });
 
 export type Schema = ClientSchema<typeof schema>;
