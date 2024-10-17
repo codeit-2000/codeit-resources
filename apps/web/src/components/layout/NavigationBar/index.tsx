@@ -30,7 +30,7 @@ const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
   );
 };
 
-const Sidebar = () => {
+const NavigationBar = () => {
   const isMobile = useIsMobile();
 
   return (
@@ -58,4 +58,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default NavigationBar;
