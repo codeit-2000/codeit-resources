@@ -3,12 +3,12 @@ import { Routes, Route } from "react-router-dom";
 import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
 import Equipments from "@src/pages/equipments";
-import Sidebar from "./NavigationBar/Sidebar";
+import NavigationBar from "@src/components/layout/NavigationBar";
 
 export default function Layout() {
   return (
     <div>
-      <Sidebar />
+      <NavigationBar />
       <div>
         <Routes>
           <Route path="/dashboard" index element={<Dashboard />} />
