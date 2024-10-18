@@ -17,3 +17,10 @@ export const primaryBadge: Story = {
     children: "안녕 난 뱃지",
   },
 };
+
+export const secondaryBadge: Story = {
+  args: {
+    children: "안녕 난 뱃지",
+    variant: "secondary",
+  },
+};
