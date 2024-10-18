@@ -156,6 +156,20 @@ export default {
           "11px",
           { lineHeight: "18px", letterSpacing: "-0.3px", fontWeight: "400" },
         ],
+
+        // 10px
+        "10-700": [
+          "10px",
+          { lineHeight: "15px", letterSpacing: "-0.3px", fontWeight: "700" },
+        ],
+        "10-500": [
+          "10px",
+          { lineHeight: "15px", letterSpacing: "-0.3px", fontWeight: "500" },
+        ],
+        "10-400": [
+          "10px",
+          { lineHeight: "15px", letterSpacing: "-0.3px", fontWeight: "400" },
+        ],
       },
     },
   },

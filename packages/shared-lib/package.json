@@ -3,5 +3,8 @@
   "type": "module",
   "files": [
     "api/"
-  ]
+  ],
+  "dependencies": {
+    "@repo/backend": "workspace:*"
+  }
 }
