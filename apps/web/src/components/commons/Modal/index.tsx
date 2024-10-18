@@ -1,38 +1,44 @@
-import isModalOpenAtom from "@src/store/modalAtom";
-import { useAtom } from "jotai";
-import Button from "../Button";
-import IconAlert from "@repo/assets/icons/icon-modal-alert.svg?react";
+import { useEffect } from "react";
+import useModal from "@src/hooks/useModal";
+import MoveSeatConfirmModal from "./MoveSeatConfirmModal";
 
 const Modal = () => {
-  const [isModalOpen, setIsModalOpenAtom] = useAtom(isModalOpenAtom);
+  const { modalState, closeModal } = useModal();
+  const { type, modalProps } = modalState;
+
+  useEffect(() => {
+    // 모달이 열렸을 때, 오버레이 스크롤 블락
+    if (type) {
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [type]);
+
+  if (!type) return null;
+
+  const modalComponents: Record<string, React.ElementType> = {
+    moveSeatConfirm: MoveSeatConfirmModal,
+  };
+
+  const SpecificModal = modalComponents[type];
+
+  // 모달 오버레이를 클릭했을 때 모달 종료
+  const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      closeModal();
+    }
+  };
 
   return (
     <>
-      {isModalOpen && (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-20">
-          <div className="rounded-16 w-370 h-213 flex flex-col items-center justify-between bg-white px-32 py-24">
-            <IconAlert />
-            <p className="text-17-500 text-gray-100">자리를 이동하시겠어요?</p>
-            <p className="text-gray-100-opacity-80 text-15-400">
-              기존의 자리는 취소되며, 선택한 자리가 예약됩니다.
-            </p>
-            <div className="flex gap-20">
-              <Button
-                variant="secondary"
-                size="modal"
-                width="w-84"
-                height="h-40"
-                onClick={() => {
-                  setIsModalOpenAtom(false);
-                }}
-              >
-                취소하기
-              </Button>
-              <Button size="modal" width="w-84" height="h-40">
-                이동하기
-              </Button>
-            </div>
-          </div>
+      {SpecificModal && (
+        <div
+          className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-20"
+          onClick={handleClickOutside}
+        >
+          <div>{SpecificModal && <SpecificModal {...modalProps} />}</div>
         </div>
       )}
     </>

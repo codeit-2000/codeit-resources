@@ -1,5 +1,13 @@
 import { atom } from "jotai";
 
-const isModalOpenAtom = atom<boolean>(true);
+interface ModalState {
+  type: string | null;
+  modalProps: any;
+}
 
-export default isModalOpenAtom;
+const modalAtom = atom<ModalState>({
+  type: null,
+  modalProps: {},
+});
+
+export default modalAtom;
