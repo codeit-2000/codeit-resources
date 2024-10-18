@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import useModal from "@src/hooks/useModal";
 import MoveSeatConfirmModal from "./MoveSeatConfirmModal";
 
-const Modal = () => {
+const ModalProvider = () => {
   const { modalState, closeModal } = useModal();
   const { type, modalProps } = modalState;
 
@@ -38,11 +38,13 @@ const Modal = () => {
           className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-20"
           onClick={handleClickOutside}
         >
-          <div>{SpecificModal && <SpecificModal {...modalProps} />}</div>
+          <div>
+            <SpecificModal {...modalProps} />
+          </div>
         </div>
       )}
     </>
   );
 };
 
-export default Modal;
+export default ModalProvider;
