@@ -1,15 +1,15 @@
 import CodeitLogo from "@repo/assets/images/codeit.svg?react";
 import CodeitTextLogo from "@repo/assets/images/codeit-resources.svg?react";
-import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
 import { Link, NavLink } from "react-router-dom";
 import useDeviceSize from "@src/hooks/useDeviceSize";
+import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
 
 interface NavBarOptionProps {
   navOption: NavOptionProps;
   isMobile: boolean;
 }
 
-const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
+function NavBarOption({ navOption, isMobile }: NavBarOptionProps) {
   return (
     <NavLink
       key={navOption.id}
@@ -28,9 +28,9 @@ const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
       )}
     </NavLink>
   );
-};
+}
 
-const Sidebar = () => {
+function Sidebar() {
   const deviceSize = useDeviceSize();
   const isMobile = deviceSize === "mobile";
 
@@ -57,6 +57,6 @@ const Sidebar = () => {
       </ul>
     </nav>
   );
-};
+}
 
 export default Sidebar;
