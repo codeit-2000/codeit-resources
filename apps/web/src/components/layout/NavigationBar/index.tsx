@@ -2,25 +2,23 @@ import CodeitLogo from "@repo/assets/images/codeit.svg?react";
 import CodeitTextLogo from "@repo/assets/images/codeit-resources.svg?react";
 import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
 import { Link, NavLink } from "react-router-dom";
-import useIsMobile from "@src/hooks/useIsMobile";
 
 interface NavBarOptionProps {
   navOption: NavOptionProps;
-  isMobile: boolean;
 }
 
-const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
+const NavBarOption = ({ navOption }: NavBarOptionProps) => {
   return (
     <NavLink
       key={navOption.id}
       to={navOption.path}
-      className={`hover:rounded-10 flex items-center hover:bg-[#FFFFFF0D] ${isMobile ? "w-60 flex-col py-8" : "flex-row gap-10 py-10 pl-16"}`}
+      className="hover:rounded-10 flex w-full flex-col items-center py-8 hover:bg-[#FFFFFF0D] md:w-auto md:flex-row md:gap-10 md:py-10 md:pl-16"
     >
       {({ isActive }) => (
         <>
           {navOption.imgSrc({ stroke: isActive ? "#FFFFFF" : "#888893" })}
           <span
-            className={`${isMobile ? "text-12-400" : "text-16-400"} ${isActive ? "text-white" : "text-[#FFFFFF99]"}`}
+            className={`text-12-400 md:text-16-400 ${isActive ? "text-white" : "text-[#FFFFFF99]"}`}
           >
             {navOption.text}
           </span>
@@ -31,27 +29,15 @@ const NavBarOption = ({ navOption, isMobile }: NavBarOptionProps) => {
 };
 
 const NavigationBar = () => {
-  const isMobile = useIsMobile();
-
   return (
-    <nav
-      className={`${isMobile ? "min-w-360 max-w-767 fixed bottom-0 w-full" : "w-200 h-[100vh]"} bg-[#333236] p-16`}
-    >
-      {!isMobile && (
-        <Link to="/dashboard" className="flex items-center gap-8 pb-12">
-          <CodeitLogo width={26} height={26} />
-          <CodeitTextLogo />
-        </Link>
-      )}
-      <ul
-        className={`flex justify-evenly ${!isMobile && "flex-col gap-10 border-t border-white border-opacity-10 pt-12"}`}
-      >
+    <nav className="fixed bottom-0 w-full min-w-[360px] max-w-[767px] bg-[#333236] p-16 md:bottom-auto md:h-[100vh] md:w-[200px] md:min-w-0 md:max-w-none">
+      <Link to="/dashboard" className="hidden items-center gap-8 pb-12 md:flex">
+        <CodeitLogo width={26} height={26} />
+        <CodeitTextLogo />
+      </Link>
+      <ul className="flex justify-evenly md:flex-col md:gap-10 md:border-t md:border-white md:border-opacity-10 md:pt-12">
         {NAV_OPTION_LIST.map((navOption) => (
-          <NavBarOption
-            key={navOption.id}
-            navOption={navOption}
-            isMobile={isMobile}
-          />
+          <NavBarOption key={navOption.id} navOption={navOption} />
         ))}
       </ul>
     </nav>
