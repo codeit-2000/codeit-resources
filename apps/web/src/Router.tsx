@@ -9,7 +9,7 @@ export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Layout />}>
-        <Route path="dashboard" index element={<Dashboard />} />
+        <Route path="dashboard" element={<Dashboard />} />
         <Route path="meeting-rooms" element={<MeetingRooms />} />
         <Route path="seats" element={<Seats />} />
         <Route path="equipments" element={<Equipments />} />
