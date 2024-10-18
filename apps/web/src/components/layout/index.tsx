@@ -4,10 +4,13 @@ import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
 import Equipments from "@src/pages/equipments";
 import NavigationBar from "@src/components/layout/NavigationBar";
+import useIsMobile from "@src/hooks/useIsMobile";
 
 export default function Layout() {
+  const isMobile = useIsMobile();
+
   return (
-    <div>
+    <div className={`${isMobile ? "" : "flex"}`}>
       <NavigationBar />
       <div>
         <Routes>
