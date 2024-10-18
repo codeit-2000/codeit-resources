@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
 import Equipments from "@src/pages/equipments";
-import Layout from "./components/layout";
+import Layout from "@src/components/layout";
 
 export default function Router() {
   return (
