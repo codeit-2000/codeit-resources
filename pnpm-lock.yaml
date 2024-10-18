@@ -356,7 +356,11 @@ importers:
 
   packages/shared-constants: {}
 
-  packages/shared-lib: {}
+  packages/shared-lib:
+    dependencies:
+      '@repo/backend':
+        specifier: workspace:*
+        version: link:../shared-backend
 
   packages/typescript-config: {}
 

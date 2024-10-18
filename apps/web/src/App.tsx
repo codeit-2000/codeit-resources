@@ -1,7 +1,7 @@
-import Layout from "./components/layout";
 import { BrowserRouter } from "react-router-dom";
 import MobileSizeWatcher from "./components/layout/MobileSizeWatcher";
 import Modal from "./components/commons/Modal";
+import Router from "./Router";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <MobileSizeWatcher />
         <Modal />
-        <Layout />
+        <Router />
       </BrowserRouter>
     </>
   );
