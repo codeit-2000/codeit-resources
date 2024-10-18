@@ -1,13 +1,13 @@
 import CodeitLogo from "@repo/assets/images/codeit.svg?react";
 import CodeitTextLogo from "@repo/assets/images/codeit-resources.svg?react";
-import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
 import { Link, NavLink } from "react-router-dom";
+import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
 
 interface NavBarOptionProps {
   navOption: NavOptionProps;
 }
 
-const NavBarOption = ({ navOption }: NavBarOptionProps) => {
+function NavBarOption({ navOption }: NavBarOptionProps) {
   return (
     <NavLink
       key={navOption.id}
@@ -26,9 +26,9 @@ const NavBarOption = ({ navOption }: NavBarOptionProps) => {
       )}
     </NavLink>
   );
-};
+}
 
-const NavigationBar = () => {
+function NavigationBar() {
   return (
     <nav className="fixed bottom-0 w-full min-w-[360px] max-w-[767px] bg-gray-100 p-16 md:bottom-auto md:h-screen md:w-[200px] md:min-w-0 md:max-w-none">
       <Link to="/dashboard" className="hidden items-center gap-8 pb-12 md:flex">
@@ -42,6 +42,6 @@ const NavigationBar = () => {
       </ul>
     </nav>
   );
-};
+}
 
 export default NavigationBar;

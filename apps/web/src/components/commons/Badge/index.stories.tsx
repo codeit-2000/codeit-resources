@@ -12,13 +12,13 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const primaryBadge: Story = {
+export const PrimaryBadge: Story = {
   args: {
     children: "안녕 난 뱃지",
   },
 };
 
-export const secondaryBadge: Story = {
+export const SecondaryBadge: Story = {
   args: {
     children: "안녕 난 뱃지",
     variant: "secondary",

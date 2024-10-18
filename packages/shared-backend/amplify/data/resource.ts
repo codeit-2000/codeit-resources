@@ -1,4 +1,4 @@
-import { a, defineData, type ClientSchema } from "@aws-amplify/backend";
+import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 const schema = a.schema({
   // User Table
@@ -21,7 +21,7 @@ const schema = a.schema({
   // Resource Table
   Resource: a
     .model({
-      resourceType: a.enum(["Room", "Seat", "Equipment"]),
+      resourceType: a.enum(["ROOM", "SEAT", "EQUIPMENT"]),
       resourceSubtype: a.string(),
       name: a.string().required(),
       description: a.string(),

@@ -8,7 +8,7 @@ interface BadgeProps extends ComponentProps<"span"> {
   variant: "primary" | "secondary";
 }
 
-const Badge = ({ children, variant = "primary" }: BadgeProps) => {
+function Badge({ children, variant = "primary" }: BadgeProps) {
   const badgeStyle = clsx({
     "bg-pink-60 rounded-8 text-10-500 text-gray-0 px-4 pt-1 inline-block":
       variant === "primary",
@@ -17,6 +17,6 @@ const Badge = ({ children, variant = "primary" }: BadgeProps) => {
   });
 
   return <span className={badgeStyle}>{children}</span>;
-};
+}
 
 export default Badge;

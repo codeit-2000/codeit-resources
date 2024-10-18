@@ -1,7 +1,6 @@
+import isMobileAtom from "@src/store/mobileAtom";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
-
-import isMobileAtom from "@src/store/mobileAtom";
 
 export default function MobileSizeWatcher() {
   const setIsMobile = useSetAtom(isMobileAtom);
