@@ -21,7 +21,6 @@ const schema = a.schema({
   // Resource Table
   Resource: a
     .model({
-      resourceId: a.id(),
       resourceType: a.enum(["Room", "Seat", "Equipment"]),
       resourceSubtype: a.string(),
       name: a.string().required(),
