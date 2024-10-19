@@ -75,8 +75,6 @@ interface RadioItemProps {
   value: string;
   /** 라디오 input의 name 속성으로, 라디오 버튼을 그룹화하는 데 사용됩니다. */
   name: string;
-  /** 라디오 버튼이 기본적으로 체크되어 있는지 여부를 지정합니다. */
-  defaultChecked?: boolean;
   /** 라디오 버튼이 비활성화되어 있는지 여부를 지정합니다. */
   disabled?: boolean;
 }
@@ -90,7 +88,6 @@ function RadioItem({
   children,
   value,
   name,
-  defaultChecked,
   disabled,
 }: RadioItemProps) {
   const { control } = useFormContext();
@@ -109,7 +106,6 @@ function RadioItem({
         >
           <input
             type="radio"
-            defaultChecked={defaultChecked}
             disabled={disabled}
             className="hidden"
             checked={field.value === value}
