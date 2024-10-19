@@ -28,6 +28,7 @@ export const Primary: Story = {
       });
 
       const onSubmit = (data: unknown) => {
+        // eslint-disable-next-line no-console
         console.log("Form Data:", data);
       };
 
