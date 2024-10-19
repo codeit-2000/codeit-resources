@@ -1,18 +1,17 @@
 import { useState } from "react";
 import type { Schema } from "@repo/backend/amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { signIn, signOut, signUp, confirmSignUp } from "aws-amplify/auth";
+import { signIn, signOut, signUp } from "aws-amplify/auth";
 import Button from "@src/components/commons/Button";
+import { autoAuthUser } from "@src/utils/autoAuthUser";
 
 const client = generateClient<Schema>();
 
 const AuthTestPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [code, setCode] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [name, setName] = useState("");
-  const [newPassword, setNewPassword] = useState("");
 
   // 로그인
   const handleLogin = async () => {
@@ -37,29 +36,18 @@ const AuthTestPage = () => {
     }
   };
 
-  // 이메일 인증
-  const handleConfirm = async () => {
-    try {
-      await confirmSignUp({
-        username: newEmail,
-        confirmationCode: code,
-      });
-      alert("인증 성공");
-    } catch (error) {
-      console.error("인증 실패", error);
-      alert("인증 실패");
-    }
-  };
-
   // 회원가입
   const handleSignUp = async () => {
     try {
       const result = await signUp({
         username: newEmail,
-        password: newPassword,
+        password: "Test12345!",
       });
-      console.log("회원가입 성공! 이메일 인증해주세요", result);
-      alert("회원가입 성공! 이메일 인증 해주세요");
+      console.log("회원가입 성공!", result);
+
+      autoAuthUser("MEMBER", newEmail);
+
+      alert("회원가입 성공!");
       client.models.User.create({
         id: result.userId,
         username: name,
@@ -95,7 +83,7 @@ const AuthTestPage = () => {
         </Button>
       </div>
       <div>
-        <h2 className="text-20-700">회원가입 하기</h2>
+        <h2 className="text-20-700">멤버 추가 하기</h2>
         <input
           placeholder="이름"
           value={name}
@@ -106,24 +94,9 @@ const AuthTestPage = () => {
           value={newEmail}
           onChange={(e) => setNewEmail(e.target.value)}
         />
-        <input
-          placeholder="비밀번호"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-        />
+        <span>비밀번호는 Test12345! 입니다.</span>
         <Button width="w-120" onClick={handleSignUp}>
-          회원가입
-        </Button>
-      </div>
-      <div>
-        <h2 className="text-20-700">인증코드 입력</h2>
-        <input
-          placeholder="인증코드"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-        />
-        <Button width="w-100" onClick={handleConfirm}>
-          인증
+          멤버추가
         </Button>
       </div>
     </div>
