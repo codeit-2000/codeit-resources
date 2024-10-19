@@ -51,8 +51,8 @@ function RadioIndicator({ isSelected }: RadioIndicatorProps) {
       className={clsx(
         "inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full",
         isSelected
-          ? "bg-purple-60 border-none"
-          : "ring-gray-100-opacity-20 ring-1 ring-inset",
+          ? "bg-purple-60 group-hover:bg-purple-70 border-none"
+          : "ring-gray-100-opacity-20 group-hover:bg-gray-100-opacity-5 ring-1 ring-inset",
       )}
     >
       {/* 내부 원 */}
@@ -99,8 +99,8 @@ function RadioItem({
       render={({ field }) => (
         <label
           className={clsx(
-            "flex cursor-pointer items-center gap-8",
-            disabled && "cursor-not-allowed opacity-50",
+            "group flex items-center gap-8",
+            disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
             className,
           )}
         >
@@ -115,7 +115,7 @@ function RadioItem({
           {/* 라디오 버튼 */}
           <RadioIndicator isSelected={field.value === value} />
           {/* label */}
-          <span className="text-16-500 text-gray-100-opacity-80">
+          <span className="text-16-500 text-gray-100-opacity-80 group-hover:text-16-700">
             {children}
           </span>
         </label>
