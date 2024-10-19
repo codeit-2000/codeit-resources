@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   AdminAddUserToGroupCommand,
   AdminConfirmSignUpCommand,
@@ -24,8 +25,9 @@ const addUserToGroup = async (email: string, groupName: string) => {
   try {
     const command = new AdminAddUserToGroupCommand(params);
     await cognitoClient.send(command);
+    return true;
   } catch (error) {
-    // console.error(error);
+    return false;
   }
 };
 
@@ -39,8 +41,9 @@ const confirmUserInCognito = async (email: string) => {
   try {
     const command = new AdminConfirmSignUpCommand(adminConfirmParams);
     await cognitoClient.send(command);
+    return true;
   } catch (error) {
-    // console.error(error);
+    return false;
   }
 };
 
@@ -60,8 +63,9 @@ const verifyUserEmail = async (email: string) => {
   try {
     const command = new AdminUpdateUserAttributesCommand(updateParams);
     await cognitoClient.send(command);
+    return true;
   } catch (error) {
-    // console.error(error);
+    return false;
   }
 };
 
@@ -71,8 +75,35 @@ const verifyUserEmail = async (email: string) => {
  * @param groupName MEMBER | ADMIN
  * @param email 유저 이메일
  */
-export const autoAuthUser = (groupName: string, email: string) => {
-  addUserToGroup(email, groupName);
-  confirmUserInCognito(email);
-  verifyUserEmail(email);
+export const autoAuthUser = async (
+  groupName: string,
+  email: string,
+): Promise<boolean> => {
+  try {
+    const addedToGroup = await addUserToGroup(email, groupName);
+    if (!addedToGroup) {
+      console.error(
+        `사용자 ${email}를 그룹 ${groupName}에 추가하는데 실패했습니다.`,
+      );
+      return false;
+    }
+
+    const confirmed = await confirmUserInCognito(email);
+    if (!confirmed) {
+      console.error(`사용자 ${email}를 확인하는데 실패했습니다.`);
+      return false;
+    }
+
+    const verified = await verifyUserEmail(email);
+    if (!verified) {
+      console.error(`사용자 ${email}의 이메일을 확인하는데 실패했습니다.`);
+      return false;
+    }
+
+    console.log(`사용자 ${email}의 인증 프로세스가 성공적으로 완료되었습니다.`);
+    return true;
+  } catch (error) {
+    console.error("사용자 인증 프로세스 중 오류 발생:", error);
+    return false;
+  }
 };
