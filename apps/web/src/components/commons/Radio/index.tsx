@@ -49,7 +49,7 @@ function RadioIndicator({ isSelected }: RadioIndicatorProps) {
   return (
     <div
       className={clsx(
-        "flex h-20 w-20 items-center justify-center rounded-full",
+        "inline-flex h-20 w-20 shrink-0 items-center justify-center rounded-full",
         isSelected
           ? "bg-purple-60 border-none"
           : "ring-gray-100-opacity-20 ring-1 ring-inset",
