@@ -52,7 +52,7 @@ export const createResource = async (resourceData: CreateResourceParams) => {
 export const getResourceList = async ({
   resourceType,
 }: {
-  resourceType?: "Room" | "Seat" | "Equipment";
+  resourceType?: "ROOM" | "SEAT" | "EQUIPMENT";
 } = {}) => {
   if (resourceType === undefined) return await client.models.Resource.list();
 

@@ -2,7 +2,9 @@ import clsx from "clsx";
 import defaultProfile from "@repo/assets/images/default-profile.png";
 
 interface ProfileImagePros {
+  /** imageUrl을 지정합니다. */
   imageUrl?: string;
+  /** ProfileImage 컴포넌트의 사이즈를 지정합니다. */
   size?: "sm" | "md" | "lg";
 }
 
