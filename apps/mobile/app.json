@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/codeit.png",
     "userInterfaceStyle": "light",
+    "scheme": "codeit.resource.scheme",
     "splash": {
       "image": "./assets/codeit-splash.png",
       "resizeMode": "contain",
@@ -22,6 +23,7 @@
     },
     "web": {
       "favicon": "./assets/codeit.png"
-    }
+    },
+    "plugins": ["expo-router"]
   }
 }
