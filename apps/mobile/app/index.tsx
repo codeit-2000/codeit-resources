@@ -1,11 +1,15 @@
-import { StyleSheet, Text, View } from "react-native";
+import Codeit from "@repo/assets/images/codeit-resources.svg";
+import CodeitLogo from "@repo/assets/images/codeit.svg";
+import COLOR from "@repo/constants/constants/colors";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
-        <Text style={styles.title}>Hello World</Text>
-        <Text style={styles.subtitle}>This is the first page of your app.</Text>
+        <CodeitLogo width={60} height={60} />
+        <Codeit color={COLOR.gray[100]} width={194} height={24} />
       </View>
     </View>
   );
@@ -15,20 +19,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
     padding: 24,
   },
   main: {
-    flex: 1,
+    alignItems: "center",
     justifyContent: "center",
-    maxWidth: 960,
+    gap: 19,
+    width: 200,
+    height: 104,
     marginHorizontal: "auto",
-  },
-  title: {
-    fontSize: 64,
-    fontWeight: "bold",
-  },
-  subtitle: {
-    fontSize: 36,
-    color: "#38434D",
   },
 });

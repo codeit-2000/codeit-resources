@@ -7,7 +7,7 @@
     "icon": "./assets/codeit.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/codeit.png",
+      "image": "./assets/codeit-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
