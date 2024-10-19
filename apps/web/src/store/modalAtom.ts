@@ -2,7 +2,7 @@ import { atom } from "jotai";
 
 interface ModalState {
   type: string | null;
-  modalProps: any;
+  modalProps: object;
 }
 
 const modalAtom = atom<ModalState>({

@@ -6,7 +6,7 @@ interface MoveSeatConfirmModalProps {
   onConfirm: () => void;
 }
 
-const MoveSeatConfirmModal = ({ onConfirm }: MoveSeatConfirmModalProps) => {
+function MoveSeatConfirmModal({ onConfirm }: MoveSeatConfirmModalProps) {
   const { closeModal } = useModal();
 
   return (
@@ -32,6 +32,6 @@ const MoveSeatConfirmModal = ({ onConfirm }: MoveSeatConfirmModalProps) => {
       </div>
     </div>
   );
-};
+}
 
 export default MoveSeatConfirmModal;

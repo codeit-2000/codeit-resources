@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Modal from ".";
 import Button from "@src/components/commons/Button";
 import useModal from "@src/hooks/useModal";
+import Modal from ".";
 
 const meta = {
   title: "Web Components/Modal",
@@ -23,9 +23,7 @@ export const MoveSeatConfirmModal: Story = {
           width="w-200"
           onClick={() => {
             openModal("moveSeatConfirm", {
-              onConfirm: () => {
-                console.log("모달 확인 버튼 클릭됨");
-              },
+              onConfirm: () => {},
             });
           }}
         >

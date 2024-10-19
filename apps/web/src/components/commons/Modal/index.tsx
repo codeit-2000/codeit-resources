@@ -1,15 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import useModal from "@src/hooks/useModal";
 import MoveSeatConfirmModal from "./MoveSeatConfirmModal";
 
-const ModalProvider = () => {
+function ModalProvider() {
   const { modalState, closeModal } = useModal();
   const { type, modalProps } = modalState;
+  const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 모달이 열렸을 때, 오버레이 스크롤 블락
     if (type) {
       document.body.style.overflow = "hidden";
+      if (modalRef.current) {
+        modalRef.current.focus();
+      }
     }
     return () => {
       document.body.style.overflow = "auto";
@@ -24,27 +27,34 @@ const ModalProvider = () => {
 
   const SpecificModal = modalComponents[type];
 
-  // 모달 오버레이를 클릭했을 때 모달 종료
   const handleClickOutside = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       closeModal();
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Escape") {
+      closeModal();
+    }
+  };
+
   return (
-    <>
-      {SpecificModal && (
-        <div
-          className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-20"
-          onClick={handleClickOutside}
-        >
-          <div>
-            <SpecificModal {...modalProps} />
-          </div>
+    SpecificModal && (
+      <div
+        ref={modalRef}
+        className="fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-20"
+        onClick={handleClickOutside}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="button"
+      >
+        <div>
+          <SpecificModal {...modalProps} />
         </div>
-      )}
-    </>
+      </div>
+    )
   );
-};
+}
 
 export default ModalProvider;
