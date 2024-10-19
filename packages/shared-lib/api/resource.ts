@@ -21,7 +21,7 @@ type CreateResourceParams = {
  * ```tsx
  * const handleClick = async () => {
  *   await client.models.Resource.create({
- *     resourceType: "Room",
+ *     resourceType: "ROOM",
  *     resourceSubtype: "미팅룸",
  *     name: "미팅룸A",
  *   });
@@ -45,7 +45,7 @@ export const createResource = async (resourceData: CreateResourceParams) => {
  * @example
  * ```tsx
  * const { data, error } = await getResourceList(); // 전체 목록을 가져옵니다.
- * const { data } = await getResourceList({ resourceType: "Room" }); // 회의실 목록을 가져옵니다.
+ * const { data } = await getResourceList({ resourceType: "ROOM" }); // 회의실 목록을 가져옵니다.
  * ```
  */
 
