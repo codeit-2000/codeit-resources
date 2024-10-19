@@ -1,8 +1,8 @@
 import {
-  CognitoIdentityProviderClient,
   AdminAddUserToGroupCommand,
   AdminConfirmSignUpCommand,
   AdminUpdateUserAttributesCommand,
+  CognitoIdentityProviderClient,
 } from "@aws-sdk/client-cognito-identity-provider";
 
 const cognitoClient = new CognitoIdentityProviderClient({
@@ -25,7 +25,7 @@ const addUserToGroup = async (email: string, groupName: string) => {
     const command = new AdminAddUserToGroupCommand(params);
     await cognitoClient.send(command);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
@@ -40,7 +40,7 @@ const confirmUserInCognito = async (email: string) => {
     const command = new AdminConfirmSignUpCommand(adminConfirmParams);
     await cognitoClient.send(command);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 
@@ -61,7 +61,7 @@ const verifyUserEmail = async (email: string) => {
     const command = new AdminUpdateUserAttributesCommand(updateParams);
     await cognitoClient.send(command);
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
 };
 

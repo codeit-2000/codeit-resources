@@ -33,10 +33,10 @@
     "types": ["vite/client", "@storybook/react"]
   },
   "include": [
-    "src",
+    "src/**/*.ts",
+    "src/**/*.tsx",
     ".storybook",
-    "../../packages/ui/src",
-    "src/components/layout/NavigationBar/.tsx"
+    "../../packages/ui/src"
   ],
   "exclude": ["node_modules"]
 }

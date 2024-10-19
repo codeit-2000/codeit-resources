@@ -1,13 +1,16 @@
-import { useState } from "react";
+/* eslint-disable no-alert */
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Schema } from "@repo/backend/amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
-import { signIn, signOut, signUp } from "aws-amplify/auth";
 import Button from "@src/components/commons/Button";
 import { autoAuthUser } from "@src/utils/autoAuthUser";
+import { signIn, signOut, signUp } from "aws-amplify/auth";
+import { generateClient } from "aws-amplify/data";
+import { useState } from "react";
 
 const client = generateClient<Schema>();
 
-const AuthTestPage = () => {
+function AuthTestPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -16,12 +19,10 @@ const AuthTestPage = () => {
   // 로그인
   const handleLogin = async () => {
     try {
-      const user = await signIn({ username: email, password });
-      console.log("로그인 성공", user);
+      await signIn({ username: email, password });
       alert("로그인 성공");
     } catch (error: any) {
-      console.error("로그인 실패", error);
-      alert("로그인 실패" + error.message);
+      alert(`로그인 실패${error.message}`);
     }
   };
 
@@ -31,23 +32,21 @@ const AuthTestPage = () => {
       await signOut();
       alert("로그아웃 성공");
     } catch (error) {
-      console.error("로그아웃 실패", error);
-      alert("로그아웃 실패" + error);
+      alert(`로그아웃 실패${error}`);
     }
   };
 
-  // 회원가입
+  // 멤버추가
   const handleSignUp = async () => {
     try {
       const result = await signUp({
         username: newEmail,
         password: "Test12345!",
       });
-      console.log("회원가입 성공!", result);
 
       autoAuthUser("MEMBER", newEmail);
 
-      alert("회원가입 성공!");
+      alert("멤버추가 성공!");
       client.models.User.create({
         id: result.userId,
         username: name,
@@ -56,8 +55,7 @@ const AuthTestPage = () => {
         team: "개발팀",
       });
     } catch (error) {
-      console.error("회원가입 실패", error);
-      alert("회원가입 실패");
+      alert("멤버추가 실패");
     }
   };
 
@@ -101,6 +99,6 @@ const AuthTestPage = () => {
       </div>
     </div>
   );
-};
+}
 
 export default AuthTestPage;
