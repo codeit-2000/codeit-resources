@@ -15,6 +15,9 @@ function AuthTestPage() {
   const [password, setPassword] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [name, setName] = useState("");
+  const [selectedRole, setSelectedRole] = useState<"MEMBER" | "ADMIN">(
+    "MEMBER",
+  );
 
   // 로그인
   const handleLogin = async () => {
@@ -44,14 +47,14 @@ function AuthTestPage() {
         password: "Test12345!",
       });
 
-      autoAuthUser("MEMBER", newEmail);
+      autoAuthUser(selectedRole, newEmail);
 
       alert("멤버추가 성공!");
       client.models.User.create({
         id: result.userId,
         username: name,
         email: newEmail,
-        role: "ADMIN",
+        role: selectedRole,
         team: "개발팀",
       });
     } catch (error) {
@@ -92,6 +95,28 @@ function AuthTestPage() {
           value={newEmail}
           onChange={(e) => setNewEmail(e.target.value)}
         />
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="MEMBER"
+              checked={selectedRole === "MEMBER"}
+              onChange={(e) => setSelectedRole(e.target.value as "MEMBER")}
+            />
+            MEMBER
+          </label>
+        </div>
+        <div>
+          <label>
+            <input
+              type="radio"
+              value="ADMIN"
+              checked={selectedRole === "ADMIN"}
+              onChange={(e) => setSelectedRole(e.target.value as "ADMIN")}
+            />
+            ADMIN
+          </label>
+        </div>
         <span>비밀번호는 Test12345! 입니다.</span>
         <Button width="w-120" onClick={handleSignUp}>
           멤버추가
