@@ -18,7 +18,7 @@ export default function ProfileImage({
 
   return (
     <img
-      src={imageUrl ? imageUrl : defaultProfile}
+      src={imageUrl || defaultProfile}
       alt="profile"
       className={classnames}
     />
