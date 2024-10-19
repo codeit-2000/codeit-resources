@@ -4,16 +4,19 @@ import modalAtom from "@src/store/modalAtom";
 const useModal = () => {
   const [modalState, setModalState] = useAtom(modalAtom);
 
-  const openModal = (type: "moveSeatConfirm" | string, modalProps: object) => {
+  const openModal = (
+    modalType: "moveSeatConfirm" | string,
+    modalProps: object,
+  ) => {
     setModalState({
-      type,
+      modalType,
       modalProps,
     });
   };
 
   const closeModal = () => {
     setModalState({
-      type: null,
+      modalType: null,
       modalProps: {},
     });
   };
