@@ -13,10 +13,10 @@ export default function Dashboard() {
 
   return (
     <div>
-      <button className="bg-purple-70 text-white" onClick={handleSuccessClick}>
+      <button type="button" className="bg-purple-70 text-white" onClick={handleSuccessClick}>
         토스트 띄우기
       </button>
-      <button className="bg-blue-70 text-white" onClick={handleErrorClick}>
+      <button type="button" className="bg-blue-70 text-white" onClick={handleErrorClick}>
         에러 토스트 띄우기
       </button>
       <h1>This is Dashboard Page :)</h1>

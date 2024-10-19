@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
+import useToast from "@src/hooks/useToast";
 import Toast from "./index";
 
-import useToast from "@src/hooks/useToast";
 import ToastProvider from "./ToastProvider";
 
 const meta = {
@@ -33,7 +33,7 @@ export const Error: Story = {
 
 export const TestToast: Story = {
   render: () => {
-    const Toast = () => {
+    function ToastStory() {
       const { success, error } = useToast();
 
       const handleSuccessClick = () => {
@@ -48,17 +48,18 @@ export const TestToast: Story = {
         <div className="flex gap-10">
           <ToastProvider />
           <button
+          type="button"
             className="bg-green-70 text-white"
             onClick={handleSuccessClick}
           >
             성공 토스트 띄우기
           </button>
-          <button className="bg-red-500 text-white" onClick={handleErrorClick}>
+          <button type="button" className="bg-red-500 text-white" onClick={handleErrorClick}>
             에러 토스트 띄우기
           </button>
         </div>
       );
-    };
-    return <Toast />;
+    }
+    return <ToastStory />;
   },
 };

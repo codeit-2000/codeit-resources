@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const DURATION_TIME = 2000;
 
-const Toast = ({ id, type, message = "테스트 메시지 확인!" }: ToastProps) => {
+function Toast({ id, type, message = "테스트 메시지 확인!" }: ToastProps) {
   const deleteToast = useSetAtom(deleteToastAtom);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -41,6 +41,6 @@ const Toast = ({ id, type, message = "테스트 메시지 확인!" }: ToastProps
       </div>
     </div>
   );
-};
+}
 
 export default Toast;
