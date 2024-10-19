@@ -16,6 +16,8 @@ interface ButtonProps extends ComponentProps<"button"> {
   height?: string;
   /** 버튼 비활성화 여부를 지정합니다. */
   disabled?: boolean;
+  /** 버튼의 크기를 지정합니다. small, modal, 또는 기본 크기 */
+  size?: "small" | "modal" | "default";
 }
 
 function Button({
@@ -25,16 +27,22 @@ function Button({
   width = "w-full",
   height = "h-full",
   disabled = false,
+  size = "default",
   ...buttonProps
 }: ButtonProps) {
   const buttonStyle = clsx(
-    "rounded-8 text-16-500 px-24 py-8 transition-all disabled:bg-gray-100-opacity-10 disabled:text-gray-100-opacity-30 disabled:cursor-not-allowed disabled:border-none", // 기본 스타일
+    "rounded-8 transition-all disabled:bg-gray-100-opacity-10 disabled:text-gray-100-opacity-30 disabled:cursor-not-allowed disabled:border-none", // 기본 스타일
     width,
     height,
     {
       "bg-purple-70 text-gray-0 hover:bg-[#7200CC]": variant === "primary",
       "bg-gray-00-opacity-40 text-gray-100-opacity-80 border-gray-100-opacity-20 border hover:bg-gray-100-opacity-20 hover:text-[#333236]":
         variant === "secondary",
+    },
+    {
+      "px-24 py-8 rounded-8 text-16-500": size === "default",
+      "px-12 py-6 rounded-6 text-13-500": size === "small",
+      "px-16 py-8 rounded-6 text-14-500": size === "modal",
     },
   );
 
