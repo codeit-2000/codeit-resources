@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingSpinner from "@repo/assets/gifs/loading-spinner.svg?react";
+import { LOGIN_ERROR_MESSAGES } from "@repo/constants/error-message/user";
 import { loginSchema } from "@repo/lib/zod-schema/user";
 import Button from "@src/components/commons/Button";
 import Input from "@src/components/commons/Input";
@@ -40,39 +40,18 @@ function SignInForm() {
       });
       success("로그인 되었습니다.");
       navigate("/dashboard");
-    } catch (err: any) {
+    } catch (err: unknown) {
       if (err instanceof AuthError) {
-        switch (err.name) {
-          case "UserAlreadyAuthenticatedException":
-            error("이미 로그인 한 상태입니다.");
-            navigate("/dashboard");
-            break;
-          case "NotAuthorizedException":
-            error("아이디 또는 비밀번호가 잘못되었습니다.");
-            break;
-          case "UserNotFoundException":
-            error("해당 사용자를 찾을 수 없습니다.");
-            break;
-          case "UserNotConfirmedException":
-            error("이메일 인증이 완료되지 않았습니다.");
-            break;
-          case "PasswordResetRequiredException":
-            error("비밀번호를 재설정해야 합니다.");
-            break;
-          case "TooManyFailedAttemptsException":
-            error(
-              "로그인 시도가 너무 많아 계정이 잠겼습니다. 잠시 후 다시 시도해주세요.",
-            );
-            break;
-          case "LimitExceededException":
-            error("요청이 너무 많습니다. 잠시 후 다시 시도해주세요.");
-            break;
-          default:
-            error("로그인 중 알 수 없는 오류가 발생했습니다.");
-            break;
+        const errorMessage =
+          LOGIN_ERROR_MESSAGES[err.name] || LOGIN_ERROR_MESSAGES.UnknownError;
+
+        error(errorMessage);
+
+        if (err.name === "UserAlreadyAuthenticatedException") {
+          navigate("/dashboard");
         }
       } else {
-        error("로그인 중 알 수 없는 오류가 발생했습니다.");
+        error(LOGIN_ERROR_MESSAGES.UnknownError);
       }
     } finally {
       setIsLoading(false);

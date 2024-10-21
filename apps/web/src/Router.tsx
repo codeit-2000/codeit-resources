@@ -4,9 +4,8 @@ import Dashboard from "@src/pages/dashboard";
 import Equipments from "@src/pages/equipments";
 import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
+import SignIn from "@src/pages/sign-in";
 import { Route, Routes } from "react-router-dom";
-
-import SignIn from "./pages/sign-in";
 
 export default function Router() {
   return (
