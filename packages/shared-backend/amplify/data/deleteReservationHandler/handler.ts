@@ -20,16 +20,17 @@ export const handler: Schema["deleteReservation"]["functionHandler"] = async (
     id,
   });
 
+  if (!reservation) {
+    throw new Error("예약을 찾을 수 없습니다.");
+  }
+
   // 2. 참여자인지 확인
-  const isParticipants =
-    reservation &&
-    reservation.participants &&
-    reservation.participants.some(
-      (participant) => (participant as string) === userID,
-    );
+  const isParticipants = reservation?.participants?.some(
+    (participant) => (participant as string) === userID,
+  );
 
   if (!isParticipants) {
-    throw new Error("예약의 참여자만 수정/삭제가 가능합니다.");
+    throw new Error("예약의 참여자만 삭제가 가능합니다.");
   }
 
   // 3. 참여자면 업데이트

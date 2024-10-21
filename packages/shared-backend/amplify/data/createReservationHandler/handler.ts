@@ -10,6 +10,11 @@ export const handler: Schema["createReservation"]["functionHandler"] = async (
 ) => {
   const { resourceId, startTime, endTime } = event.arguments;
 
+  // 입력값 검증
+  if (!startTime || !endTime || new Date(startTime) >= new Date(endTime)) {
+    throw new Error("유효한 시작 시간과 종료 시간을 입력해주세요.");
+  }
+
   // 1. 예약이 겹치는지 확인하는 쿼리
   const { data: existingReservations } =
     await client.queries.getReservationsByResource({

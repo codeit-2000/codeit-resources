@@ -12,7 +12,7 @@ export const createReservation = async (reservationData) => {
   );
 };
 
-export const updateResourceName = async (reservationData) => {
+export const updateReservation = async (reservationData) => {
   return await client.mutations.updateReservation(
     reservationData as Reservation,
   );
