@@ -1,11 +1,11 @@
-import Equipment from "@repo/assets/icons/icon-equipment.svg?react";
-import Meeting from "@repo/assets/icons/icon-meeting.svg?react";
 import Person from "@repo/assets/icons/icon-person.svg?react";
+import Meeting from "@repo/assets/icons/icon-meeting.svg?react";
 import Seats from "@repo/assets/icons/icon-seats.svg?react";
+import Equipment from "@repo/assets/icons/icon-equipment.svg?react";
 
 export interface NavOptionProps {
   id: string;
-  imgSrc: ({ stroke }: { stroke: string }) => JSX.Element;
+  imgSrc: ({ stroke }: { color: string }) => JSX.Element;
   text: string;
   path: string;
 }
@@ -13,7 +13,7 @@ export interface NavOptionProps {
 const NAV_OPTION_LIST: NavOptionProps[] = [
   {
     id: "dashboard",
-    imgSrc: ({ stroke }) => <Person color={stroke} />,
+    imgSrc: ({ stroke }) => <Person color={stroke} />,
     text: "대시보드",
     path: "/dashboard",
   },
