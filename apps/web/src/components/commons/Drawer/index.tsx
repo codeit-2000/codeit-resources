@@ -5,10 +5,11 @@ import { ReactNode } from "react";
 
 interface DrawerProps {
   onClose: () => void;
+  buttonText: string;
   children: ReactNode; // 드로워 안에 내용들 children으로 채워주기
 }
 
-function Drawer({ onClose, children }: DrawerProps) {
+function Drawer({ onClose, buttonText, children }: DrawerProps) {
   return (
     <motion.div
       initial={{ x: "100%" }}
@@ -27,7 +28,7 @@ function Drawer({ onClose, children }: DrawerProps) {
         </button>
         {children}
         <div className="fixed bottom-40 w-[90%]">
-          <Button>예약하기</Button>
+          <Button>{buttonText}</Button>
         </div>
       </div>
     </motion.div>
