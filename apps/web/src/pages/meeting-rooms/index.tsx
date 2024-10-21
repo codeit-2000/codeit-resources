@@ -1,18 +1,18 @@
-import Drawer from "@src/components/commons/Drawer";
-import DrawerOpenButton from "@src/components/commons/Drawer/DrawerOpenButton";
+import BottomSheet from "@src/components/commons/BottomSheet";
+import BottomSheetOpenButton from "@src/components/commons/BottomSheet/BottomSheetOpenButton";
 import { useState } from "react";
 
 export default function MeetingRooms() {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const handleDrawerOpen = () => setIsDrawerOpen(true);
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const handleBottomSheetOpen = () => setIsBottomSheetOpen(true);
 
   return (
     <div>
-      <DrawerOpenButton handleDrawerOpen={handleDrawerOpen} />
-      {isDrawerOpen && (
-        <Drawer
-          isDrawerOpen={isDrawerOpen}
-          onClose={() => setIsDrawerOpen(false)}
+      <BottomSheetOpenButton handleBottomSheetOpen={handleBottomSheetOpen} />
+      {isBottomSheetOpen && (
+        <BottomSheet
+          isBottomSheetOpen={isBottomSheetOpen}
+          onClose={() => setIsBottomSheetOpen(false)}
         />
       )}
       <h1>This is Meeting Rooms Reservation Page :)</h1>

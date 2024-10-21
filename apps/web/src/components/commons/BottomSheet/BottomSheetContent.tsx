@@ -1,11 +1,11 @@
 import Scroll from "@repo/assets/icons/icon-drawer-bar.svg?react";
 import Button from "@src/components/commons/Button";
 
-interface DrawerContentProps {
+interface BottomSheetContentProps {
   onClose: () => void;
 }
 
-function DrawerContent({ onClose }: DrawerContentProps) {
+function BottomSheetContent({ onClose }: BottomSheetContentProps) {
   return (
     <>
       <Scroll className="mt-16" />
@@ -16,4 +16,4 @@ function DrawerContent({ onClose }: DrawerContentProps) {
   );
 }
 
-export default DrawerContent;
+export default BottomSheetContent;

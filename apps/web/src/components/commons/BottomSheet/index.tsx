@@ -2,18 +2,18 @@ import { AnimatePresence, PanInfo, motion, useAnimation } from "framer-motion";
 import { useEffect, useState } from "react";
 
 import BackgroundOverlay from "./BackgroundOverlay";
-import DrawerContent from "./DrawerContent";
-import DrawerContentWrapper from "./DrawerContentWrapper";
+import BottomSheetContent from "./BottomSheetContent";
+import BottomSheetContentWrapper from "./BottomSheetContentWrapper";
 
-interface DrawerProps {
-  isDrawerOpen: boolean;
+interface BottomSheetProps {
+  isBottomSheetOpen: boolean;
   onClose: () => void;
 }
 
-function Drawer({ isDrawerOpen, onClose }: DrawerProps) {
+function BottomSheet({ isBottomSheetOpen, onClose }: BottomSheetProps) {
   const controls = useAnimation();
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const [drawerPosition, setDrawerPosition] = useState("closed");
+  const [BottomSheetPosition, setBottomSheetPosition] = useState("closed");
   const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
@@ -21,13 +21,13 @@ function Drawer({ isDrawerOpen, onClose }: DrawerProps) {
     const handleResize = () => setWindowHeight(window.innerHeight);
 
     const handleMediaQueryChange = (e: MediaQueryListEvent) => {
-      setDrawerPosition(e.matches ? "half" : "full");
+      setBottomSheetPosition(e.matches ? "half" : "full");
     };
 
     if (mediaQuery.matches) {
-      setDrawerPosition("half");
+      setBottomSheetPosition("half");
     } else {
-      setDrawerPosition("full");
+      setBottomSheetPosition("full");
     }
 
     mediaQuery.addEventListener("change", handleMediaQueryChange);
@@ -40,13 +40,13 @@ function Drawer({ isDrawerOpen, onClose }: DrawerProps) {
   }, []);
 
   useEffect(() => {
-    if (isDrawerOpen) {
+    if (isBottomSheetOpen) {
       setIsClosing(false);
-      controls.start(drawerPosition);
+      controls.start(BottomSheetPosition);
     } else {
       controls.start("closed");
     }
-  }, [isDrawerOpen, drawerPosition, controls]);
+  }, [isBottomSheetOpen, BottomSheetPosition, controls]);
 
   const variants = {
     closed: {
@@ -68,21 +68,21 @@ function Drawer({ isDrawerOpen, onClose }: DrawerProps) {
     const velocity = info.velocity.y;
     const currentPosition = info.point.y;
 
-    if (drawerPosition === "full") {
+    if (BottomSheetPosition === "full") {
       if (currentPosition > threshold || velocity > 500) {
         await controls.start("half");
-        setDrawerPosition("half");
+        setBottomSheetPosition("half");
       } else {
         controls.start("full");
       }
-    } else if (drawerPosition === "half") {
+    } else if (BottomSheetPosition === "half") {
       if (currentPosition < -threshold || velocity < -500) {
         await controls.start("full");
-        setDrawerPosition("full");
+        setBottomSheetPosition("full");
       } else if (currentPosition > threshold || velocity > 500) {
         setIsClosing(true);
         await controls.start("closed");
-        setDrawerPosition("closed");
+        setBottomSheetPosition("closed");
         onClose();
       } else {
         controls.start("half");
@@ -93,10 +93,10 @@ function Drawer({ isDrawerOpen, onClose }: DrawerProps) {
   return (
     <>
       <AnimatePresence>
-        {isDrawerOpen && !isClosing && <BackgroundOverlay />}
+        {isBottomSheetOpen && !isClosing && <BackgroundOverlay />}
       </AnimatePresence>
       <AnimatePresence>
-        {(isDrawerOpen || isClosing) && (
+        {(isBottomSheetOpen || isClosing) && (
           <motion.div
             className="rounded-t-16 fixed bottom-0 left-0 right-0 overflow-hidden bg-white shadow-lg"
             style={{ height: windowHeight }}
@@ -115,9 +115,9 @@ function Drawer({ isDrawerOpen, onClose }: DrawerProps) {
               }
             }}
           >
-            <DrawerContentWrapper>
-              <DrawerContent onClose={() => setIsClosing(true)} />
-            </DrawerContentWrapper>
+            <BottomSheetContentWrapper>
+              <BottomSheetContent onClose={() => setIsClosing(true)} />
+            </BottomSheetContentWrapper>
           </motion.div>
         )}
       </AnimatePresence>
@@ -125,4 +125,4 @@ function Drawer({ isDrawerOpen, onClose }: DrawerProps) {
   );
 }
 
-export default Drawer;
+export default BottomSheet;
