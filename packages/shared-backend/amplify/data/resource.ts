@@ -33,7 +33,10 @@ const schema = a.schema({
     // const { data, errors } = await client.models.Resource.listResourceByResourceType({
     //   resourceType: 'Seat',
     // });
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.group("ADMIN"),
+    ]),
 
   // Reservation Table
   ReservationStatus: a.enum(["CONFIRMED", "CANCELED", "PASSED"]),
