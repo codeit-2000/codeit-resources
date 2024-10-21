@@ -5,14 +5,14 @@ import SignInForm from "./components/sign-in-form";
 
 function SignIn() {
   return (
-    <div className="mt-240 gap-33 flex flex-col items-center justify-center">
+    <div className="mt-240 gap-33 flex flex-col items-center justify-center px-8">
       <div className="flex flex-col items-center gap-24">
         <CodeitLogo width={78} height={78} />
         <CodeitTextLogo width={254} height={31} />
       </div>
       <SignInForm />
       {/** TODO: 비밀번호 찾기 기능 구현하기 */}
-      <p className="text-14-400 cursor-pointer hover:underline">
+      <p className="text-14-400 text-gray-80 cursor-pointer hover:text-gray-100">
         비밀번호 찾기
       </p>
     </div>
