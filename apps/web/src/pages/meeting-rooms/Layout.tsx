@@ -52,7 +52,7 @@ function RoomSelection({ subType, roomList }: RoomSelectionProps) {
               type="button"
               onClick={() => handleRoomClick(room)}
               className={clsx(
-                "text-16-500 rounded-8 md:min-w-128 md:h-59 h-48 min-w-80 cursor-pointer border-[1px] px-32 py-16",
+                "text-16-500 rounded-8 md:min-w-128 md:h-59 flex h-48 min-w-80 cursor-pointer items-center justify-center border-[1px]",
                 {
                   "bg-purple-80 md:bg-gray-80 text-gray-0": activeRoom === room, // 액티브 상태일 때
                   "text-gray-100-opacity-80 border-gray-100-opacity-10":
