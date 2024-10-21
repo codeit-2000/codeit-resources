@@ -33,7 +33,7 @@ function Input({
           type={type}
           {...register}
           className={clsx("input-base peer", {
-            "border-status-negative border": errorMessage,
+            "border-status-negative bg-status-negative/5 border": errorMessage,
             "border-gray-100-opacity-40 focus:border-purple-70 focus:bg-purple-5":
               !errorMessage,
           })}
