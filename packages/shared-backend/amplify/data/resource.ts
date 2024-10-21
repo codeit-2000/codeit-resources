@@ -10,12 +10,12 @@ const schema = a.schema({
       role: a.enum(["ADMIN", "MEMBER"]),
       team: a.string(),
       profileImage: a.url(),
+      createdAt: a.datetime(),
     })
     .authorization((allow) => [allow.owner()])
     .secondaryIndexes((index) => [
-      index("role"), // role에 따른 멤버들 리스트 보여줌 - 관리자 페이지
-      // TODO: team으로 1차 정렬하고, username으로 2차 정렬
-      // TODO: 최신순, 오래된순, 가나다순 정렬
+      index("role").sortKeys(["username"]).queryField("listUsersByRoleName"),
+      index("role").sortKeys(["createdAt"]).queryField("listUsersByRoleDate"),
     ]),
 
   // Resource Table
