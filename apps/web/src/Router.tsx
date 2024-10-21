@@ -6,6 +6,8 @@ import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
 import { Route, Routes } from "react-router-dom";
 
+import SignIn from "./pages/sign-in";
+
 export default function Router() {
   return (
     <Routes>
@@ -16,6 +18,9 @@ export default function Router() {
         <Route path="equipments" element={<Equipments />} />
       </Route>
 
+      <Route path="/sign-in" element={<SignIn />} />
+
+      {/** 테스트 페이지 */}
       <Route path="/auth-test" element={<AuthTest />} />
     </Routes>
   );
