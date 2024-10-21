@@ -28,3 +28,12 @@ input:-webkit-autofill {
 .label-focus {
   @apply peer-focus:text-13-400 peer-focus:top-1 peer-focus:mx-10 peer-focus:h-10 peer-focus:-translate-y-9 peer-focus:bg-white;
 }
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
