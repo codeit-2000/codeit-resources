@@ -1,16 +1,23 @@
+import Scroll from "@repo/assets/icons/icon-drawer-bar.svg?react";
+import Button from "@src/components/commons/Button";
 import { AnimatePresence, PanInfo, motion, useAnimation } from "framer-motion";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 import BackgroundOverlay from "./BackgroundOverlay";
-import BottomSheetContent from "./BottomSheetContent";
-import BottomSheetContentWrapper from "./BottomSheetContentWrapper";
 
 interface BottomSheetProps {
   isBottomSheetOpen: boolean;
   onClose: () => void;
+  buttonText: string;
+  children: ReactNode;
 }
 
-function BottomSheet({ isBottomSheetOpen, onClose }: BottomSheetProps) {
+function BottomSheet({
+  isBottomSheetOpen,
+  onClose,
+  buttonText,
+  children,
+}: BottomSheetProps) {
   const controls = useAnimation();
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [BottomSheetPosition, setBottomSheetPosition] = useState("closed");
@@ -98,7 +105,7 @@ function BottomSheet({ isBottomSheetOpen, onClose }: BottomSheetProps) {
       <AnimatePresence>
         {(isBottomSheetOpen || isClosing) && (
           <motion.div
-            className="rounded-t-16 fixed bottom-0 left-0 right-0 overflow-hidden bg-white shadow-lg"
+            className="rounded-t-16 border-gray-20 fixed bottom-0 left-0 right-0 flex flex-col items-center overflow-hidden border bg-white shadow-lg"
             style={{ height: windowHeight }}
             drag="y"
             dragConstraints={{ top: 0, bottom: windowHeight * 0.5 }}
@@ -115,9 +122,14 @@ function BottomSheet({ isBottomSheetOpen, onClose }: BottomSheetProps) {
               }
             }}
           >
-            <BottomSheetContentWrapper>
-              <BottomSheetContent onClose={() => setIsClosing(true)} />
-            </BottomSheetContentWrapper>
+            {/* 스크롤 바 바텀시트 상단 고정 */}
+            <Scroll className="mt-16" />
+            {/* 버튼 안에 들어갈 요소들 받아서 렌더링 */}
+            {children}
+            {/* 버튼 바텀시트 하단 고정 */}
+            <div className="fixed bottom-0 mb-32 h-48 w-[90%]">
+              <Button onClick={onClose}>{buttonText}</Button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
