@@ -4,6 +4,8 @@ import type { Schema } from "./../../shared-backend/amplify/data/resource";
 
 const client = generateClient<Schema>();
 
+// TODO: 팀이 새롭게 생성되어서 멤버 목록 관련된 API는 추후에 해보겠습니다.
+
 type Role = Schema["User"]["type"]["role"];
 
 type CreateUserParams = {
@@ -11,14 +13,13 @@ type CreateUserParams = {
   username: string; // 유저 이름
   email: string; // 유저 이메일
   role: Role; // 유저 역할 ADMIN | MEMBER
-  team: string; // 소속 팀
+  teams: [string]; // 소속 팀
   profileImage?: string; // 유저 프로필 이미지
 };
 /**
  * @description [유저 생성하기] - 관리자 페이지
- * TODO: 관리자만 생성 가능하도록 수정
  *
- * id, username, email, role, team 모두 입력받아야 합니다.
+ * id, username, email, role, teams 모두 입력받아야 합니다.
  */
 export const createUserData = async (param: CreateUserParams) => {
   return await client.models.User.create(param);
@@ -34,82 +35,13 @@ export const getUserData = async (id: string) => {
   return await client.models.User.get({ id });
 };
 
-type Order = "recent" | "username" | "past";
-/**
- * @description [유저 목록 가져오기] - 관리자 페이지
- * orderBy는 필수값 입니다.
- * "recent" | "username" | "past"
- *
- * role은 선택값 입니다.
- * "MEMBER" | "ADMIN"
- */
-export const getUserListData = async (orderBy: Order, role?: Role) => {
-  if (role) {
-    switch (orderBy) {
-      case "username":
-        return await client.models.User.listUsersByRoleName(
-          { role },
-          { sortDirection: "ASC" },
-        );
-      case "recent":
-        return await client.models.User.listUsersByRoleDate(
-          { role },
-          { sortDirection: "ASC" },
-        );
-      case "past":
-        return await client.models.User.listUsersByRoleDate(
-          { role },
-          { sortDirection: "DESC" },
-        );
-      default:
-        throw new Error("데이터를 가져오는데 실패하였습니다.");
-    }
-  } else {
-    const list = await client.models.User.list();
-
-    switch (orderBy) {
-      case "username":
-        return list.data.sort((a, b) => a.username.localeCompare(b.username));
-      case "recent":
-        return list.data.sort((a, b) => {
-          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-          return dateB - dateA;
-        });
-      case "past":
-        return list.data.sort((a, b) => {
-          const dateA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-          const dateB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-          return dateA - dateB;
-        });
-      default:
-        throw new Error("데이터를 가져오는데 실패하였습니다.");
-    }
-  }
-};
-
-/**
- * @description [참여할 유저 목록 가져오기] - 회의실 예약 페이지
- *
- * team으로 1차 정렬, username으로 2차 정렬
- */
-export const getParticipatingUsers = async () => {
-  const list = await client.models.User.list();
-
-  return list.data.sort((a, b) => {
-    const teamComparison = (a.team ?? "").localeCompare(b.team ?? "");
-    return teamComparison === 0
-      ? a.username.localeCompare(b.username)
-      : teamComparison;
-  });
-};
-
 type UpdateUserParams = {
   id: string; // 업데이트할 유저 ID
   role?: Role;
   username?: string;
   email?: string;
   profileImage?: string;
+  teams?: [string];
 };
 /**
  * @description [유저 정보 수정하기]
