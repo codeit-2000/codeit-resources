@@ -1,7 +1,8 @@
-import CodeitLogo from "@repo/assets/images/codeit.svg?react";
 import CodeitTextLogo from "@repo/assets/images/codeit-resources.svg?react";
-import { Link, NavLink } from "react-router-dom";
+import CodeitLogo from "@repo/assets/images/codeit.svg?react";
 import useDeviceSize from "@src/hooks/useDeviceSize";
+import { Link, NavLink } from "react-router-dom";
+
 import NAV_OPTION_LIST, { NavOptionProps } from "./NavOptionList";
 
 interface NavBarOptionProps {
@@ -41,7 +42,7 @@ function Sidebar() {
       {!isMobile && (
         <Link to="/dashboard" className="flex items-center gap-8 pb-12">
           <CodeitLogo width={26} height={26} />
-          <CodeitTextLogo />
+          <CodeitTextLogo color="#fff" />
         </Link>
       )}
       <ul
