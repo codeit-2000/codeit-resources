@@ -1,11 +1,10 @@
-/* eslint-disable no-alert */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingSpinner from "@repo/assets/gifs/loading-spinner.svg?react";
 import { loginSchema } from "@repo/lib/zod-schema/user";
 import Button from "@src/components/commons/Button";
 import Input from "@src/components/commons/Input";
+import useToast from "@src/hooks/useToast";
 import { AuthError, signIn } from "aws-amplify/auth";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -18,6 +17,7 @@ type SignInInput = {
 
 function SignInForm() {
   const navigate = useNavigate();
+  const { success, error } = useToast();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,41 +38,41 @@ function SignInForm() {
         username: data.email,
         password: data.password,
       });
-
+      success("로그인 되었습니다.");
       navigate("/dashboard");
-    } catch (error: any) {
-      if (error instanceof AuthError) {
-        switch (error.name) {
+    } catch (err: any) {
+      if (err instanceof AuthError) {
+        switch (err.name) {
           case "UserAlreadyAuthenticatedException":
-            alert("이미 로그인 한 상태입니다.");
+            error("이미 로그인 한 상태입니다.");
             navigate("/dashboard");
             break;
           case "NotAuthorizedException":
-            alert("아이디 또는 비밀번호가 잘못되었습니다.");
+            error("아이디 또는 비밀번호가 잘못되었습니다.");
             break;
           case "UserNotFoundException":
-            alert("해당 사용자를 찾을 수 없습니다.");
+            error("해당 사용자를 찾을 수 없습니다.");
             break;
           case "UserNotConfirmedException":
-            alert("이메일 인증이 완료되지 않았습니다.");
+            error("이메일 인증이 완료되지 않았습니다.");
             break;
           case "PasswordResetRequiredException":
-            alert("비밀번호를 재설정해야 합니다.");
+            error("비밀번호를 재설정해야 합니다.");
             break;
           case "TooManyFailedAttemptsException":
-            alert(
+            error(
               "로그인 시도가 너무 많아 계정이 잠겼습니다. 잠시 후 다시 시도해주세요.",
             );
             break;
           case "LimitExceededException":
-            alert("요청이 너무 많습니다. 잠시 후 다시 시도해주세요.");
+            error("요청이 너무 많습니다. 잠시 후 다시 시도해주세요.");
             break;
           default:
-            alert("로그인 중 알 수 없는 오류가 발생했습니다.");
+            error("로그인 중 알 수 없는 오류가 발생했습니다.");
             break;
         }
       } else {
-        alert("로그인 중 알 수 없는 오류가 발생했습니다.");
+        error("로그인 중 알 수 없는 오류가 발생했습니다.");
       }
     } finally {
       setIsLoading(false);
@@ -102,7 +102,7 @@ function SignInForm() {
           autoComplete="current-password"
         />
       </fieldset>
-      <Button type="submit" disabled={!isValid}>
+      <Button type="submit" disabled={!isValid || isLoading}>
         {isLoading ? <LoadingSpinner height={27} width="100%" /> : "로그인"}
       </Button>
     </form>
