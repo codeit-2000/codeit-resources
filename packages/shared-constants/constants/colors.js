@@ -127,6 +127,9 @@ const colors = {
     90: "#03731F",
     100: "#025918",
   },
+  status: {
+    negative: "#D6173A",
+  },
 };
 
 module.exports = colors;
