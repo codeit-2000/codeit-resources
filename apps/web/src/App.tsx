@@ -1,13 +1,16 @@
+import ToastProvider from "@src/components/commons/Toast/ToastProvider";
 import { BrowserRouter } from "react-router-dom";
-import MobileSizeWatcher from "./components/layout/MobileSizeWatcher";
+
 import Router from "./Router";
+import MobileSizeWatcher from "./components/layout/MobileSizeWatcher";
 
 function App() {
   return (
     <BrowserRouter>
-        <MobileSizeWatcher />
-        <Router />
-      </BrowserRouter>
+      <ToastProvider />
+      <MobileSizeWatcher />
+      <Router />
+    </BrowserRouter>
   );
 }
 
