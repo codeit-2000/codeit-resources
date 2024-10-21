@@ -31,7 +31,6 @@ function Input({
           name={id}
           required
           type={type}
-          {...props}
           {...register}
           className={clsx("input-base peer", {
             "border-status-negative border": errorMessage,
@@ -39,6 +38,7 @@ function Input({
               !errorMessage,
           })}
           placeholder=" "
+          {...props}
         />
         <label
           htmlFor={id}
