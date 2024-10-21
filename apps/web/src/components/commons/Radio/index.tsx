@@ -99,8 +99,8 @@ function RadioItem({
       render={({ field }) => (
         <label
           className={clsx(
-            "group flex items-center gap-8",
-            disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+            "flex items-center gap-8",
+            disabled ? "cursor-not-allowed opacity-50" : "group cursor-pointer",
             className,
           )}
         >
@@ -115,7 +115,7 @@ function RadioItem({
           {/* 라디오 버튼 */}
           <RadioIndicator isSelected={field.value === value} />
           {/* label */}
-          <span className="text-16-500 text-gray-100-opacity-80 group-hover:text-16-700">
+          <span className="text-16-500 text-gray-100-opacity-80 group-hover:text-16-700 mt-2">
             {children}
           </span>
         </label>
