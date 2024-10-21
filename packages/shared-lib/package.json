@@ -2,7 +2,8 @@
   "name": "@repo/lib",
   "type": "module",
   "files": [
-    "api/"
+    "api/",
+    "zod-schema"
   ],
   "dependencies": {
     "@repo/backend": "workspace:*"
