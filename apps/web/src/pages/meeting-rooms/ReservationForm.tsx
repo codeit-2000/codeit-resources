@@ -10,7 +10,7 @@ function ReservationForm() {
       <form className="md:w-414 h-600 p-30 [&_input]:text-16-400 flex w-full flex-col gap-y-16">
         <Input id="title" label="미팅 제목" />
         <Input id="name" label="회의실" />
-        <fieldset className="flex gap-16">
+        <fieldset className="inline-flex gap-16 [&>div]:grow">
           <Input id="startTime" label="시작 시간" />
           <Input id="endTime" label="종료 시간" />
         </fieldset>
