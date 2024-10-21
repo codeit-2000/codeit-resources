@@ -33,7 +33,7 @@ export const handler: Schema["deleteReservation"]["functionHandler"] = async (
   }
 
   // 3. 참여자면 업데이트
-  const { data } = await client.models.Reservation.update(event.arguments);
+  const { data } = await client.models.Reservation.delete(event.arguments);
 
   return data;
 };
