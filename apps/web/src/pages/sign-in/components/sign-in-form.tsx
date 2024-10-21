@@ -19,7 +19,7 @@ type SignInInput = {
 function SignInForm() {
   const navigate = useNavigate();
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const {
     register,
@@ -43,6 +43,10 @@ function SignInForm() {
     } catch (error: any) {
       if (error instanceof AuthError) {
         switch (error.name) {
+          case "UserAlreadyAuthenticatedException":
+            alert("이미 로그인 한 상태입니다.");
+            navigate("/dashboard");
+            break;
           case "NotAuthorizedException":
             alert("아이디 또는 비밀번호가 잘못되었습니다.");
             break;
