@@ -1,5 +1,9 @@
-import { Meta, StoryObj } from "@storybook/react";
+import {
+  ORDER_OPTIONS,
+  ROLE_OPTIONS,
+} from "@repo/constants/constants/dropdownConstants";
 import Dropdown from "@src/components/commons/Dropdown";
+import { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
 
 const meta: Meta<typeof Dropdown> = {
@@ -31,8 +35,13 @@ export const RoleDropdown: Story = {
         >
           <Dropdown.Toggle />
           <Dropdown.Wrapper>
-            <Dropdown.Item itemValue="MEMBER">멤버</Dropdown.Item>
-            <Dropdown.Item itemValue="ADMIN">어드민</Dropdown.Item>
+            {Object.entries(ROLE_OPTIONS).map(([itemValue, label]) => (
+              <Dropdown.Item
+                key={itemValue}
+                itemValue={itemValue as string}
+                label={label as string}
+              />
+            ))}
           </Dropdown.Wrapper>
         </Dropdown>
       </div>
@@ -53,9 +62,13 @@ export const OrderDropdown: Story = {
         >
           <Dropdown.Toggle />
           <Dropdown.Wrapper>
-            <Dropdown.Item itemValue="latest">최신순</Dropdown.Item>
-            <Dropdown.Item itemValue="alphabetical">가나다순</Dropdown.Item>
-            <Dropdown.Item itemValue="oldest">오래된순</Dropdown.Item>
+            {Object.entries(ORDER_OPTIONS).map(([itemValue, label]) => (
+              <Dropdown.Item
+                key={`dropdown_item_${itemValue}`}
+                itemValue={itemValue as string}
+                label={label as string}
+              />
+            ))}
           </Dropdown.Wrapper>
         </Dropdown>
       </div>
@@ -120,8 +133,8 @@ export const TimeDropdown: Story = {
             />
             <Dropdown.Wrapper>
               <Dropdown.ManualItem>직접 입력</Dropdown.ManualItem>
-              <Dropdown.Item itemValue="10:00">10:00</Dropdown.Item>
-              <Dropdown.Item itemValue="11:00">11:00</Dropdown.Item>
+              <Dropdown.Item itemValue="10:00" />
+              <Dropdown.Item itemValue="11:00" />
             </Dropdown.Wrapper>
           </Dropdown>
         </div>
@@ -139,8 +152,8 @@ export const TimeDropdown: Story = {
             />
             <Dropdown.Wrapper>
               <Dropdown.ManualItem>직접 입력</Dropdown.ManualItem>
-              <Dropdown.Item itemValue="12:00">12:00</Dropdown.Item>
-              <Dropdown.Item itemValue="13:00">13:00</Dropdown.Item>
+              <Dropdown.Item itemValue="12:00" />
+              <Dropdown.Item itemValue="13:00" />
             </Dropdown.Wrapper>
           </Dropdown>
         </div>
@@ -163,10 +176,10 @@ export const MeetingRoomDropdown: Story = {
           >
             <Dropdown.Toggle />
             <Dropdown.Wrapper>
-              <Dropdown.Item itemValue="ROOM1">회의실 1</Dropdown.Item>
-              <Dropdown.Item itemValue="ROOM2">회의실 2</Dropdown.Item>
-              <Dropdown.Item itemValue="ROOM3">회의실 3</Dropdown.Item>
-              <Dropdown.Item itemValue="ROOM4">회의실 4</Dropdown.Item>
+              <Dropdown.Item itemValue="회의실 1" />
+              <Dropdown.Item itemValue="회의실 2" />
+              <Dropdown.Item itemValue="회의실 3" />
+              <Dropdown.Item itemValue="회의실 4" />
             </Dropdown.Wrapper>
           </Dropdown>
         </div>

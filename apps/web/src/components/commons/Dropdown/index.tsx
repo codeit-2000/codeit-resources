@@ -1,16 +1,23 @@
+import CheckIcon from "@repo/assets/icons/icon-check.svg?react";
+import {
+  ORDER_OPTIONS,
+  ROLE_OPTIONS,
+} from "@repo/constants/constants/dropdownConstants";
+import clsx from "clsx";
 import React, {
   createContext,
-  useContext,
-  useState,
-  useRef,
-  useEffect,
   useCallback,
+  useContext,
+  useEffect,
   useMemo,
+  useRef,
+  useState,
 } from "react";
-import clsx from "clsx";
-import ArrowDown from "@repo/assets/icons/icon-arrow-down.svg?react";
-import OrderIcon from "@repo/assets/icons/icon-order.svg?react";
-import CheckIcon from "@repo/assets/icons/icon-check.svg?react";
+
+import MeetingRoomToggle from "./Toggle/MeetingRoomToggle";
+import OrderToggle from "./Toggle/OrderToggle";
+import RoleToggle from "./Toggle/RoleToggle";
+import TimeToggle from "./Toggle/TimeToggle";
 
 interface DropdownContextType {
   // 드랍다운의 open 여부를 나타내는 Boolean 상태
@@ -64,6 +71,7 @@ export default function Dropdown({
 }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isInput, setIsInput] = useState(false);
+
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = useCallback(
@@ -140,199 +148,6 @@ export default function Dropdown({
   );
 }
 
-// 권한 드랍다운 토글
-function RoleToggle({
-  isOpen,
-  toggleDropdown,
-  renderText,
-}: {
-  isOpen: boolean;
-  toggleDropdown: () => void;
-  renderText: () => string | React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={toggleDropdown}
-      className={clsx(
-        "border-gray-100-opacity-20 rounded-8 text-16-400 hover:border-purple-70 flex h-40 w-96 items-center justify-between border px-16 py-7 hover:text-gray-100",
-        {
-          "border-purple-70 text-gray-100": isOpen,
-          "text-gray-100-opacity-60": !isOpen,
-        },
-      )}
-    >
-      <span>{renderText()}</span>
-      <ArrowDown
-        className={clsx({
-          "rotate-180": isOpen,
-        })}
-      />
-    </button>
-  );
-}
-
-// 멤버 정렬 드랍다운 토글
-function OrderToggle({
-  isOpen,
-  toggleDropdown,
-  renderText,
-}: {
-  isOpen: boolean;
-  toggleDropdown: () => void;
-  renderText: () => string | React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={toggleDropdown}
-      className={`rounded-8 hover:bg-gray-15 flex items-center text-nowrap px-6 py-4 ${isOpen && "bg-gray-15"}`}
-    >
-      <OrderIcon />
-      <span className="text-12-500 text-gray-100-opacity-60 ml-3">
-        {renderText()}
-      </span>
-    </button>
-  );
-}
-
-// 회의실 예약 드랍다운
-function MeetingRoomToggle({
-  isOpen,
-  toggleDropdown,
-  renderText,
-}: {
-  isOpen: boolean;
-  toggleDropdown: () => void;
-  renderText: () => string | React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={toggleDropdown}
-      className={clsx(
-        "border-gray-100-opacity-20 rounded-8 text-16 hover:border-purple-70 group relative flex w-full items-center justify-between border px-20 py-14 text-left",
-        {
-          "border-purple-70": isOpen,
-        },
-      )}
-    >
-      <span
-        className={clsx(
-          "text-13 text-gray-100-opacity-80 group-hover:text-purple-70 left-15 absolute top-[-9px] bg-white px-4",
-          {
-            "text-purple-70": isOpen,
-          },
-        )}
-      >
-        회의실
-      </span>
-      <span
-        className={clsx("text-16-400", {
-          "text-gray-100-opacity-80 group-hover:text-gray-100": !isOpen,
-          "text-gray-100": isOpen,
-        })}
-      >
-        {renderText() === "" ? "회의실을 선택해 주세요." : renderText()}
-      </span>
-      <ArrowDown
-        className={clsx("ml-8", {
-          "rotate-180": isOpen,
-        })}
-      />
-    </button>
-  );
-}
-
-// 시작 시간, 종료 시간 토글 드랍다운
-function TimeToggle({
-  label,
-  isOpen,
-  toggleDropdown,
-  value,
-  handleChange,
-  isInput,
-  isError = false,
-  errorMessage = "",
-}: {
-  label: string;
-  isOpen: boolean;
-  toggleDropdown: () => void;
-  value: string;
-  handleChange: (value: string) => void;
-  isInput: boolean;
-  isError?: boolean;
-  errorMessage?: string;
-}) {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    // isInput이 true일 때 input에 focus
-    if (isInput && inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, [isInput]);
-
-  return (
-    <div>
-      <button
-        type="button"
-        onClick={toggleDropdown}
-        className={clsx(
-          "rounded-8 text-16 group relative flex w-full items-center justify-between px-20 py-14 text-left",
-          "border",
-          isError ? "border-[#D6173A]" : "border-gray-100-opacity-20",
-          {
-            "hover:border-purple-70": !isError,
-          },
-        )}
-      >
-        <span
-          className={clsx(
-            "text-13 left-15 absolute top-[-9px] bg-white px-4",
-            isError
-              ? "text-[#D6173A]"
-              : "text-gray-100-opacity-80 group-hover:text-purple-70",
-            {
-              "text-purple-70": isOpen && !isError,
-            },
-          )}
-        >
-          {label}
-        </span>
-        <span
-          className={clsx("text-16-400", {
-            "text-gray-100-opacity-80 group-hover:text-gray-100": !isOpen,
-            "text-gray-100": isOpen,
-          })}
-        >
-          {isInput ? (
-            <input
-              ref={inputRef}
-              className="h-full w-full focus:outline-none"
-              type="text"
-              value={value}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                handleChange(e.target.value)
-              }
-            />
-          ) : (
-            value || "시간을 입력해 주세요."
-          )}
-        </span>
-        <ArrowDown
-          className={clsx("ml-8", {
-            "rotate-180": isOpen,
-          })}
-        />
-      </button>
-      {isError && errorMessage && (
-        <p className="text-13 mt-2 text-[#D6173A]">{errorMessage}</p>
-      )}
-    </div>
-  );
-}
-
 // 드랍다운을 Open하는 Toggle
 function Toggle({
   isError = false,
@@ -344,45 +159,14 @@ function Toggle({
   const { isOpen, toggleDropdown, value, handleChange, variant, isInput } =
     useDropdownContext();
 
-  const renderRoleText = (newValue: string) => {
-    const roleOptions: { [key: string]: string } = {
-      MEMBER: "멤버",
-      ADMIN: "어드민",
-    };
-    return roleOptions[newValue] || newValue;
-  };
-
-  const renderOrderText = (newValue: string) => {
-    const orderOptions: { [key: string]: string } = {
-      latest: "최신순",
-      alphabetical: "가나다순",
-      oldest: "오래된순",
-    };
-    return orderOptions[newValue] || newValue;
-  };
-
-  const renderMeetingRoomText = (newValue: string) => {
-    const roomOptions: { [key: string]: string } = {
-      ROOM1: "회의실 1",
-      ROOM2: "회의실 2",
-      ROOM3: "회의실 3",
-      ROOM4: "회의실 4",
-    };
-    return roomOptions[newValue] || newValue;
-  };
-
-  // value에 따른 문자열 렌더링 (ex: ROOM1 => 회의실 1)
   const renderText = () => {
-    switch (variant) {
-      case "role":
-        return renderRoleText(value);
-      case "order":
-        return renderOrderText(value);
-      case "meetingRoom":
-        return renderMeetingRoomText(value);
-      default:
-        return value;
+    if (variant === "role") {
+      return ROLE_OPTIONS[value as keyof typeof ROLE_OPTIONS] || value;
     }
+    if (variant === "order") {
+      return ORDER_OPTIONS[value as keyof typeof ORDER_OPTIONS] || value;
+    }
+    return value;
   };
 
   // variant에 따른 Toggle 렌더링
@@ -466,13 +250,7 @@ function Wrapper({ children }: { children: React.ReactNode }) {
 }
 
 // 클릭 시 value가 변경되는 드랍다운 Item
-function Item({
-  children,
-  itemValue,
-}: {
-  children: React.ReactNode;
-  itemValue: string;
-}) {
+function Item({ itemValue, label }: { itemValue: string; label?: string }) {
   const { handleChange, value, variant, setIsInput } = useDropdownContext();
 
   const isSelected = value === itemValue;
@@ -500,7 +278,7 @@ function Item({
       role="button"
       tabIndex={0}
     >
-      {children}
+      {label || itemValue}
       {isSelected &&
       (variant === "meetingRoom" ||
         variant === "startTime" ||
