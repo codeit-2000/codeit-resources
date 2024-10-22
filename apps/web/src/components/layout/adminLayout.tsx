@@ -2,7 +2,7 @@ import { adminAtom } from "@src/store/authUserAtom";
 import { useAtomValue } from "jotai";
 import { Navigate, Outlet } from "react-router-dom";
 
-const AdminLayout = () => {
+function AdminLayout() {
   const isAdmin = useAtomValue(adminAtom);
 
   if (isAdmin === false) {
@@ -10,10 +10,8 @@ const AdminLayout = () => {
   }
 
   return (
-    <>
-      <Outlet />
-    </>
+    <Outlet />
   );
-};
+}
 
 export default AdminLayout;
