@@ -3,16 +3,16 @@ import { Tags } from "aws-cdk-lib";
 
 import { auth } from "./auth/resource";
 import { data } from "./data/resource";
-import { createReservationHandler } from "./function/createReservationHandler/resource";
-import { deleteReservationHandler } from "./function/deleteReservationHandler/resource";
-import { updateReservationHandler } from "./function/updateReservationHandler/resource";
+import { createConfirmedReservation } from "./function/createConfirmedReservation/resource";
+import { deleteReservationById } from "./function/deleteReservationById/resource";
+import { updateReservationById } from "./function/updateReservationById/resource";
 
 const backend = defineBackend({
   auth,
   data,
-  createReservationHandler,
-  updateReservationHandler,
-  deleteReservationHandler,
+  createConfirmedReservation,
+  updateReservationById,
+  deleteReservationById,
 });
 
 const tags = Tags.of(backend.stack);

@@ -1,8 +1,8 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
-import { createReservationHandler } from "../function/createReservationHandler/resource";
-import { deleteReservationHandler } from "../function/deleteReservationHandler/resource";
-import { updateReservationHandler } from "../function/updateReservationHandler/resource";
+import { createConfirmedReservation } from "../function/createConfirmedReservation/resource";
+import { deleteReservationById } from "../function/deleteReservationById/resource";
+import { updateReservationById } from "../function/updateReservationById/resource";
 
 const schema = a.schema({
   // Team Table
@@ -89,7 +89,7 @@ const schema = a.schema({
     .returns(a.ref("Reservation"))
     // .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
     .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
-    .handler(a.handler.function(createReservationHandler)),
+    .handler(a.handler.function(createConfirmedReservation)),
 
   updateReservationById: a
     .mutation()
@@ -105,7 +105,7 @@ const schema = a.schema({
     .returns(a.ref("Reservation"))
     // .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
     .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
-    .handler(a.handler.function(updateReservationHandler)),
+    .handler(a.handler.function(updateReservationById)),
 
   deleteReservationById: a
     .mutation()
@@ -115,7 +115,7 @@ const schema = a.schema({
     .returns(a.ref("Reservation"))
     // .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
     .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
-    .handler(a.handler.function(deleteReservationHandler)),
+    .handler(a.handler.function(deleteReservationById)),
 });
 
 export type Schema = ClientSchema<typeof schema>;
