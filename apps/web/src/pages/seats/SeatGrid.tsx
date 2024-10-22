@@ -33,7 +33,7 @@ const SEATING_CHART = {
 
 export default function SeatGrid() {
   return (
-    <div className="md:mt-83 md:mx-118 mx-16 mt-28 grid w-[668px] auto-rows-auto grid-cols-2 gap-40 md:w-[1004px] xl:flex-shrink-0">
+    <div className="md:my-83 md:mx-118 mx-16 mt-28 grid w-[668px] auto-rows-auto grid-cols-2 gap-40 md:w-[1004px] xl:flex-shrink-0">
       <SeatBlock seats={SEATING_CHART.A} />
       <SeatBlock seats={SEATING_CHART.B} />
       <SeatBlock seats={SEATING_CHART.C} />
