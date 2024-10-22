@@ -6,11 +6,11 @@ import useTabDrag from "./useTabDrag";
 interface Props {
   /** ReactNode를 반환하는 함수를 children으로 가집니다. */
   children: (props: {
-    activeIndex: number;
+    activeIndex: number | string;
     handleClick: (id: number) => void;
   }) => ReactNode;
   /** 가장 처음 렌더될 때 active 상태인 탭의 index를 지정합니다. */
-  defaultIndex: number;
+  defaultIndex: number | string;
   /** 탭 전체에 추가적인 CSS 클래스를 적용합니다. */
   className?: string;
 }
