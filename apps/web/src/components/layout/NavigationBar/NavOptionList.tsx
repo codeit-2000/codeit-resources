@@ -1,11 +1,11 @@
-import Person from "@repo/assets/icons/icon-person.svg?react";
-import Meeting from "@repo/assets/icons/icon-meeting.svg?react";
-import Seats from "@repo/assets/icons/icon-seats.svg?react";
 import Equipment from "@repo/assets/icons/icon-equipment.svg?react";
+import Meeting from "@repo/assets/icons/icon-meeting.svg?react";
+import Person from "@repo/assets/icons/icon-person.svg?react";
+import Seats from "@repo/assets/icons/icon-seats.svg?react";
 
 export interface NavOptionProps {
   id: string;
-  imgSrc: ({ stroke }: { color: string }) => JSX.Element;
+  imgSrc: ({ color }: { color: string }) => JSX.Element;
   text: string;
   path: string;
 }
@@ -13,25 +13,25 @@ export interface NavOptionProps {
 const NAV_OPTION_LIST: NavOptionProps[] = [
   {
     id: "dashboard",
-    imgSrc: ({ stroke }) => <Person color={stroke} />,
+    imgSrc: ({ color }) => <Person color={color} />,
     text: "대시보드",
     path: "/dashboard",
   },
   {
     id: "meeting-rooms",
-    imgSrc: ({ stroke }) => <Meeting color={stroke} />,
+    imgSrc: ({ color }) => <Meeting color={color} />,
     text: "회의실",
     path: "/meeting-rooms",
   },
   {
     id: "seats",
-    imgSrc: ({ stroke }) => <Seats color={stroke} />,
+    imgSrc: ({ color }) => <Seats color={color} />,
     text: "좌석",
     path: "/seats",
   },
   {
     id: "equipments",
-    imgSrc: ({ stroke }) => <Equipment color={stroke} />,
+    imgSrc: ({ color }) => <Equipment color={color} />,
     text: "장비",
     path: "/equipments",
   },

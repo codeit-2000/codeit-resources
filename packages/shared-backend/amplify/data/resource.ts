@@ -2,10 +2,12 @@ import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 const schema = a.schema({
   // Team Table
-  Team: a.model({
-    name: a.string().required(),
-    members: a.string().array(), // 멤버 id 목록
-  }),
+  Team: a
+    .model({
+      name: a.string().required(),
+      members: a.string().array(), // 멤버 id 목록
+    })
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])]),
 
   // User Table
   User: a
@@ -18,10 +20,7 @@ const schema = a.schema({
       profileImage: a.url(),
       createdAt: a.datetime(),
     })
-    .authorization((allow) => [
-      allow.groups(["ADMIN"]).to(["create"]), // ADMIN 그룹만 create 가능
-      allow.authenticated(), // 로그인한 모든 사용자에게 접근 권한 부여
-    ])
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
     .secondaryIndexes((index) => [
       index("role").sortKeys(["username"]).queryField("listUsersByRoleName"),
       index("role").sortKeys(["createdAt"]).queryField("listUsersByRoleDate"),

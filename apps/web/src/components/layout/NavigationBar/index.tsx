@@ -17,7 +17,7 @@ function NavBarOption({ navOption }: NavBarOptionProps) {
     >
       {({ isActive }) => (
         <>
-          {navOption.imgSrc({ stroke: isActive ? "#FFFFFF" : "#888893" })}
+          {navOption.imgSrc({ color: isActive ? "#FFFFFF" : "#888893" })}
           <span
             className={`text-12-400 md:text-16-400 ${isActive ? "text-white" : "text-gray-00-opacity-60"}`}
           >
