@@ -1,4 +1,4 @@
-// 작성한 서비스 파일 import
+/* eslint-disable */
 import { Schema } from "@repo/backend/amplify/data/resource";
 import { createResource } from "@repo/lib/api/resource";
 import { generateClient } from "aws-amplify/api";

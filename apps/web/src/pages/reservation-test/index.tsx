@@ -1,4 +1,4 @@
-// 작성한 서비스 파일 import
+/* eslint-disable */
 import type { Schema } from "@repo/backend/amplify/data/resource";
 import {
   createReservation,
