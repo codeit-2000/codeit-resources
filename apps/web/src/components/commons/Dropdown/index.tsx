@@ -44,18 +44,24 @@ const useDropdownContext = () => {
   return context;
 };
 
+interface DropdownProps {
+  /** Dropdown 안에 들어가는 자식 컴포넌트들입니다. */
+  children: React.ReactNode;
+  /** 현재 선택된 값입니다. */
+  value: string;
+  /** Dropdown 값이 변경될 때 호출되는 함수입니다. */
+  onChange: (value: string) => void;
+  /** Dropdown의 타입을 지정합니다. role, order, meetingRoom, startTime, endTime 중 하나를 선택할 수 있습니다. */
+  variant: "role" | "order" | "meetingRoom" | "startTime" | "endTime";
+}
+
 // 드랍다운 최상위 컴포넌트
 export default function Dropdown({
   children,
   value,
   onChange,
   variant,
-}: {
-  children: React.ReactNode;
-  value: string;
-  onChange: (value: string) => void;
-  variant: "role" | "order" | "meetingRoom" | "startTime" | "endTime";
-}) {
+}: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isInput, setIsInput] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -448,7 +454,7 @@ function Wrapper({ children }: { children: React.ReactNode }) {
     <div
       className={clsx(
         "bg-gray-5 rounded-8 border-gray-20 absolute z-50 mt-3 flex w-full flex-col gap-3 border p-8",
-        variant === "order" && "w-101 right-0",
+        variant === "order" && "w-106 right-0",
       )}
     >
       {children}
