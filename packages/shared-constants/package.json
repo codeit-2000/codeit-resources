@@ -2,6 +2,7 @@
   "name": "@repo/constants",
   "type": "module",
   "files": [
-    "constants/"
+    "constants/",
+    "error-message"
   ]
 }
