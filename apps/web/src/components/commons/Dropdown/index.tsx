@@ -453,8 +453,11 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   return isOpen ? (
     <div
       className={clsx(
-        "bg-gray-5 rounded-8 border-gray-20 absolute z-50 mt-3 flex w-full flex-col gap-3 border p-8",
-        variant === "order" && "w-106 right-0",
+        "bg-gray-5 rounded-8 border-gray-20 absolute z-50 mt-3 flex flex-col gap-3 border p-8",
+        {
+          "right-0 w-96": variant === "order",
+          "w-full": variant !== "order",
+        },
       )}
     >
       {children}
