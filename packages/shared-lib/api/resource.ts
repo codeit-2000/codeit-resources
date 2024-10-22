@@ -33,32 +33,39 @@ export const createResource = async (resourceData: CreateResourceParams) => {
   return await client.models.Resource.create(resourceData);
 };
 
-// Get
-
-/**
- *
- * @description Resource 목록 가져오는 함수
- *
- * `resourceType`을 넣지 않으면 전체 목록을 가져오고,
- * `resourceType`을 넣으면 해당하는 목록을 가져옵니다.
- *
- * @example
- * ```tsx
- * const { data, error } = await getResourceList(); // 전체 목록을 가져옵니다.
- * const { data } = await getResourceList({ resourceType: "ROOM" }); // 회의실 목록을 가져옵니다.
- * ```
- */
+// Read
 
 export const getResourceList = async ({
   resourceType,
+  resourceSubtype,
 }: {
   resourceType?: "ROOM" | "SEAT" | "EQUIPMENT";
+  resourceSubtype?: string;
 } = {}) => {
+  // resourceSubtype이 정의되었지만 resourceType이 없는 경우 에러 처리
+  if (resourceSubtype && !resourceType) {
+    throw new Error("resourceSubtype을 사용할 경우 resourceType은 필수입니다.");
+  }
+
+  // 전체 목록을 가져오는 경우
   if (resourceType === undefined) return await client.models.Resource.list();
 
-  return await client.models.Resource.listResourceByResourceType({
-    resourceType,
-  });
+  // resourceType에 따른 목록을 가져오는 경우
+  if (resourceType && resourceSubtype === undefined) {
+    return await client.models.Resource.listResourceByTypeAndSubtype({
+      resourceType,
+    });
+  }
+
+  // resourceType과 resourceSubtype에 따른 목록을 가져오는 경우
+  if (resourceType && resourceSubtype) {
+    return await client.models.Resource.listResourceByTypeAndSubtype({
+      resourceType,
+      resourceSubtype: {
+        eq: resourceSubtype,
+      },
+    });
+  }
 };
 
 /**

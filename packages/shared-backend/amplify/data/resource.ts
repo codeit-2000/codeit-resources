@@ -36,15 +36,12 @@ const schema = a.schema({
       image: a.url(),
       reservations: a.hasMany("Reservation", "resourceId"),
     })
-    .secondaryIndexes((index) => [index("resourceType")])
-    // ex) resourceType 기준으로 쿼리
-    // const { data, errors } = await client.models.Resource.listResourceByResourceType({
-    //   resourceType: 'Seat',
-    // });
-    .authorization((allow) => [
-      allow.authenticated().to(["read"]),
-      allow.group("ADMIN"),
-    ]),
+    .secondaryIndexes((index) => [
+      index("resourceType")
+        .sortKeys(["resourceSubtype"])
+        .queryField("listResourceByTypeAndSubtype"),
+    ])
+    .authorization((allow) => [allow.authenticated()]),
 
   // Reservation Table
   ReservationStatus: a.enum(["CONFIRMED", "CANCELED", "PASSED"]),
