@@ -6,7 +6,7 @@ import {
   getReservation,
   updateReservation,
 } from "@repo/lib/api/reservation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 type Reservation = Schema["Reservation"]["type"];
 

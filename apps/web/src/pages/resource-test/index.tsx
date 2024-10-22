@@ -2,7 +2,7 @@
 import { Schema } from "@repo/backend/amplify/data/resource";
 import { createResource } from "@repo/lib/api/resource";
 import { generateClient } from "aws-amplify/api";
-import React, { useState } from "react";
+import { useState } from "react";
 
 type RT = "ROOM" | "SEAT" | "EQUIPMENT";
 
