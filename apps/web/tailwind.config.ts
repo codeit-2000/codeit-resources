@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 import colors from "@repo/constants/constants/colors";
 
 export default {
@@ -127,6 +126,10 @@ export default {
         "13-500": [
           "13px",
           { lineHeight: "21px", letterSpacing: "-0.3px", fontWeight: "500" },
+        ],
+        "13-400": [
+          "13px",
+          { lineHeight: "21px", letterSpacing: "-0.3px", fontWeight: "400" },
         ],
 
         // 12px

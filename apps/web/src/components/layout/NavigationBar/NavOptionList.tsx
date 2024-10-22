@@ -5,7 +5,7 @@ import Equipment from "@repo/assets/icons/icon-equipment.svg?react";
 
 export interface NavOptionProps {
   id: string;
-  imgSrc: ({ stroke }: { stroke: string }) => JSX.Element;
+  imgSrc: ({ stroke }: { color: string }) => JSX.Element;
   text: string;
   path: string;
 }
@@ -13,25 +13,25 @@ export interface NavOptionProps {
 const NAV_OPTION_LIST: NavOptionProps[] = [
   {
     id: "dashboard",
-    imgSrc: ({ stroke }) => <Person stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Person color={stroke} />,
     text: "대시보드",
     path: "/dashboard",
   },
   {
     id: "meeting-rooms",
-    imgSrc: ({ stroke }) => <Meeting stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Meeting color={stroke} />,
     text: "회의실",
     path: "/meeting-rooms",
   },
   {
     id: "seats",
-    imgSrc: ({ stroke }) => <Seats stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Seats color={stroke} />,
     text: "좌석",
     path: "/seats",
   },
   {
     id: "equipments",
-    imgSrc: ({ stroke }) => <Equipment stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Equipment color={stroke} />,
     text: "장비",
     path: "/equipments",
   },
@@ -39,25 +39,25 @@ const NAV_OPTION_LIST: NavOptionProps[] = [
    * 어드민 role 추가되면 추가할 예정입니다
   {
     id: "admin-members",
-    imgSrc: ({ stroke }) => <Person stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Person color={stroke} />,
     text: "멤버 관리",
     path: "/admin/members",
   },
   {
     id: "admin-meeting-rooms",
-    imgSrc: ({ stroke }) => <Meeting stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Meeting color={stroke} />,
     text: "회의실 설정",
     path: "/admin/meeting-rooms",
   },
   {
     id: "admin-seats",
-    imgSrc: ({ stroke }) => <Seats stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Seats color={stroke} />,
     text: "좌석 설정",
     path: "/admin/seats",
   },
   {
     id: "admin-equipments",
-    imgSrc: ({ stroke }) => <Equipment stroke={stroke} />,
+    imgSrc: ({ stroke }) => <Equipment color={stroke} />,
     text: "장비 설정",
     path: "/admin/equipments",
   },
