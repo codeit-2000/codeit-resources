@@ -5,7 +5,9 @@ import { loginSchema } from "@repo/lib/zod-schema/user";
 import Button from "@src/components/commons/Button";
 import Input from "@src/components/commons/Input";
 import useToast from "@src/hooks/useToast";
+import { authAtom } from "@src/store/authUserAtom";
 import { AuthError, signIn } from "aws-amplify/auth";
+import { useSetAtom } from "jotai";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +21,7 @@ function SignInForm() {
   const navigate = useNavigate();
   const { success, error } = useToast();
 
+  const setIsAuthenticated = useSetAtom(authAtom);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -39,6 +42,7 @@ function SignInForm() {
         password: data.password,
       });
       success("로그인 되었습니다.");
+      setIsAuthenticated(true);
       navigate("/dashboard");
     } catch (err: unknown) {
       if (err instanceof AuthError) {
