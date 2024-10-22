@@ -7,6 +7,9 @@ import Seats from "@src/pages/seats";
 import SignIn from "@src/pages/sign-in";
 import { Route, Routes } from "react-router-dom";
 
+import AdminLayout from "./components/layout/adminLayout";
+import AdminTeamPage from "./pages/admin-page/team";
+
 export default function Router() {
   return (
     <Routes>
@@ -15,6 +18,9 @@ export default function Router() {
         <Route path="meeting-rooms" element={<MeetingRooms />} />
         <Route path="seats" element={<Seats />} />
         <Route path="equipments" element={<Equipments />} />
+        <Route path="admin" element={<AdminLayout />}>
+          <Route path="team" element={<AdminTeamPage />} />
+        </Route>
       </Route>
 
       <Route path="/sign-in" element={<SignIn />} />

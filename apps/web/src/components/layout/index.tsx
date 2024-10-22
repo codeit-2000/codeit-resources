@@ -1,6 +1,6 @@
 import type { Schema } from "@repo/backend/amplify/data/resource";
 import NavigationBar from "@src/components/layout/NavigationBar";
-import { authAtom, userAtom } from "@src/store/authUserAtom";
+import { adminAtom, authAtom, userAtom } from "@src/store/authUserAtom";
 import { getCurrentUser } from "aws-amplify/auth";
 import { generateClient } from "aws-amplify/data";
 import { useAtom, useSetAtom } from "jotai";
@@ -12,6 +12,7 @@ const client = generateClient<Schema>();
 export default function Layout() {
   const [isAuthenticated, setIsAuthenticated] = useAtom(authAtom);
   const setUser = useSetAtom(userAtom);
+  const setIsAdmin = useSetAtom(adminAtom);
 
   useEffect(() => {
     const getUser = async () => {
@@ -25,6 +26,7 @@ export default function Layout() {
 
           if (userData) {
             setUser(userData);
+            setIsAdmin(userData.role === "ADMIN");
             setIsAuthenticated(true);
           } else {
             setIsAuthenticated(false);
