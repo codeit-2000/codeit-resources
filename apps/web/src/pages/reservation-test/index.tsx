@@ -1,13 +1,14 @@
+// 작성한 서비스 파일 import
+import type { Schema } from "@repo/backend/amplify/data/resource";
 import {
   createReservation,
   deleteReservation,
   getReservation,
-  searchReservations,
   updateReservation,
 } from "@repo/lib/api/reservation";
 import React, { useState } from "react";
 
-// 작성한 서비스 파일 import
+type Reservation = Schema["Reservation"]["type"];
 
 function ReservationForm() {
   // 예약 정보 상태 관리
@@ -18,9 +19,6 @@ function ReservationForm() {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
   const [participants, setParticipants] = useState("");
-  const [searchDate, setSearchDate] = useState("");
-  const [searchResourceId, setSearchResourceId] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
 
   const handleCreateReservation = async () => {
     try {
@@ -31,7 +29,7 @@ function ReservationForm() {
         startTime,
         endTime,
         participants: participants.split(","),
-      });
+      } as Reservation);
       console.log("Reservation created:", result);
       alert("Reservation created successfully");
     } catch (error) {
@@ -49,7 +47,7 @@ function ReservationForm() {
         startTime,
         endTime,
         participants: participants.split(","),
-      });
+      } as Reservation);
       console.log("Reservation updated:", result);
       alert("Reservation updated successfully");
     } catch (error) {
@@ -71,24 +69,8 @@ function ReservationForm() {
     try {
       const result = await getReservation(reservationId);
       console.log("Fetched reservation:", result);
-      setTitle(result.title);
-      setResourceId(result.resourceId);
-      setDate(result.date);
-      setStartTime(result.startTime);
-      setEndTime(result.endTime);
-      setParticipants(result.participants.join(","));
     } catch (error) {
       console.error("Error fetching reservation:", error);
-    }
-  };
-
-  const handleSearchReservations = async () => {
-    try {
-      const results = await searchReservations(searchResourceId, searchDate);
-      setSearchResults(results);
-      console.log("Search results:", results);
-    } catch (error) {
-      console.error("Error searching reservations:", error);
     }
   };
 
