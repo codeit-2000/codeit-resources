@@ -27,7 +27,7 @@ function SignInForm() {
     formState: { errors, isValid },
   } = useForm<SignInInput>({
     resolver: zodResolver(loginSchema),
-    mode: "onBlur",
+    mode: "onChange",
     reValidateMode: "onChange",
   });
 

@@ -1,10 +1,5 @@
 import { z } from "zod";
 
-// 비밀번호 유효성 정규식
-const specialCharRegex = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~^$*\s]/;
-const lowercaseRegex = /[a-z]/;
-const digitRegex = /\d/;
-
 const loginSchema = z.object({
   email: z
     .string()
@@ -17,15 +12,12 @@ const loginSchema = z.object({
     .string()
     .min(1, "비밀번호는 필수 입력입니다.")
     .min(8, "비밀번호는 최소 8자 이상입니다.")
-    .refine((password) => lowercaseRegex.test(password), {
-      message: "비밀번호는 최소 1개 이상의 소문자를 포함해야 합니다.",
-    })
-    .refine((password) => digitRegex.test(password), {
-      message: "비밀번호는 최소 1개 이상의 숫자를 포함해야 합니다.",
-    })
-    .refine((password) => specialCharRegex.test(password), {
-      message: "비밀번호는 최소 1개 이상의 특수문자를 포함해야 합니다.",
-    }),
+    .regex(
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?`~^$*\s]/,
+      "비밀번호는 최소 1개 이상의 특수문자를 포함해야 합니다.",
+    )
+    .regex(/[a-z]/, "비밀번호는 최소 1개 이상의 소문자를 포함해야 합니다.")
+    .regex(/\d/, "비밀번호는 최소 1개 이상의 숫자를 포함해야 합니다."),
 });
 
 export { loginSchema };
