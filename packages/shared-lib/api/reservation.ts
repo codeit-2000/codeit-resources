@@ -1,5 +1,5 @@
 import type { Schema } from "@repo/backend/amplify/data/resource";
-import { generateClient } from "aws-amplify/data";
+import { generateClient } from "aws-amplify/api";
 
 type Reservation = Schema["Reservation"]["type"];
 
