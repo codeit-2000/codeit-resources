@@ -5,7 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import { ReactNode, useState } from "react";
 
 const meta = {
-  title: "Components/Common/Drawer", // 계층 구조를 더 명확하게 표현
+  title: "Components/Common/Drawer",
   component: Drawer,
   tags: ["autodocs"],
   parameters: {
@@ -53,8 +53,7 @@ function DrawerStory({ buttonText, children }: DrawerStoryProps) {
   );
 }
 
-// 기본 Drawer 스토리
-export const Default: Story = {
+export const DefaultDrawer: Story = {
   args: {
     buttonText: "저장하기",
     onClose: () => {},
