@@ -1,3 +1,4 @@
+import { Authenticator } from "@aws-amplify/ui-react";
 import ToastProvider from "@src/components/commons/Toast/ToastProvider";
 import { BrowserRouter } from "react-router-dom";
 
@@ -7,12 +8,14 @@ import MobileSizeWatcher from "./components/layout/MobileSizeWatcher";
 
 function App() {
   return (
-    <BrowserRouter>
-      <ToastProvider />
-      <MobileSizeWatcher />
-      <ModalProvider />
-      <Router />
-    </BrowserRouter>
+    <Authenticator>
+      <BrowserRouter>
+        <ToastProvider />
+        <MobileSizeWatcher />
+        <ModalProvider />
+        <Router />
+      </BrowserRouter>
+    </Authenticator>
   );
 }
 

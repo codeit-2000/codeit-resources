@@ -6,6 +6,9 @@ import MeetingRooms from "@src/pages/meeting-rooms";
 import Seats from "@src/pages/seats";
 import { Route, Routes } from "react-router-dom";
 
+import ReservationForm from "./pages/reservation-test";
+import ResourceForm from "./pages/resource-test";
+
 export default function Router() {
   return (
     <Routes>
@@ -17,6 +20,8 @@ export default function Router() {
       </Route>
 
       <Route path="/auth-test" element={<AuthTest />} />
+      <Route path="/resource-test" element={<ResourceForm />} />
+      <Route path="/reservation-test" element={<ReservationForm />} />
     </Routes>
   );
 }
