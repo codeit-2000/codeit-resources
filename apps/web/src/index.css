@@ -7,10 +7,17 @@
 }
 
 input:-webkit-autofill {
-  background-color: transparent !important;
-  color: inherit !important;
-  -webkit-box-shadow: 0 0 0 1000px white inset !important;
   box-shadow: 0 0 0 1000px white inset !important;
+}
+
+input:hover,
+input:-webkit-autofill:hover {
+  box-shadow: 0 0 0 1000px #f6f6f8 inset !important;
+}
+
+input:focus,
+input:-webkit-autofill:focus {
+  box-shadow: 0 0 0 1000px #f8ecff inset !important;
 }
 
 .input-base {
@@ -18,13 +25,22 @@ input:-webkit-autofill {
 }
 
 .label-base {
-  @apply text-13-400 peer-hover:bg-gray-10 absolute start-2 top-1 z-10 mx-10 h-10 origin-[0] -translate-y-9 bg-white duration-200;
+  @apply text-13-400 absolute start-2 top-1 z-10 mx-10 h-10 origin-[0] -translate-y-9 bg-white duration-200;
 }
 
 .label-placeholder-shown {
-  @apply peer-placeholder-shown:text-16-400 pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:h-fit peer-placeholder-shown:-translate-y-1/2;
+  @apply peer-placeholder-shown:text-16-400 pointer-events-none peer-placeholder-shown:top-1/2 peer-placeholder-shown:h-fit peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-opacity-0;
 }
 
 .label-focus {
   @apply peer-focus:text-13-400 peer-focus:top-1 peer-focus:mx-10 peer-focus:h-10 peer-focus:-translate-y-9 peer-focus:bg-white;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
