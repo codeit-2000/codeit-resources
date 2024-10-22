@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.670.0",
+    "@hookform/resolvers": "^3.9.0",
     "jotai": "^2.10.1"
   }
 }

@@ -55,7 +55,7 @@ function AuthTestPage() {
         username: name,
         email: newEmail,
         role: selectedRole,
-        team: "개발팀",
+        teams: ["개발팀"],
       });
     } catch (error) {
       alert("멤버추가 실패");
