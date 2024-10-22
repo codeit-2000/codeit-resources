@@ -68,7 +68,7 @@ function BottomSheet({
   };
 
   const handleDragEnd = async (
-    event: MouseEvent | TouchEvent | PointerEvent,
+    _event: MouseEvent | TouchEvent | PointerEvent,
     info: PanInfo,
   ) => {
     const threshold = 50;
