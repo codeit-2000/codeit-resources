@@ -7,7 +7,14 @@ import Router from "./Router";
 import ModalProvider from "./components/commons/Modal";
 import MobileSizeWatcher from "./components/layout/MobileSizeWatcher";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: 60000,
+    },
+  },
+});
 
 function App() {
   return (
