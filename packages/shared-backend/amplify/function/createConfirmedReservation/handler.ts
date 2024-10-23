@@ -1,6 +1,8 @@
+// import { CognitoIdentityProviderClient } from "@aws-sdk/client-cognito-identity-provider";
 import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/api";
 
+// import { CognitoIdentityServiceProvider } from "aws-sdk";
 import outputs from "../../../amplify_outputs.json";
 import type { Schema } from "../../data/resource";
 
@@ -10,11 +12,17 @@ Amplify.configure(outputs);
 
 export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
   async (event, context) => {
+    // const cognitoClient = new CognitoIdentityProviderClient({
+    //   region: "ap-northeast-2",
+    //   credentials: {
+    //     accessKeyId: import.meta.env.VITE_ACCESS_KEY_ID,
+    //     secretAccessKey: import.meta.env.VITE_SECRET_ACCESS_KEY,
+    //   },
+    // });
+
     const client = generateClient<Schema>({
       authMode: "userPool",
-      headers: {
-        authorization: event?.request?.headers?.authorization || "", // JWT 토큰을 전달
-      },
+      authToken: event?.request?.headers?.authorization,
     });
 
     console.log("이ㅁㄴㅇㄹㅁㄴㅇ트", event);
@@ -58,9 +66,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       },
       {
         authMode: "userPool",
-        headers: {
-          authorization: event?.request?.headers?.authorization || "", // JWT 토큰을 전달
-        },
+        authToken: event?.request?.headers?.authorization,
       },
     );
     console.log("JSON.stringify(data)", JSON.stringify(req));
