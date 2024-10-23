@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingSpinner from "@repo/assets/gifs/loading-spinner.svg?react";
 import { createTeamData } from "@repo/lib/api/team";
@@ -57,9 +58,9 @@ function AddTeamModal() {
       onSubmit={handleSubmit(onSubmit)}
       className="rounded-16 w-370 flex flex-col items-center justify-between bg-white px-32 py-24"
     >
-      <p className="text-17-500 text-gray-100">팀 추가</p>
+      <h2 className="text-17-500 text-gray-100">팀 추가</h2>
       <p className="text-gray-100-opacity-80 text-15-400">
-        새롭게 추가할 팀 이름을 작성해주세요.
+        추가할 팀 이름을 입력해주세요.
       </p>
       <div className="my-20 flex w-full flex-col gap-8">
         <Input
