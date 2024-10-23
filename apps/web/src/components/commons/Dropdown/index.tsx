@@ -252,7 +252,8 @@ function Item({ itemValue, label }: { itemValue: string; label?: string }) {
   };
 
   return (
-    <div
+    <button
+      type="button"
       className={clsx("rounded-8 text-15-500 px-12 py-6 text-center", {
         "bg-purple-opacity-10 text-purple-80": isSelected,
         "text-gray-100-opacity-80 hover:bg-purple-opacity-5 hover:text-purple-80":
@@ -266,8 +267,6 @@ function Item({ itemValue, label }: { itemValue: string; label?: string }) {
       onKeyDown={(e) =>
         (e.key === "Enter" || e.key === " ") && handleChange(itemValue)
       }
-      role="button"
-      tabIndex={0}
     >
       {label || itemValue}
       {isSelected &&
@@ -276,7 +275,7 @@ function Item({ itemValue, label }: { itemValue: string; label?: string }) {
         variant === "endTime") ? (
         <CheckIcon className="mb-2" />
       ) : null}
-    </div>
+    </button>
   );
 }
 
