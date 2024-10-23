@@ -21,10 +21,10 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
     // });
     console.log("토큰토큰톸느 ", event?.request?.headers?.authorization);
     const client = generateClient<Schema>(
-      {
-      authMode: "apiKey",
-    //   // authToken: event?.request?.headers?.authorization,
-    }
+    //   {
+    //   authMode: "apiKey",
+    // //   // authToken: event?.request?.headers?.authorization,
+    // }
   );
 
     console.log("이ㅁㄴㅇㄹㅁㄴㅇ트", event);
@@ -44,6 +44,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
           eq: new Date().toISOString().split("T")[0],
         },
       },  {
+        authMode: "apiKey",
         headers: {
           Authorization: event?.request?.headers?.authorization || "", 
         }});
@@ -65,6 +66,9 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
     }
     // 3. 충돌이 없으면 예약 생성
     const req = await client.models.Reservation.create(
+      // authMode?: AuthMode;
+      // authToken?: string;
+      // headers?: CustomHeaders;
       {
         ...event.arguments,
         status: "CONFIRMED",
@@ -74,6 +78,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       //   // authToken: event?.request?.headers?.authorization,
       // },
       {
+        authMode: "apiKey",
         headers: {
           Authorization: event?.request?.headers?.authorization || "", 
         },
