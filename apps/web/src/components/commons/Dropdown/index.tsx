@@ -99,16 +99,7 @@ export default function Dropdown({
       isInput,
       setIsInput,
     }),
-    [
-      isOpen,
-      value,
-      toggleDropdown,
-      closeDropdown,
-      handleChange,
-      variant,
-      isInput,
-      setIsInput,
-    ],
+    [isOpen, value, variant, isInput],
   );
 
   // 드랍다운 외부를 클릭했을 때 드랍다운이 닫힘
