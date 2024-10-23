@@ -38,10 +38,13 @@ const schema = a.schema({
     })
     .secondaryIndexes((index) => [
       index("resourceType")
-        .sortKeys(["resourceSubtype"])
-        .queryField("listResourceByTypeAndSubtype"),
+        .sortKeys(["name"])
+        .queryField("listResourceByTypeAndName"),
     ])
-    .authorization((allow) => [allow.authenticated()]),
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.group("ADMIN"),
+    ]),
 
   // Reservation Table
   ReservationStatus: a.enum(["CONFIRMED", "CANCELED", "PASSED"]),

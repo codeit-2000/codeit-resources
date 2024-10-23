@@ -20,7 +20,7 @@ type CreateResourceParams = {
  * @example
  * ```tsx
  * const handleClick = async () => {
- *   await client.models.Resource.create({
+ *   await createResource({
  *     resourceType: "ROOM",
  *     resourceSubtype: "미팅룸",
  *     name: "미팅룸A",
@@ -52,19 +52,27 @@ export const getResourceList = async ({
 
   // resourceType에 따른 목록을 가져오는 경우
   if (resourceType && resourceSubtype === undefined) {
-    return await client.models.Resource.listResourceByTypeAndSubtype({
-      resourceType,
-    });
+    return await client.models.Resource.listResourceByTypeAndName(
+      {
+        resourceType,
+      },
+      {
+        sortDirection: "ASC",
+      },
+    );
   }
 
   // resourceType과 resourceSubtype에 따른 목록을 가져오는 경우
   if (resourceType && resourceSubtype) {
-    return await client.models.Resource.listResourceByTypeAndSubtype({
-      resourceType,
-      resourceSubtype: {
-        eq: resourceSubtype,
+    return await client.models.Resource.listResourceByTypeAndName(
+      {
+        resourceType,
       },
-    });
+      {
+        filter: { resourceSubtype: { eq: resourceSubtype } },
+        sortDirection: "ASC",
+      },
+    );
   }
 };
 
