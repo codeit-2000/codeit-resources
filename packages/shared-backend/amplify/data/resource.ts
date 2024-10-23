@@ -88,7 +88,7 @@ const schema = a.schema({
     // .returns(a.ref("Reservation"))
     .returns(a.string())
     // .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
-    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"]), allow.publicApiKey(), allow.authenticated()])
+    .authorization((allow) => [allow.authenticated(), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"]),])
     .handler(a.handler.function(createConfirmedReservation)),
 
   updateReservationById: a

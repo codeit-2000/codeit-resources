@@ -21,10 +21,10 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
     // });
     console.log("토큰토큰톸느 ", event?.request?.headers?.authorization);
     const client = generateClient<Schema>(
-    //   {
-    //   authMode: "apiKey",
+      {
+      authMode: "apiKey",
     //   // authToken: event?.request?.headers?.authorization,
-    // }
+    }
   );
 
     console.log("이ㅁㄴㅇㄹㅁㄴㅇ트", event);
