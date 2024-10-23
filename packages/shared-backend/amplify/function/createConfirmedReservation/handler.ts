@@ -11,7 +11,7 @@ Amplify.configure(outputs);
 export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
   async (event, context) => {
     const client = generateClient<Schema>({
-      authMode: "userPool",
+      authMode: "identityPool",
       authToken: event.request.headers.authorization,
     });
 
