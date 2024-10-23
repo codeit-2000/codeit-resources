@@ -11,8 +11,8 @@ interface ListItemProps {
   gap?: string;
   /** 수정 모드 여부 입니다. */
   isEditMode?: boolean;
-  /** 테마입니다. */
-  variant?: "primary" | "secondary";
+  /** 배경색 유무입니다. */
+  isBackground?: boolean;
   /** 높이입니다. */
   height?: string;
 }
@@ -23,7 +23,7 @@ function ListItem({
   children,
   gap = "gap-32",
   isEditMode = false,
-  variant = "primary",
+  isBackground = false,
   height = "h-72",
 }: ListItemProps) {
   return (
@@ -33,7 +33,7 @@ function ListItem({
         gap,
         height,
         {
-          "bg-gray-10": variant === "secondary",
+          "bg-gray-10": isBackground,
         },
         {
           "border-gray-70 duration-300": isEditMode,

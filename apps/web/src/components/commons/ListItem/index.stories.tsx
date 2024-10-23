@@ -103,7 +103,7 @@ export const Secondary: Story = {
 
       return (
         <div>
-          <ListItem variant="secondary" isEditMode={editId === 0}>
+          <ListItem isBackground isEditMode={editId === 0}>
             <ListItem.Title
               text="text-18-500"
               isEditMode={editId === 0}
