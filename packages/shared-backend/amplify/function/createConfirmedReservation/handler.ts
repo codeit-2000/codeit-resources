@@ -19,7 +19,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
     //     secretAccessKey: import.meta.env.VITE_SECRET_ACCESS_KEY,
     //   },
     // });
-
+    console.log("토큰토큰톸느 ", event?.request?.headers?.authorization);
     const client = generateClient<Schema>({
       authMode: "userPool",
       authToken: event?.request?.headers?.authorization,
