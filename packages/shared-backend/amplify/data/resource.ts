@@ -73,7 +73,7 @@ const schema = a.schema({
       //   }
       index("resourceId").sortKeys(["date"]).queryField("listByResource"),
     ])
-    .authorization((allow) => [allow.publicApiKey()]),
+    .authorization((allow) => [allow.authenticated(), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"])]),
 
   createConfirmedReservation: a
     .mutation()
@@ -88,7 +88,7 @@ const schema = a.schema({
     // .returns(a.ref("Reservation"))
     .returns(a.string())
     // .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
-    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"]), allow.publicApiKey()])
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"]), allow.publicApiKey(), allow.authenticated()])
     .handler(a.handler.function(createConfirmedReservation)),
 
   updateReservationById: a
