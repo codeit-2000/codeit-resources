@@ -73,7 +73,7 @@ const schema = a.schema({
       //   }
       index("resourceId").sortKeys(["date"]).queryField("listByResource"),
     ])
-    .authorization((allow) => [allow.authenticated(), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"])]),
+    .authorization((allow) => [allow.authenticated().to(["read", "create"]), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"])]),
 
   createConfirmedReservation: a
     .mutation()

@@ -20,10 +20,12 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
     //   },
     // });
     console.log("토큰토큰톸느 ", event?.request?.headers?.authorization);
-    const client = generateClient<Schema>({
-      authMode: "apiKey",
-      authToken: event?.request?.headers?.authorization,
-    });
+    const client = generateClient<Schema>(
+    //   {
+    //   authMode: "apiKey",
+    //   // authToken: event?.request?.headers?.authorization,
+    // }
+  );
 
     console.log("이ㅁㄴㅇㄹㅁㄴㅇ트", event);
     console.log("콘탟ㅌㅌㅇㄹㅇㅌㄹㄴㄹ", context);
@@ -66,7 +68,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       },
       {
         authMode: "apiKey",
-        authToken: event?.request?.headers?.authorization,
+        // authToken: event?.request?.headers?.authorization,
       },
     );
     console.log("JSON.stringify(data)", JSON.stringify(req));
