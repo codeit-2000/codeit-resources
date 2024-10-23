@@ -13,7 +13,7 @@ type AddTeamInput = {
   name: string;
 };
 
-const AddTeamModal = () => {
+function AddTeamModal() {
   const { closeModal } = useModal();
   const { success, error } = useToast();
   const queryClient = useQueryClient();
@@ -91,6 +91,6 @@ const AddTeamModal = () => {
       </div>
     </form>
   );
-};
+}
 
 export default AddTeamModal;
