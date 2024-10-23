@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import useModal from "@src/hooks/useModal";
+import AddTeamModal from "@src/pages/admin/team/components/AddTeamModal";
+import { useEffect, useRef, useState } from "react";
+
 import MoveSeatConfirmModal from "./MoveSeatConfirmModal";
 
 function ModalProvider() {
@@ -28,6 +30,7 @@ function ModalProvider() {
 
   const modalComponents: Record<string, React.ElementType> = {
     moveSeatConfirm: MoveSeatConfirmModal,
+    addTeamModal: AddTeamModal,
   };
 
   const SpecificModal = modalType ? modalComponents[modalType] : null;
