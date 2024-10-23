@@ -11,8 +11,7 @@ Amplify.configure(outputs);
 export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
   async (event, context) => {
     const client = generateClient<Schema>({
-      authMode: "identityPool",
-      authToken: event.request.headers.authorization,
+      authMode: "userPool",
     });
 
     console.log("이ㅁㄴㅇㄹㅁㄴㅇ트", event);
@@ -49,10 +48,15 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       throw new Error("해당 시간에 이미 예약이 있습니다.");
     }
     // 3. 충돌이 없으면 예약 생성
-    const req = await client.models.Reservation.create({
-      ...event.arguments,
-      status: "CONFIRMED",
-    });
+    const req = await client.models.Reservation.create(
+      {
+        ...event.arguments,
+        status: "CONFIRMED",
+      },
+      {
+        authMode: "userPool",
+      },
+    );
     console.log("JSON.stringify(data)", JSON.stringify(req));
     return `${JSON.stringify(req)}`;
   };
