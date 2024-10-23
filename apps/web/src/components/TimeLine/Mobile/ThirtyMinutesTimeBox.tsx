@@ -1,8 +1,8 @@
 import useIsMobile from "@src/hooks/useIsMobile";
 import clsx from "clsx";
 
-import { ThirtyMinutesTimeBoxProps } from "./TimeLinetypes";
-import { TimeText } from "./TimeText";
+import { ThirtyMinutesTimeBoxProps } from "../TimeLinetypes";
+import { TimeText } from "../TimeText";
 
 type TimeVerticalLineProps = Pick<
   ThirtyMinutesTimeBoxProps,
@@ -13,7 +13,7 @@ type TimeVerticalLineProps = Pick<
 export function TimeVerticalLine({
   isHalfHour,
   isCurrentTime,
-  isTestCurrentTime, // 현재 시간 테스트용 prop
+  isTestCurrentTime,
 }: TimeVerticalLineProps) {
   return (
     <div
@@ -25,6 +25,7 @@ export function TimeVerticalLine({
     />
   );
 }
+
 /* 예약된 시간 표시 바 */
 export function ReservationBar() {
   return <div className="top-21 bg-purple-70 absolute h-12 w-full" />;
@@ -40,11 +41,12 @@ export function BottomDottedBar() {
 function ThirtyMinutesTimeBox({
   isHalfHour = false,
   isCurrentTime = false,
-  isTestCurrentTime = false, // 현재 시간 테스트용 prop
+  isTestCurrentTime = false,
   time,
   reservation,
 }: ThirtyMinutesTimeBoxProps) {
   const isMobile = useIsMobile();
+  const is24Hour = time === "24:00";
 
   return (
     <li className="flex w-48 flex-col justify-end gap-40">
@@ -59,15 +61,19 @@ function ThirtyMinutesTimeBox({
       )}
       {/* 세로 구분선과 점선을 포함하는 30분 단위 박스 */}
       <div className="h-55 relative flex w-48 flex-col justify-end">
-        <div className="absolute inset-0 left-1 cursor-pointer hover:bg-[#ede2f9] hover:shadow-[inset_0_0_0_1px_#e0c8fa]">
-          {reservation && <ReservationBar />}
-        </div>
+        {/* 24:00이 아닐 때만 호버 효과 적용 */}
+        {!is24Hour && (
+          <div className="absolute inset-0 left-1 cursor-pointer hover:bg-[#ede2f9] hover:shadow-[inset_0_0_0_1px_#e0c8fa]">
+            {reservation && <ReservationBar />}
+          </div>
+        )}
         <TimeVerticalLine
           isHalfHour={isHalfHour}
           isCurrentTime={isCurrentTime}
           isTestCurrentTime={isTestCurrentTime}
         />
-        <BottomDottedBar />
+        {/* 24:00이 아닐 때만 점선 표시 */}
+        {!is24Hour && <BottomDottedBar />}
       </div>
     </li>
   );

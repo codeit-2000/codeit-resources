@@ -15,13 +15,16 @@ export function TimeText({
   time,
 }: TimeTextProps) {
   return (
-    <div className="h-8">
+    <div className="md:w-72">
       {!isHalfHour && time && (
         <span
-          className={clsx("text-12-700 -ml-14", {
-            "text-gray-50": !isTestCurrentTime,
-            "text-black": isTestCurrentTime,
-          })}
+          className={clsx(
+            "text-12-700 md:text-14-700 ml-[-14px] md:ml-[-17px]",
+            {
+              "text-gray-50": !isTestCurrentTime,
+              "text-black": isTestCurrentTime,
+            },
+          )}
         >
           {time}
         </span>
