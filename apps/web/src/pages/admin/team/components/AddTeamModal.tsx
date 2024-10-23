@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { zodResolver } from "@hookform/resolvers/zod";
 import LoadingSpinner from "@repo/assets/gifs/loading-spinner.svg?react";
-import { createTeamData } from "@repo/lib/api/team";
+import { createTeamData, getTeamByName } from "@repo/lib/api/team";
 import { addTeamSchema } from "@repo/lib/zod-schema/team";
 import Button from "@src/components/commons/Button";
 import Input from "@src/components/commons/Input";
@@ -34,23 +34,26 @@ function AddTeamModal() {
   });
 
   const onSubmit: SubmitHandler<AddTeamInput> = async (data) => {
-    mutate(data, {
-      onSuccess: (res) => {
-        if (res.data) {
-          success(`${res.data.name} 팀이 추가되었습니다.`);
+    try {
+      if (await getTeamByName(data.name)) {
+        error("이미 존재하는 팀 이름입니다.");
+        return;
+      }
+      mutate(data, {
+        onSuccess: (res) => {
+          if (res.data) {
+            success(`${res.data.name} 팀이 추가되었습니다.`);
+          } else {
+            error("팀을 추가하는데 실패하였습니다.");
+          }
           queryClient.invalidateQueries({ queryKey: ["teamList"] });
-        } else {
-          error("팀을 추가하는데 실패하였습니다.");
-        }
-      },
-      onError: (err) => {
-        console.error(err);
-        error("팀을 추가하는데 실패하였습니다.");
-      },
-      onSettled: () => {
-        closeModal();
-      },
-    });
+        },
+        onError: () => error("팀을 추가하는데 실패하였습니다."),
+        onSettled: closeModal,
+      });
+    } catch {
+      error("팀 이름 확인 중 문제가 발생했습니다.");
+    }
   };
 
   return (
