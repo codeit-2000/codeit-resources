@@ -1,26 +1,31 @@
+import useIsMobile from "@src/hooks/useIsMobile";
 import clsx from "clsx";
 
+import { ThirtyMinutesTimeBoxProps } from "./TimeLinetypes";
+import { TimeText } from "./TimeText";
+
 type TimeVerticalLineProps = Pick<
-  ThirtyMinutesBoxProps,
-  "isHalfHour" | "isCurrentTime"
+  ThirtyMinutesTimeBoxProps,
+  "isHalfHour" | "isCurrentTime" | "isTestCurrentTime"
 >;
 
 /* 세로 구분선 */
 export function TimeVerticalLine({
   isHalfHour,
   isCurrentTime,
+  isTestCurrentTime, // 현재 시간 테스트용 prop
 }: TimeVerticalLineProps) {
   return (
     <div
       className={clsx(
-        "z-30 w-1",
+        "z-10 w-1",
         isHalfHour ? "h-12" : "h-55",
-        isCurrentTime ? "w-1 bg-black" : "bg-gray-200",
+        isTestCurrentTime ? "w-1 bg-black" : "bg-gray-200",
       )}
     />
   );
 }
-/* 예약된 시간대 표시바 */
+/* 예약된 시간 표시 바 */
 export function ReservationBar() {
   return <div className="top-21 bg-purple-70 absolute h-12 w-full" />;
 }
@@ -32,46 +37,35 @@ export function BottomDottedBar() {
   );
 }
 
-interface Reservation {
-  startTime: string;
-  endTime: string;
-}
-
-interface ThirtyMinutesBoxProps {
-  isHalfHour?: boolean;
-  isCurrentTime?: boolean;
-  time?: string;
-  reservation?: Reservation;
-}
-
 function ThirtyMinutesTimeBox({
   isHalfHour = false,
   isCurrentTime = false,
+  isTestCurrentTime = false, // 현재 시간 테스트용 prop
   time,
   reservation,
-}: ThirtyMinutesBoxProps) {
+}: ThirtyMinutesTimeBoxProps) {
+  const isMobile = useIsMobile();
+
   return (
     <li className="flex w-48 flex-col justify-end gap-40">
-      {/* 시간 */}
-      <div className="h-8">
-        {!isHalfHour && time && (
-          <span
-            className={clsx("text-12-700 -ml-14", {
-              "text-gray-50": !isCurrentTime,
-              "text-black": isCurrentTime,
-            })}
-          >
-            {time}
-          </span>
-        )}
-      </div>
-
+      {/* 상단 시간 텍스트 */}
+      {isMobile && (
+        <TimeText
+          isHalfHour={isHalfHour}
+          isCurrentTime={isCurrentTime}
+          isTestCurrentTime={isTestCurrentTime}
+          time={time}
+        />
+      )}
       {/* 세로 구분선과 점선을 포함하는 30분 단위 박스 */}
-      <div className="h-55 hover:w-49 relative flex w-48 flex-col justify-end hover:border hover:border-[#e0c8fa] hover:bg-[#ede2f9]">
-        {reservation && <ReservationBar />}
+      <div className="h-55 relative flex w-48 flex-col justify-end">
+        <div className="absolute inset-0 left-1 cursor-pointer hover:bg-[#ede2f9] hover:shadow-[inset_0_0_0_1px_#e0c8fa]">
+          {reservation && <ReservationBar />}
+        </div>
         <TimeVerticalLine
           isHalfHour={isHalfHour}
           isCurrentTime={isCurrentTime}
+          isTestCurrentTime={isTestCurrentTime}
         />
         <BottomDottedBar />
       </div>

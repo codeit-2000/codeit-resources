@@ -1,4 +1,4 @@
-import ThirtyMinutesBox from "./ThirtyMinutesTimeBox";
+import ThirtyMinutesTimeBox from "./ThirtyMinutesTimeBox";
 
 function TimeLine() {
   // hour와 minute은 number 타입으로 받아서 문자열로 변환
@@ -30,31 +30,28 @@ function TimeLine() {
       time,
       reservation,
       isHalfHour: index % 2 !== 0,
-      // isCurrentTime: time === currentTime,
-      isCurrentTime: time === testCurrentTime, // 테스트용 현재 시간과 비교
+      isCurrentTime: time === currentTime,
+      isTestCurrentTime: time === testCurrentTime, // 테스트용 현재 시간과 비교
     };
   });
 
   return (
-    <div className="ml-60 w-full overflow-hidden">
-      <div className="relative">
-        <div className="no-scrollbar overflow-x-auto">
-          <ul
-            className="flex h-full pl-24"
-            style={{ width: `${timeSlots.length * 192}px` }}
-          >
-            {timeSlots.map((slot) => (
-              <ThirtyMinutesBox
-                key={slot.time}
-                isHalfHour={slot.isHalfHour}
-                isCurrentTime={slot.isCurrentTime}
-                time={!slot.isHalfHour ? slot.time : undefined}
-                reservation={slot.reservation}
-              />
-            ))}
-          </ul>
-        </div>
-      </div>
+    <div className="no-scrollbar relative overflow-x-auto">
+      <ul
+        className="pl-30 flex h-full"
+        style={{ width: `${timeSlots.length * 192}px` }}
+      >
+        {timeSlots.map((slot) => (
+          <ThirtyMinutesTimeBox
+            key={slot.time}
+            isHalfHour={slot.isHalfHour}
+            isCurrentTime={slot.isCurrentTime}
+            isTestCurrentTime={slot.isTestCurrentTime} // 테스트 현재 시간 prop
+            time={!slot.isHalfHour ? slot.time : undefined}
+            reservation={slot.reservation}
+          />
+        ))}
+      </ul>
     </div>
   );
 }
