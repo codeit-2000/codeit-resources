@@ -21,7 +21,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
     // });
     console.log("토큰토큰톸느 ", event?.request?.headers?.authorization);
     const client = generateClient<Schema>({
-      authMode: "userPool",
+      authMode: "apiKey",
       authToken: event?.request?.headers?.authorization,
     });
 
@@ -65,7 +65,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
         status: "CONFIRMED",
       },
       {
-        authMode: "userPool",
+        authMode: "apiKey",
         authToken: event?.request?.headers?.authorization,
       },
     );
