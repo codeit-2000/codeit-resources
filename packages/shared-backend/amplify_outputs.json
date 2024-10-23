@@ -1,0 +1,665 @@
+{
+  "auth": {
+    "user_pool_id": "ap-northeast-2_afFnwMSCB",
+    "aws_region": "ap-northeast-2",
+    "user_pool_client_id": "56rg0o3419se58el90gncje689",
+    "identity_pool_id": "ap-northeast-2:0c004789-f94c-478c-a5df-75b86dafbd70",
+    "mfa_methods": [],
+    "standard_required_attributes": [
+      "email"
+    ],
+    "username_attributes": [
+      "email"
+    ],
+    "user_verification_types": [
+      "email"
+    ],
+    "mfa_configuration": "NONE",
+    "password_policy": {
+      "min_length": 8,
+      "require_lowercase": true,
+      "require_numbers": true,
+      "require_symbols": true,
+      "require_uppercase": true
+    },
+    "unauthenticated_identities_enabled": true
+  },
+  "data": {
+    "url": "https://hrzazuyiovdcbgkxrfivhgqvni.appsync-api.ap-northeast-2.amazonaws.com/graphql",
+    "aws_region": "ap-northeast-2",
+    "api_key": "da2-37oodphcerdhzfb6wfjvd5i6lm",
+    "default_authorization_type": "AMAZON_COGNITO_USER_POOLS",
+    "authorization_types": [
+      "API_KEY",
+      "AWS_IAM"
+    ],
+    "model_introspection": {
+      "version": 1,
+      "models": {
+        "Team": {
+          "name": "Team",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "name": {
+              "name": "name",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "members": {
+              "name": "members",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "Teams",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "ADMIN",
+                      "MEMBER"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "User": {
+          "name": "User",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "username": {
+              "name": "username",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "email": {
+              "name": "email",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "role": {
+              "name": "role",
+              "isArray": false,
+              "type": {
+                "enum": "UserRole"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "teams": {
+              "name": "teams",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true
+            },
+            "profileImage": {
+              "name": "profileImage",
+              "isArray": false,
+              "type": "AWSURL",
+              "isRequired": false,
+              "attributes": []
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": []
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "Users",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "key",
+              "properties": {
+                "fields": [
+                  "id"
+                ]
+              }
+            },
+            {
+              "type": "key",
+              "properties": {
+                "name": "usersByRoleAndUsername",
+                "queryField": "listUsersByRoleName",
+                "fields": [
+                  "role",
+                  "username"
+                ]
+              }
+            },
+            {
+              "type": "key",
+              "properties": {
+                "name": "usersByRoleAndCreatedAt",
+                "queryField": "listUsersByRoleDate",
+                "fields": [
+                  "role",
+                  "createdAt"
+                ]
+              }
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "ADMIN",
+                      "MEMBER"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "Resource": {
+          "name": "Resource",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "resourceType": {
+              "name": "resourceType",
+              "isArray": false,
+              "type": {
+                "enum": "ResourceResourceType"
+              },
+              "isRequired": false,
+              "attributes": []
+            },
+            "resourceSubtype": {
+              "name": "resourceSubtype",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "name": {
+              "name": "name",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "description": {
+              "name": "description",
+              "isArray": false,
+              "type": "String",
+              "isRequired": false,
+              "attributes": []
+            },
+            "image": {
+              "name": "image",
+              "isArray": false,
+              "type": "AWSURL",
+              "isRequired": false,
+              "attributes": []
+            },
+            "reservations": {
+              "name": "reservations",
+              "isArray": true,
+              "type": {
+                "model": "Reservation"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true,
+              "association": {
+                "connectionType": "HAS_MANY",
+                "associatedWith": [
+                  "resourceId"
+                ]
+              }
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "Resources",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "key",
+              "properties": {
+                "name": "resourcesByResourceType",
+                "queryField": "listResourceByResourceType",
+                "fields": [
+                  "resourceType"
+                ]
+              }
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "allow": "private",
+                    "operations": [
+                      "read"
+                    ]
+                  },
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "ADMIN"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        },
+        "Reservation": {
+          "name": "Reservation",
+          "fields": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "title": {
+              "name": "title",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true,
+              "attributes": []
+            },
+            "resourceId": {
+              "name": "resourceId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true,
+              "attributes": []
+            },
+            "resource": {
+              "name": "resource",
+              "isArray": false,
+              "type": {
+                "model": "Resource"
+              },
+              "isRequired": false,
+              "attributes": [],
+              "association": {
+                "connectionType": "BELONGS_TO",
+                "targetNames": [
+                  "resourceId"
+                ]
+              }
+            },
+            "date": {
+              "name": "date",
+              "isArray": false,
+              "type": "AWSDate",
+              "isRequired": true,
+              "attributes": []
+            },
+            "startTime": {
+              "name": "startTime",
+              "isArray": false,
+              "type": "AWSTime",
+              "isRequired": true,
+              "attributes": []
+            },
+            "endTime": {
+              "name": "endTime",
+              "isArray": false,
+              "type": "AWSTime",
+              "isRequired": true,
+              "attributes": []
+            },
+            "status": {
+              "name": "status",
+              "isArray": false,
+              "type": {
+                "enum": "ReservationStatus"
+              },
+              "isRequired": true,
+              "attributes": []
+            },
+            "participants": {
+              "name": "participants",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "attributes": [],
+              "isArrayNullable": true
+            },
+            "createdAt": {
+              "name": "createdAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            },
+            "updatedAt": {
+              "name": "updatedAt",
+              "isArray": false,
+              "type": "AWSDateTime",
+              "isRequired": false,
+              "attributes": [],
+              "isReadOnly": true
+            }
+          },
+          "syncable": true,
+          "pluralName": "Reservations",
+          "attributes": [
+            {
+              "type": "model",
+              "properties": {}
+            },
+            {
+              "type": "key",
+              "properties": {
+                "name": "reservationsByResourceIdAndDate",
+                "queryField": "listByResource",
+                "fields": [
+                  "resourceId",
+                  "date"
+                ]
+              }
+            },
+            {
+              "type": "auth",
+              "properties": {
+                "rules": [
+                  {
+                    "groupClaim": "cognito:groups",
+                    "provider": "userPools",
+                    "allow": "groups",
+                    "groups": [
+                      "ADMIN",
+                      "MEMBER"
+                    ],
+                    "operations": [
+                      "create",
+                      "update",
+                      "delete",
+                      "read"
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "primaryKeyInfo": {
+            "isCustomPrimaryKey": false,
+            "primaryKeyFieldName": "id",
+            "sortKeyFieldNames": []
+          }
+        }
+      },
+      "enums": {
+        "ReservationStatus": {
+          "name": "ReservationStatus",
+          "values": [
+            "CONFIRMED",
+            "CANCELED",
+            "PASSED"
+          ]
+        },
+        "UserRole": {
+          "name": "UserRole",
+          "values": [
+            "ADMIN",
+            "MEMBER"
+          ]
+        },
+        "ResourceResourceType": {
+          "name": "ResourceResourceType",
+          "values": [
+            "ROOM",
+            "SEAT",
+            "EQUIPMENT"
+          ]
+        }
+      },
+      "nonModels": {},
+      "mutations": {
+        "createConfirmedReservation": {
+          "name": "createConfirmedReservation",
+          "isArray": false,
+          "type": "String",
+          "isRequired": false,
+          "arguments": {
+            "title": {
+              "name": "title",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            },
+            "resourceId": {
+              "name": "resourceId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            },
+            "date": {
+              "name": "date",
+              "isArray": false,
+              "type": "AWSDate",
+              "isRequired": true
+            },
+            "startTime": {
+              "name": "startTime",
+              "isArray": false,
+              "type": "AWSTime",
+              "isRequired": true
+            },
+            "endTime": {
+              "name": "endTime",
+              "isArray": false,
+              "type": "AWSTime",
+              "isRequired": true
+            },
+            "participants": {
+              "name": "participants",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "isArrayNullable": true
+            }
+          }
+        },
+        "updateReservationById": {
+          "name": "updateReservationById",
+          "isArray": false,
+          "type": {
+            "model": "Reservation"
+          },
+          "isRequired": false,
+          "arguments": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            },
+            "title": {
+              "name": "title",
+              "isArray": false,
+              "type": "String",
+              "isRequired": true
+            },
+            "resourceId": {
+              "name": "resourceId",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            },
+            "date": {
+              "name": "date",
+              "isArray": false,
+              "type": "AWSDate",
+              "isRequired": true
+            },
+            "startTime": {
+              "name": "startTime",
+              "isArray": false,
+              "type": "AWSTime",
+              "isRequired": true
+            },
+            "endTime": {
+              "name": "endTime",
+              "isArray": false,
+              "type": "AWSTime",
+              "isRequired": true
+            },
+            "participants": {
+              "name": "participants",
+              "isArray": true,
+              "type": "String",
+              "isRequired": false,
+              "isArrayNullable": true
+            }
+          }
+        },
+        "deleteReservationById": {
+          "name": "deleteReservationById",
+          "isArray": false,
+          "type": {
+            "model": "Reservation"
+          },
+          "isRequired": false,
+          "arguments": {
+            "id": {
+              "name": "id",
+              "isArray": false,
+              "type": "ID",
+              "isRequired": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "version": "1.2"
+}
