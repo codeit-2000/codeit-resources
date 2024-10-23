@@ -180,6 +180,10 @@ export const MeetingRoomDropdown: Story = {
               <Dropdown.Item itemValue="회의실 2" />
               <Dropdown.Item itemValue="회의실 3" />
               <Dropdown.Item itemValue="회의실 4" />
+              <Dropdown.Item itemValue="회의실 5" />
+              <Dropdown.Item itemValue="회의실 6" />
+              <Dropdown.Item itemValue="회의실 7" />
+              <Dropdown.Item itemValue="회의실 8" />
             </Dropdown.Wrapper>
           </Dropdown>
         </div>

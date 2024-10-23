@@ -228,7 +228,7 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   return isOpen ? (
     <div
       className={clsx(
-        "bg-gray-5 rounded-8 border-gray-20 absolute z-50 mt-3 flex flex-col gap-3 border p-8",
+        "bg-gray-5 rounded-8 border-gray-20 max-h-168 shadow-dropdown-wrapper absolute z-50 mt-3 flex flex-col gap-3 overflow-y-auto border p-8",
         {
           "right-0 w-96": variant === "order",
           "w-full": variant !== "order",
