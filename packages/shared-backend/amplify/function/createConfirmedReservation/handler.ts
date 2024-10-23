@@ -78,7 +78,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       //   // authToken: event?.request?.headers?.authorization,
       // },
       {
-        authMode: "apiKey",
+        authMode: "iam",
         headers: {
           Authorization: event?.request?.headers?.authorization || "", 
         },
