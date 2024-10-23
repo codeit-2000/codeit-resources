@@ -66,10 +66,15 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
         ...event.arguments,
         status: "CONFIRMED",
       },
+      // {
+      //   authMode: "apiKey",
+      //   // authToken: event?.request?.headers?.authorization,
+      // },
       {
-        authMode: "apiKey",
-        // authToken: event?.request?.headers?.authorization,
-      },
+        headers: {
+          Authorization: event?.request?.headers?.authorization || "", 
+        },
+      }
     );
     console.log("JSON.stringify(data)", JSON.stringify(req));
     return `${JSON.stringify(req)}`;
