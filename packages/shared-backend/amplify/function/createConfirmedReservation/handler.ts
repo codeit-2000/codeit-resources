@@ -41,5 +41,7 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       status: "CONFIRMED",
     });
 
-    return data;
+    console.log(JSON.stringify(data));
+
+    return "test";
   };

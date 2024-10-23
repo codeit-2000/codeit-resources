@@ -1,9 +1,9 @@
 import type { Schema } from "@repo/backend/amplify/data/resource";
-import outputs from "@repo/backend/outputs";
-import { Amplify } from "aws-amplify";
+// import outputs from "@repo/backend/outputs";
+// import { Amplify } from "aws-amplify";
 import { generateClient } from "aws-amplify/api";
 
-Amplify.configure(outputs);
+// Amplify.configure(outputs);
 
 type Reservation = Schema["Reservation"]["type"];
 
