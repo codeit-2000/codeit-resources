@@ -43,7 +43,7 @@ export const createReservation = async (reservationData: Reservation) => {
       startTime: reservationData.startTime,
       endTime: reservationData.endTime,
       participants: reservationData.participants || [],
-    },  {authMode: "apiKey"});
+    });
   } catch (error) {
     console.error("Error creating reservation:", error);
     throw new Error("Failed to create reservation");

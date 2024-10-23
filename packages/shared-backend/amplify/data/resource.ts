@@ -88,7 +88,7 @@ const schema = a.schema({
     // .returns(a.ref("Reservation"))
     .returns(a.string())
     // .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
-    .authorization((allow) => [allow.publicApiKey()])
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"]), allow.publicApiKey()])
     .handler(a.handler.function(createConfirmedReservation)),
 
   updateReservationById: a
@@ -103,7 +103,7 @@ const schema = a.schema({
       participants: a.string().array(),
     })
     .returns(a.ref("Reservation"))
-    .authorization((allow) => [allow.publicApiKey()])
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"]), allow.publicApiKey()])
     .handler(a.handler.function(updateReservationById)),
 
   deleteReservationById: a
@@ -112,7 +112,7 @@ const schema = a.schema({
       id: a.id().required(),
     })
     .returns(a.ref("Reservation"))
-    .authorization((allow) => [allow.publicApiKey()])
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"]), allow.publicApiKey()])
     .handler(a.handler.function(deleteReservationById)),
 });
 
