@@ -43,7 +43,10 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
         date: {
           eq: new Date().toISOString().split("T")[0],
         },
-      });
+      },  {
+        headers: {
+          Authorization: event?.request?.headers?.authorization || "", 
+        }});
 
     console.log("existingReservations", JSON.stringify(existingReservations));
 
