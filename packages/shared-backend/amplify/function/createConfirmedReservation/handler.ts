@@ -12,6 +12,9 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
   async (event, context) => {
     const client = generateClient<Schema>({
       authMode: "userPool",
+      headers: {
+        authorization: event?.request?.headers?.authorization || "", // JWT 토큰을 전달
+      },
     });
 
     console.log("이ㅁㄴㅇㄹㅁㄴㅇ트", event);
@@ -55,6 +58,9 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       },
       {
         authMode: "userPool",
+        headers: {
+          authorization: event?.request?.headers?.authorization || "", // JWT 토큰을 전달
+        },
       },
     );
     console.log("JSON.stringify(data)", JSON.stringify(req));
