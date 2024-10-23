@@ -1,16 +1,25 @@
-// import { Amplify } from "aws-amplify";
-// import { generateClient } from "aws-amplify/api";
-// import outputs from "../../../amplify_outputs.json";
-import type { Schema } from "../../data/resource";
-import { client } from "../helpers/get-amplify-client";
+import { Amplify } from "aws-amplify";
+import { generateClient } from "aws-amplify/api";
 
-// Amplify.configure(outputs);
-// const client = generateClient<Schema>();
+import outputs from "../../../amplify_outputs.json";
+import type { Schema } from "../../data/resource";
+
+// import { client } from "../helpers/get-amplify-client";
+
+Amplify.configure(outputs);
+
 export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
   async (event, context) => {
+    const client = generateClient<Schema>({
+      authMode: "userPool",
+      authToken: event.request.headers.authorization,
+    });
+
     console.log("이ㅁㄴㅇㄹㅁㄴㅇ트", event);
     console.log("콘탟ㅌㅌㅇㄹㅇㅌㄹㄴㄹ", context);
+
     const { resourceId, startTime, endTime } = event.arguments;
+
     // 입력값 검증
     if (!startTime || !endTime || new Date(startTime) >= new Date(endTime)) {
       throw new Error("유효한 시작 시간과 종료 시간을 입력해주세요.");
@@ -23,6 +32,9 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
           eq: new Date().toISOString().split("T")[0],
         },
       });
+
+    console.log(JSON.stringify(existingReservations));
+
     // 2. 충돌하는 예약이 있는지 확인
     const isConflict = (existingReservations || []).some((reservation) => {
       return (
