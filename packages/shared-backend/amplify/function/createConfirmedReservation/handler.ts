@@ -33,10 +33,12 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
         },
       });
 
-    console.log(JSON.stringify(existingReservations));
+    console.log("existingReservations", JSON.stringify(existingReservations));
 
     // 2. 충돌하는 예약이 있는지 확인
     const isConflict = (existingReservations || []).some((reservation) => {
+      if (!reservation) return false;
+
       return (
         reservation &&
         new Date(startTime) < new Date(reservation.endTime) &&
@@ -47,12 +49,12 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       throw new Error("해당 시간에 이미 예약이 있습니다.");
     }
     // 3. 충돌이 없으면 예약 생성
-    const { data } = await client.models.Reservation.create({
+    const req = await client.models.Reservation.create({
       ...event.arguments,
       status: "CONFIRMED",
     });
-    console.log(JSON.stringify(data));
-    return `${JSON.stringify(data)}`;
+    console.log("JSON.stringify(data)", JSON.stringify(req));
+    return `${JSON.stringify(req)}`;
   };
 // import { DynamoDBClient, GetItemCommand } from "@aws-sdk/client-dynamodb";
 // import { DynamoDBDocumentClient, GetCommand } from "@aws-sdk/lib-dynamodb";
