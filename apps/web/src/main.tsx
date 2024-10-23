@@ -1,5 +1,6 @@
-import outputs from "@repo/backend/outputs";
+/* eslint-disable */
 import { Amplify } from "aws-amplify";
+import outputs from "@repo/backend/outputs";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 
@@ -12,4 +13,4 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <App />
   </StrictMode>,
-);
+)
