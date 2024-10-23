@@ -1,9 +1,10 @@
 export const ROLE_OPTIONS = {
-  MEMBER: "Member",
-  ADMIN: "Admin",
+  MEMBER: "멤버",
+  ADMIN: "어드민",
 } as const;
 
 export const ORDER_OPTIONS = {
-  ASCENDING: "Ascending",
-  DESCENDING: "Descending",
+  latest: "최신순",
+  alphabetical: "가나다순",
+  oldest: "오래된순",
 } as const;

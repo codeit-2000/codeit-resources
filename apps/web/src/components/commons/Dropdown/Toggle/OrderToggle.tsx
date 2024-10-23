@@ -14,10 +14,10 @@ export default function OrderToggle({
     <button
       type="button"
       onClick={toggleDropdown}
-      className={`rounded-8 hover:bg-gray-15 flex items-center text-nowrap px-6 py-4 ${isOpen && "bg-gray-15"}`}
+      className={`rounded-8 hover:bg-gray-15 flex items-center justify-center text-nowrap px-6 py-4 ${isOpen && "bg-gray-15"}`}
     >
       <OrderIcon />
-      <span className="text-12-500 text-gray-100-opacity-60 ml-3">
+      <span className="text-12-500 text-gray-100-opacity-60 ml-3 mt-1">
         {renderText()}
       </span>
     </button>

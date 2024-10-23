@@ -39,7 +39,7 @@ export default function TimeToggle({
         className={clsx(
           "rounded-8 text-16 group relative flex w-full items-center justify-between px-20 py-14 text-left",
           "border",
-          isError ? "border-[#D6173A]" : "border-gray-100-opacity-20",
+          isError ? "border-status-negative" : "border-gray-100-opacity-20",
           {
             "hover:border-purple-70": !isError,
           },
@@ -49,7 +49,7 @@ export default function TimeToggle({
           className={clsx(
             "text-13 left-15 absolute top-[-9px] bg-white px-4",
             isError
-              ? "text-[#D6173A]"
+              ? "text-status-negative"
               : "text-gray-100-opacity-80 group-hover:text-purple-70",
             {
               "text-purple-70": isOpen && !isError,
