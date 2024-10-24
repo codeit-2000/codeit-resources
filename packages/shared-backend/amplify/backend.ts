@@ -54,26 +54,26 @@ tags.add("202410_InternA", "202410_InternA");
 //   process.env.ADMIN_API_KEY!,
 // );
 
-const outputs = {} as { [key: string]: string };
-[
-  { name: "createConfirmedReservation" },
-  { name: "updateReservationById" },
-  { name: "deleteReservationById" },
-].forEach((functionInfo) => {
-  const underlyingLambda =
-    // eslint-disable-next-line
-    (backend as any)[functionInfo.name].resources.lambda as Function;
-  // underlyingLambda.addEnvironment("ADMIN_API_KEY", process.env.ADMIN_API_KEY!);
+// const outputs = {} as { [key: string]: string };
+// [
+//   { name: "createConfirmedReservation" },
+//   { name: "updateReservationById" },
+//   { name: "deleteReservationById" },
+// ].forEach((functionInfo) => {
+//   const underlyingLambda =
+//     // eslint-disable-next-line
+//     (backend as any)[functionInfo.name].resources.lambda as Function;
+//   // underlyingLambda.addEnvironment("ADMIN_API_KEY", process.env.ADMIN_API_KEY!);
 
-  const functionUrl = underlyingLambda.addFunctionUrl({
-    authType: FunctionUrlAuthType.NONE,
-    cors: {
-      allowedOrigins: ["*"],
-      allowedHeaders: ["*"],
-    },
-  });
-  outputs[functionInfo.name] = functionUrl.url;
-});
-backend.addOutput({
-  custom: outputs,
-});
+//   const functionUrl = underlyingLambda.addFunctionUrl({
+//     authType: FunctionUrlAuthType.NONE,
+//     cors: {
+//       allowedOrigins: ["*"],
+//       allowedHeaders: ["*"],
+//     },
+//   });
+//   outputs[functionInfo.name] = functionUrl.url;
+// });
+// backend.addOutput({
+//   custom: outputs,
+// });
