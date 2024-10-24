@@ -1,4 +1,5 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { AmplifyFunction, ConstructFactory } from "@aws-amplify/plugin-types";
 
 import { createConfirmedReservation } from "../function/createConfirmedReservation/resource";
 import { deleteReservationById } from "../function/deleteReservationById/resource";
@@ -73,7 +74,7 @@ const schema = a.schema({
       //   }
       index("resourceId").sortKeys(["date"]).queryField("listByResource"),
     ])
-    .authorization((allow) => [allow.authenticated().to(["read", "create"]), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"])]),
+    .authorization((allow) => [allow.custom(), allow.authenticated().to(["read", "create"]), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"])]),
 
   createConfirmedReservation: a
     .mutation()
@@ -88,7 +89,7 @@ const schema = a.schema({
     // .returns(a.ref("Reservation"))
     .returns(a.string())
     // .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
-    .authorization((allow) => [allow.authenticated(), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"]),])
+    .authorization((allow) => [allow.custom(), allow.authenticated(), allow.publicApiKey(), allow.groups(["ADMIN", "MEMBER"]),])
     .handler(a.handler.function(createConfirmedReservation)),
 
   updateReservationById: a
@@ -118,10 +119,14 @@ const schema = a.schema({
 
 export type Schema = ClientSchema<typeof schema>;
 
-export const data = defineData({
+export const data = (authFunction: ConstructFactory<AmplifyFunction>) => defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: "userPool",
+    lambdaAuthorizationMode: {
+      function: authFunction,
+      timeToLiveInSeconds: 300,
+    },
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },

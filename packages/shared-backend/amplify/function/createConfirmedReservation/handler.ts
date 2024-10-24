@@ -44,10 +44,12 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
           eq: new Date().toISOString().split("T")[0],
         },
       },  {
-        authMode: "apiKey",
-        headers: {
-          Authorization: event?.request?.headers?.authorization || "", 
-        }});
+        authMode: "lambda",
+        // headers: {
+        //   Authorization: event?.request?.headers?.authorization || "", 
+        // }
+      
+      });
 
     console.log("existingReservations", JSON.stringify(existingReservations));
 
@@ -78,10 +80,10 @@ export const handler: Schema["createConfirmedReservation"]["functionHandler"] =
       //   // authToken: event?.request?.headers?.authorization,
       // },
       {
-        authMode: "iam",
-        headers: {
-          Authorization: event?.request?.headers?.authorization || "", 
-        },
+        authMode: "lambda",
+        // headers: {
+        //   Authorization: event?.request?.headers?.authorization || "", 
+        // },
       }
     );
     console.log("JSON.stringify(data)", JSON.stringify(req));
