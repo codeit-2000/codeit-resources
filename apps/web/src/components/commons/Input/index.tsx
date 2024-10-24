@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { ComponentProps, ForwardedRef, forwardRef } from "react";
+import { ComponentProps } from "react";
 import { UseFormRegisterReturn } from "react-hook-form";
 
 interface InputProps extends ComponentProps<"input"> {
@@ -15,17 +15,14 @@ interface InputProps extends ComponentProps<"input"> {
   register?: UseFormRegisterReturn;
 }
 
-function Input(
-  {
-    id,
-    label,
-    errorMessage = "",
-    type = "text",
-    register,
-    ...props
-  }: InputProps,
-  ref: ForwardedRef<HTMLInputElement>,
-) {
+function Input({
+  id,
+  label,
+  errorMessage = "",
+  type = "text",
+  register,
+  ...props
+}: InputProps) {
   return (
     <div className="flex flex-col gap-8">
       <div className="relative">
@@ -42,7 +39,6 @@ function Input(
           })}
           placeholder=" "
           {...props}
-          ref={ref}
         />
         <label
           htmlFor={id}
@@ -63,4 +59,4 @@ function Input(
   );
 }
 
-export default forwardRef(Input);
+export default Input;
