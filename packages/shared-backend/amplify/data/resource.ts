@@ -26,10 +26,12 @@ const schema = a.schema({
       index("role").sortKeys(["createdAt"]).queryField("listUsersByRoleDate"),
     ]),
 
+  ResourceType: a.enum(["ROOM", "SEAT", "EQUIPMENT"]),
+
   // Resource Table
   Resource: a
     .model({
-      resourceType: a.enum(["ROOM", "SEAT", "EQUIPMENT"]),
+      resourceType: a.ref("ResourceType"),
       resourceSubtype: a.string(),
       name: a.string().required(),
       description: a.string(),
@@ -47,11 +49,19 @@ const schema = a.schema({
     ]),
 
   // Reservation Table
-  ReservationStatus: a.enum(["CONFIRMED", "CANCELED", "PASSED"]),
+  ReservationStatus: a.enum([
+    "CONFIRMED",
+    "CANCELED",
+    "PASSED",
+    "FIXED",
+    "DISABLED",
+  ]),
 
   Reservation: a
     .model({
+      title: a.string(),
       resourceId: a.id().required(), // 연결된 리소스 id
+      resourceType: a.ref("ResourceType"),
       resource: a.belongsTo("Resource", "resourceId"), // Resource 컬렉션(테이블)에서 [Reservation의 resourceId]를 사용해서 리소스를 연결
       date: a.date().required(), // DATE,SO 8601 확장 날짜 문자열 (형식: YYYY-MM-DD)
       startTime: a.time().required(), // TIME, ISO 8601 확장 시간 문자열 (형식: hh:mm:ss.sss)
@@ -66,12 +76,15 @@ const schema = a.schema({
       //   date: {
       //     eq: "2024-10-15",
       //   }
+
       index("resourceId")
         .sortKeys(["date", "startTime", "status"])
         .queryField("listByResource"),
     ])
-    //TODO participants에 속한 유저만 수정 가능하도록 수정
-    .authorization((allow) => [allow.authenticated()]),
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.groups(["ADMIN", "MEMBER"]),
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
