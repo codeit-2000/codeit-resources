@@ -17,7 +17,7 @@ const schema = a.schema({
       email: a.string().required(),
       role: a.enum(["ADMIN", "MEMBER"]),
       teams: a.string().array(), // 팀 id 목록
-      profileImage: a.url(),
+      profileImage: a.string(),
       createdAt: a.datetime(),
     })
     .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
@@ -33,7 +33,7 @@ const schema = a.schema({
       resourceSubtype: a.string(),
       name: a.string().required(),
       description: a.string(),
-      image: a.url(),
+      image: a.string(),
       reservations: a.hasMany("Reservation", "resourceId"),
     })
     .secondaryIndexes((index) => [index("resourceType")])
