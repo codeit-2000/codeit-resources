@@ -5,6 +5,7 @@ import AuthTest from "@src/pages/auth-test";
 import Dashboard from "@src/pages/dashboard";
 import Equipments from "@src/pages/equipments";
 import MeetingRooms from "@src/pages/meeting-rooms";
+import NotFoundPage from "@src/pages/not-found-page";
 import Seats from "@src/pages/seats";
 import SignIn from "@src/pages/sign-in";
 import { Route, Routes } from "react-router-dom";
@@ -27,6 +28,7 @@ export default function Router() {
 
       {/** 테스트 페이지 */}
       <Route path="/auth-test" element={<AuthTest />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }
