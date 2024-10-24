@@ -5,7 +5,7 @@ const schema = a.schema({
   Team: a
     .model({
       name: a.string().required(),
-      members: a.string().array(), // 멤버 id 목록
+      members: a.string().array(), // 해당 팀에 소속된 유저 id 목록
     })
     .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])]),
 
@@ -16,7 +16,7 @@ const schema = a.schema({
       username: a.string().required(),
       email: a.string().required(),
       role: a.enum(["ADMIN", "MEMBER"]),
-      teams: a.string().array(), // 팀 id 목록
+      teams: a.string().array(), // 소속된 팀 id 목록
       profileImage: a.url(),
       createdAt: a.datetime(),
     })

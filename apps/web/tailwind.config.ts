@@ -174,6 +174,9 @@ export default {
           { lineHeight: "15px", letterSpacing: "-0.3px", fontWeight: "400" },
         ],
       },
+      boxShadow: {
+        "dropdown-wrapper": "0px 2px 4px 0px #3332360F",
+      },
     },
   },
   plugins: [],

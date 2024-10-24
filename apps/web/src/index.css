@@ -6,18 +6,20 @@
   font-family: "Spoqa Han Sans Neo", "sans-serif";
 }
 
-input:-webkit-autofill {
-  box-shadow: 0 0 0 1000px white inset !important;
-}
+@layer components {
+  input.autofill-target:-webkit-autofill {
+    @apply shadow-[0_0_0_1000px_white_inset] !important;
+  }
 
-input:hover,
-input:-webkit-autofill:hover {
-  box-shadow: 0 0 0 1000px #f6f6f8 inset !important;
-}
+  input.autofill-target:hover,
+  input.autofill-target:-webkit-autofill:hover {
+    @apply shadow-[0_0_0_1000px_#f6f6f8_inset] !important;
+  }
 
-input:focus,
-input:-webkit-autofill:focus {
-  box-shadow: 0 0 0 1000px #f8ecff inset !important;
+  input.autofill-target:focus,
+  input.autofill-target:-webkit-autofill:focus {
+    @apply shadow-[0_0_0_1000px_#f8ecff_inset] !important;
+  }
 }
 
 .input-base {
