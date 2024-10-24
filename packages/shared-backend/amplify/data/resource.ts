@@ -78,8 +78,14 @@ const schema = a.schema({
       //   }
 
       index("resourceId")
-        .sortKeys(["date", "startTime", "status"])
-        .queryField("listByResource"),
+        .sortKeys(["date"])
+        .queryField("listByResourceIdAndDate")
+        .name("listByResourceIdAndDate"),
+
+      index("resourceType")
+        .sortKeys(["date"])
+        .queryField("listByResourceTypeAndDate")
+        .name("listByResourceTypeAndDate"),
     ])
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
