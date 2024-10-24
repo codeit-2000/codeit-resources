@@ -34,6 +34,7 @@ function ListItem({
         height,
         {
           "bg-gray-10": isBackground,
+          "bg-gray-0": !isBackground,
         },
         {
           "border-gray-70 duration-300": isEditMode,
