@@ -62,10 +62,9 @@ export default function Popover({ children }: { children: React.ReactNode }) {
 // Toggle 컴포넌트
 interface ToggleProps {
   icon: ReactNode;
-  label?: string;
 }
 
-function Toggle({ icon, label }: ToggleProps) {
+function Toggle({ icon }: ToggleProps) {
   const { togglePopover } = usePopoverContext();
 
   return (
@@ -74,7 +73,6 @@ function Toggle({ icon, label }: ToggleProps) {
       onClick={togglePopover}
       className="flex h-40 w-40 items-center justify-between rounded-full"
     >
-      {label && <span className="mr-2">{label}</span>}
       {icon}
     </button>
   );
@@ -85,7 +83,7 @@ function Wrapper({ children }: { children: React.ReactNode }) {
   const { isOpen } = usePopoverContext();
 
   return isOpen ? (
-    <div className="bg-gray-5 rounded-8 border-gray-20 shadow-dropdown-wrapper w-98 absolute z-50 mt-3 flex flex-col gap-3 border p-8">
+    <div className="bg-gray-5 rounded-8 border-gray-20 shadow-dropdown-wrapper absolute left-auto right-0 z-50 mt-3 flex w-auto flex-col gap-3 border p-8">
       {children}
     </div>
   ) : null;
@@ -102,7 +100,7 @@ function Item({ label, onClick }: ItemProps) {
     <button
       type="button"
       onClick={onClick}
-      className="rounded-8 text-15-500 text-gray-100-opacity-80 hover:bg-purple-opacity-5 hover:text-purple-80 w-full px-12 py-6 text-center"
+      className="rounded-8 text-15-500 text-gray-100-opacity-80 hover:bg-purple-opacity-5 hover:text-purple-80 w-full text-nowrap px-12 py-6 text-center"
     >
       {label}
     </button>
