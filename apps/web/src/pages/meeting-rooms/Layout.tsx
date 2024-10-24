@@ -30,7 +30,6 @@ function Header({ className }: { className?: string }) {
     setDate((prev) => {
       const nextDateYear = prev.month === 12 ? prev.year + 1 : prev.year;
       const nextDateMonth = prev.month === 12 ? 0 : prev.month;
-
       if (nextDateMonth + 1 === today.month) return today;
       return getDaysUntilEndOfMonth(new Date(nextDateYear, nextDateMonth, 1));
     });
@@ -40,7 +39,7 @@ function Header({ className }: { className?: string }) {
     <header className={className}>
       <div className="flex">
         {/* 타이틀 */}
-        <h1 className="text-24-700 md:text-28-700 mb-16 mr-24 text-gray-100">
+        <h1 className="text-24-700 md:text-28-700 mr-13 mb-16 text-gray-100 md:mr-24">
           회의실 예약
         </h1>
         <div>
@@ -54,7 +53,7 @@ function Header({ className }: { className?: string }) {
           >
             <ChevronLeft />
           </button>
-          <span className="text-28-700 mx-16 text-gray-100">{`${year}년 ${month}월`}</span>
+          <span className="text-24-700 md:text-28-700 mx-16 text-gray-100">{`${year}년 ${month}월`}</span>
           <button
             className="text-14-500"
             type="button"
@@ -65,7 +64,11 @@ function Header({ className }: { className?: string }) {
         </div>
       </div>
       {/* 탭 */}
-      <Tab defaultIndex={0} className="border-gray-40 gap-24 border-b">
+      <Tab
+        key={`${year}-${month}`}
+        defaultIndex={0}
+        className="border-gray-40 gap-24 border-b"
+      >
         {({ activeIndex, handleClick }) =>
           days.map(({ id, day, weekday }, index) => (
             <div key={id}>
@@ -96,8 +99,8 @@ function Header({ className }: { className?: string }) {
 function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="">
-      <Header className="px-64 pt-24" />
-      <section className="bg-gray-5 min-h-screen px-64 py-24">
+      <Header className="px-16 pt-64 md:px-64 md:pt-24" />
+      <section className="bg-gray-5 min-h-screen px-16 pt-64 md:px-64 md:pt-24">
         {children}
       </section>
     </div>
