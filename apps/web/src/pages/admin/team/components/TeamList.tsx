@@ -42,11 +42,11 @@ function TeamList() {
 
   if (data) {
     return (
-      <div className="mt-40 flex flex-col gap-16 pb-80">
+      <div className="pb-150 mt-40 flex flex-col gap-16 md:pb-80">
         {data.length ? (
           <>
             {data.map((item) => (
-              <ListItem key={item.id}>
+              <ListItem key={item.id} gap="gap-18 md:gap-32">
                 <ListItem.Title>{item.name}</ListItem.Title>
                 <ListItem.Right>
                   <div className="flex cursor-pointer gap-8">
