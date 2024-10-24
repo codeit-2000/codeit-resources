@@ -1,98 +1,104 @@
 import ChevronLeft from "@repo/assets/icons/icon-chevron-left.svg?react";
 import ChevronRight from "@repo/assets/icons/icon-chevron-right.svg?react";
+import getDaysUntilEndOfMonth from "@repo/lib/utils/getDaysUntilEndOfMonth";
+import Badge from "@src/components/commons/Badge";
+import Tab from "@src/components/commons/Tab";
 import clsx from "clsx";
 import { useState } from "react";
 
-import ReservationForm from "./ReservationForm";
+interface DateState {
+  year: number;
+  month: number;
+  days: Array<{ id: string; day: string; weekday: string }>;
+}
 
 function Header({ className }: { className?: string }) {
+  const today = getDaysUntilEndOfMonth();
+  const [date, setDate] = useState<DateState>(today);
+  const { year, month, days } = date;
+
+  const handlePrevButton = () => {
+    setDate((prev) => {
+      const prevDateYear = prev.month === 1 ? prev.year - 1 : prev.year;
+      const prevDateMonth = prev.month === 1 ? 11 : prev.month - 2;
+      if (prevDateMonth + 1 === today.month) return today;
+      return getDaysUntilEndOfMonth(new Date(prevDateYear, prevDateMonth, 1));
+    });
+  };
+
+  const handleNextButton = () => {
+    setDate((prev) => {
+      const nextDateYear = prev.month === 12 ? prev.year + 1 : prev.year;
+      const nextDateMonth = prev.month === 12 ? 0 : prev.month;
+
+      if (nextDateMonth + 1 === today.month) return today;
+      return getDaysUntilEndOfMonth(new Date(nextDateYear, nextDateMonth, 1));
+    });
+  };
+
   return (
     <header className={className}>
       <div className="flex">
         {/* 타이틀 */}
-        <h1 className="text-24-700 md:text-28-700 mr-24 text-gray-100">
+        <h1 className="text-24-700 md:text-28-700 mb-16 mr-24 text-gray-100">
           회의실 예약
         </h1>
-        {/* TODO 날짜 이동, 탭이랑 연동 후 기능 구현 */}
         <div>
-          <button className="text-14-500" type="button">
+          <button
+            className={clsx(
+              "text-14-500 disabled:cursor-not-allowed disabled:opacity-30",
+            )}
+            type="button"
+            onClick={handlePrevButton}
+            disabled={year === today.year && month === today.month}
+          >
             <ChevronLeft />
           </button>
-          <span className="text-28-700 mx-16 text-gray-100">2024년 7월</span>
-          <button className="text-14-500" type="button">
+          <span className="text-28-700 mx-16 text-gray-100">{`${year}년 ${month}월`}</span>
+          <button
+            className="text-14-500"
+            type="button"
+            onClick={handleNextButton}
+          >
             <ChevronRight />
           </button>
         </div>
       </div>
       {/* 탭 */}
-      {/* 추가 예정 */}
+      <Tab defaultIndex={0} className="border-gray-40 gap-24 border-b">
+        {({ activeIndex, handleClick }) =>
+          days.map(({ id, day, weekday }, index) => (
+            <div key={id}>
+              {index === 0 && year === today.year && month === today.month ? (
+                <Badge variant="primary">오늘</Badge>
+              ) : (
+                <div className="h-24 w-1" />
+              )}
+              <button
+                type="button"
+                className={clsx("block", {
+                  "border-b-2 border-violet-800 pb-6 font-semibold text-violet-800":
+                    index === activeIndex,
+                  "pb-8": index !== activeIndex,
+                })}
+                onClick={() => handleClick(index)}
+              >
+                {day}({weekday})
+              </button>
+            </div>
+          ))
+        }
+      </Tab>
     </header>
   );
 }
 
-interface RoomSelectionProps {
-  subType: string;
-  roomList: string[];
-}
-
-function RoomSelection({ subType, roomList }: RoomSelectionProps) {
-  const [activeRoom, setActiveRoom] = useState<string | null>(null);
-
-  const handleRoomClick = (room: string) => {
-    setActiveRoom(room);
-  };
-
-  return (
-    <>
-      <h3 className="text-14-500 text-gray-100-opacity-50 mb-16">{subType}</h3>
-      <ul className="flex gap-16 md:flex-col">
-        {roomList.map((room) => (
-          <li key={room}>
-            <button
-              type="button"
-              onClick={() => handleRoomClick(room)}
-              className={clsx(
-                "text-16-500 rounded-8 md:min-w-128 md:h-59 flex h-48 min-w-80 cursor-pointer items-center justify-center border-[1px]",
-                {
-                  "bg-purple-80 md:bg-gray-80 text-gray-0": activeRoom === room, // 액티브 상태일 때
-                  "text-gray-100-opacity-80 border-gray-100-opacity-10":
-                    activeRoom !== room, // 비액티브 상태일 때
-                },
-              )}
-            >
-              {room}
-            </button>
-          </li>
-        ))}
-      </ul>
-    </>
-  );
-}
-
-function Layout() {
+function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="">
-      <ReservationForm />
-      <Header className="px-64 py-24" />
+      <Header className="px-64 pt-24" />
       <section className="bg-gray-5 min-h-screen px-64 py-24">
-        <RoomSelection
-          subType="미팅룸"
-          roomList={["미팅룸 A", "미팅룸 B", "미팅룸 C"]}
-        />
-      </section>
-    </div>
-  );
-}
-
-function MobileLayout() {
-  return (
-    <div className="">
-      <Header className="px-64 py-24" />
-      <section className="bg-gray-5 min-h-screen px-64 py-24">
-        <RoomSelection
-          subType="미팅룸"
-          roomList={["미팅룸 A", "미팅룸 B", "미팅룸 C"]}
-        />
+        {children}
       </section>
     </div>
   );
