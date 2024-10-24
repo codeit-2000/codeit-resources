@@ -1,3 +1,7 @@
+import { Schema } from "@repo/backend/amplify/data/resource";
+import { generateClient } from "aws-amplify/api";
+import { useEffect } from "react";
+
 import SeatButton from "./SeatButton";
 
 /*
@@ -31,7 +35,85 @@ const SEATING_CHART = {
   J: ["J0", "J1", "J2", "J3", "J4"],
 };
 
+const client = generateClient<Schema>();
+
+const createResource = async ({
+  resourceType,
+  resourceSubtype,
+  name,
+}: {
+  resourceType: string;
+  resourceSubtype: string;
+  name: string;
+  // eslint-disable-next-line consistent-return
+}) => {
+  try {
+    const response = await client.models.Resource.create({
+      resourceType: "SEAT",
+      resourceSubtype,
+      name,
+    });
+    console.log(`Resource created: ${name}`, response);
+    return response;
+  } catch (error) {
+    console.error(`Failed to create resource: ${name}`, error);
+  }
+};
+
+const createResourcesFromSeatingChart = async () => {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const [row, seats] of Object.entries(SEATING_CHART)) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const seat of seats) {
+      // eslint-disable-next-line no-await-in-loop
+      await createResource({
+        resourceType: "SEAT", // Resource 타입을 고정
+        resourceSubtype: row, // A, B, C 등 row 값을 resourceSubtype으로 설정
+        name: seat, // 각 좌석명을 name으로 설정
+      });
+    }
+  }
+};
+
 export default function SeatGrid() {
+  const createReservation = async () => {
+    // createResourcesFromSeatingChart();
+    const res = await client.models.Reservation.create({
+      resourceId: "49eeb727-2660-4ea2-9cd9-a2be93184fb9",
+      resourceType: "SEAT",
+      date: "2024-10-24",
+      status: "CONFIRMED",
+      startTime: "00:00:00.000",
+      endTime: "23:59:00.000",
+      participants: ["천권희"],
+    });
+
+    console.log(res);
+
+    // const response = await client.models.Resource.get({ name: "A1 " });
+  };
+
+  useEffect(() => {
+    (async () => {
+      const res = await client.models.Reservation.list({
+        filter: {
+          resourceType: { eq: "SEAT" },
+          date: { eq: "2024-10-24" },
+        },
+        selectionSet: [
+          "id",
+          "date",
+          "status",
+          "participants",
+          "resource.id",
+          "resource.name",
+        ],
+      });
+
+      console.log(res);
+    })();
+  }, []);
+
   return (
     <div className="md:my-83 md:mx-118 mx-16 mt-28 grid w-[668px] auto-rows-auto grid-cols-2 gap-40 md:w-[1004px] xl:flex-shrink-0">
       <SeatBlock seats={SEATING_CHART.A} />
@@ -44,6 +126,9 @@ export default function SeatGrid() {
       <SeatBlock seats={SEATING_CHART.H} />
       <SeatBlock seats={SEATING_CHART.I} />
       <SeatBlock seats={SEATING_CHART.J} />
+      <button type="button" onClick={createReservation}>
+        추가하기
+      </button>
     </div>
   );
 }
