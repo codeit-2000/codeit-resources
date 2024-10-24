@@ -26,8 +26,8 @@ function DeleteTeamModal({ teamId, teamName }: DeleteTeamModalProps) {
       }
       queryClient.invalidateQueries({ queryKey: ["teamList"] });
     },
-    onError: (err) => {
-      error(err.message);
+    onError: () => {
+      error("팀을 삭제하는데 실패하였습니다.");
     },
     onSettled: () => {
       closeModal();
