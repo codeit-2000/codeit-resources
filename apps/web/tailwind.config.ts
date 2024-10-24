@@ -10,6 +10,16 @@ export default {
         ...colors,
       },
       fontSize: {
+        // 38px
+        "38-700": [
+          "38px",
+          { lineHeight: "50px", letterSpacing: "-0.3px", fontWeight: "700" },
+        ],
+        "38-500": [
+          "38px",
+          { lineHeight: "50px", letterSpacing: "-0.3px", fontWeight: "500" },
+        ],
+
         // 28px
         "28-700": [
           "28px",
