@@ -60,6 +60,7 @@ export const checkReservationConflict = async (
     resourceId,
     {
       date: { eq: date },
+      status: { eq: "CONFIRMED" },
     },
   );
 
