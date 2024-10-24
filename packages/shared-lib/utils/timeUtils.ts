@@ -59,3 +59,44 @@ export function getAvailableTimeSlots(
     return slotTotalMinutes >= currentTotalMinutes;
   });
 }
+
+/**
+ * "HH:MM" 형식의 시간을 분 단위의 숫자로 변환합니다.
+ *
+ * @param time - "HH:MM" 형식의 시간 문자열 (예: "14:30")
+ * @returns 총 분 수 또는 유효하지 않은 형식일 경우 null
+ */
+export function convertTimeToMinutes(time: string): number | null {
+  const timePattern = /^([01]\d|2[0-3]):([0-5]\d)$/;
+  const match = time.match(timePattern);
+
+  if (!match) {
+    return null; // 유효하지 않은 형식
+  }
+
+  const hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+
+  return hours * 60 + minutes;
+}
+
+/**
+ * 종료 시간이 시작 시간보다 늦은지 확인합니다.
+ *
+ * @param startTime - 시작 시간 문자열 ("HH:MM" 형식)
+ * @param endTime - 종료 시간 문자열 ("HH:MM" 형식)
+ * @returns 종료 시간이 시작 시간보다 늦으면 true, 그렇지 않으면 false
+ */
+export function isEndTimeAfterStartTime(
+  startTime: string,
+  endTime: string,
+): boolean {
+  const startMinutes = convertTimeToMinutes(startTime);
+  const endMinutes = convertTimeToMinutes(endTime);
+
+  if (startMinutes === null || endMinutes === null) {
+    return false; // 유효하지 않은 시간 형식
+  }
+
+  return endMinutes > startMinutes;
+}

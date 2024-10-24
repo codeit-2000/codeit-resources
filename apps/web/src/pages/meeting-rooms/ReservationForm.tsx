@@ -1,6 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import TIME_SLOT from "@repo/constants/constants/timeSlot";
 import {
+  createReservation,
+  updateReservation,
+} from "@repo/lib/api/reservation";
+import { getResourceList } from "@repo/lib/api/resource";
+import { Reservation, Resource } from "@repo/lib/api/utils";
+import {
   getAvailableTimeSlots,
   getCurrentTime,
 } from "@repo/lib/utils/timeUtils";
@@ -8,59 +14,93 @@ import { reservationSchema } from "@repo/lib/zod-schema/reservation";
 import Button from "@src/components/commons/Button";
 import Dropdown from "@src/components/commons/Dropdown";
 import Input from "@src/components/commons/Input";
+import { useEffect, useState } from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
 
 const TIME_SLOT_ITEMS = getAvailableTimeSlots(TIME_SLOT, getCurrentTime());
 
-function ReservationForm() {
-  const methods = useForm({
+type CreateReservation = Omit<Reservation, "resource">;
+type CreateReservationData = Pick<
+  Reservation,
+  "title" | "resourceId" | "startTime" | "endTime" | "participants"
+>;
+type ReservationFormData = CreateReservation & { id?: string };
+
+interface ReservationFormProps {
+  actionType: "create" | "update";
+  reservationData?: ReservationFormData;
+}
+
+function ReservationForm({
+  actionType,
+  reservationData,
+}: ReservationFormProps) {
+  const [roomList, setRoomList] = useState<Resource[]>([]);
+
+  const methods = useForm<CreateReservationData>({
     defaultValues: {
-      title: "",
-      resourceId: "",
-      startTime: "",
-      endTime: "",
-      // startTimeOption: "", // 시작 시간 옵션 (드롭다운 값)
-      // startTimeManual: "", // 시작 시간 수동 입력 값
-      // endTimeOption: "", // 종료 시간 옵션 (드롭다운 값)
-      // endTimeManual: "", // 종료 시간 수동 입력 값
-      participants: "",
+      title: reservationData?.title || "",
+      resourceId: reservationData?.resourceId || "",
+      startTime: reservationData?.startTime || "",
+      endTime: reservationData?.endTime || "",
+      // TODO: 멀티셀렉드롭다운 연결
+      participants: reservationData?.participants || [],
     },
     resolver: zodResolver(reservationSchema),
-    // mode: "onChange",
-    // reValidateMode: "onChange",
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
 
-  const {
-    handleSubmit,
-    control,
-    watch,
-    formState: { errors },
-  } = methods;
+  const { handleSubmit, control } = methods;
 
-  // 폼 제출 시 처리 함수
-  // ts-ignore
-  // eslint-disable-next-line
-  const onSubmit = (data: any) => {
-    // // 드롭다운에서 "직접 입력"을 선택했는지 확인하고, 해당 값을 사용
-    const startTime =
-      data.startTimeOption === "manual"
-        ? data.startTimeManual
-        : data.startTimeOption;
-    const endTime =
-      data.endTimeOption === "manual" ? data.endTimeManual : data.endTimeOption;
-
-    // 최종 제출 데이터 구성
+  const onSubmit = async (data: CreateReservationData) => {
     const formData = {
       title: data.title,
       resourceId: data.resourceId,
-      startTime,
-      endTime,
-      participants: data.participants,
+      startTime: data.startTime,
+      endTime: data.endTime,
+      participants: [
+        "f488fd4c-30d1-70c9-0cb6-13e25754b919",
+        "c4d80dbc-50f1-70a3-d651-cca949d01276",
+      ],
+      date: "2024-10-25", // TODO: 실제 날짜로 변경 필요
     };
 
-    console.log(formData);
-    // 여기에 폼 데이터를 서버로 전송하거나 추가적인 처리를 구현
+    // actionType에 따라 예약 생성 또는 업데이트
+    if (actionType === "create") {
+      const { data: reservation, errors } = await createReservation(
+        formData as CreateReservation,
+      );
+
+      if (errors) {
+        console.error("예약 실패...", errors);
+        return;
+      }
+      console.log("예약 성공!", reservation);
+    } else if (actionType === "update" && reservationData?.id) {
+      const updateFormData = { ...formData, id: reservationData.id };
+      const { data: updatedReservation, errors } = await updateReservation(
+        updateFormData as ReservationFormData,
+      );
+
+      if (errors) {
+        console.error("예약 수정 실패...", errors);
+        return;
+      }
+      console.log("예약 수정 성공!", updatedReservation);
+    }
   };
+
+  // 리소스 목록을 가져와 roomList 업데이트
+  useEffect(() => {
+    const fetchRooms = async () => {
+      // @ts-expect-error eslint-disable-next-line
+      const { data: rooms } = await getResourceList({ resourceType: "ROOM" });
+      setRoomList(rooms);
+    };
+
+    fetchRooms();
+  }, []);
 
   return (
     <FormProvider {...methods}>
@@ -71,11 +111,11 @@ function ReservationForm() {
         <Input
           id="title"
           label="미팅 제목"
-          {...methods.register("title", {
+          register={methods.register("title", {
             required: "미팅 제목을 입력해주세요.",
           })}
-          // error={errors.title?.message}
         />
+
         <Controller
           name="resourceId"
           control={control}
@@ -87,16 +127,9 @@ function ReservationForm() {
                 errorMessage={error ? error.message : ""}
               />
               <Dropdown.Wrapper>
-                {/* TODO 타입과 일치하는 리소스 정보 모두 렌더링 */}
-                <Dropdown.Item itemValue="" label="선택" />
-                <Dropdown.Item
-                  itemValue="회의실A의resourceId"
-                  label="회의실A"
-                />
-                <Dropdown.Item
-                  itemValue="회의실B의resourceId"
-                  label="회의실B"
-                />
+                {roomList?.map((room) => (
+                  <Dropdown.Item itemValue={room.id} label={room.name} />
+                ))}
               </Dropdown.Wrapper>
             </Dropdown>
           )}
@@ -104,7 +137,7 @@ function ReservationForm() {
 
         {/* 시간 설정 fieldset */}
         <fieldset className="inline-flex gap-16 [&>div]:grow">
-          <div className="w-200">
+          <div className="">
             <Controller
               name="startTime"
               control={control}
@@ -121,7 +154,7 @@ function ReservationForm() {
                   <Dropdown.Wrapper>
                     <Dropdown.ManualItem>직접 입력</Dropdown.ManualItem>
                     {TIME_SLOT_ITEMS.map((item) => (
-                      <Dropdown.Item itemValue={item} />
+                      <Dropdown.Item key={item} itemValue={item} />
                     ))}
                   </Dropdown.Wrapper>
                 </Dropdown>
@@ -129,7 +162,7 @@ function ReservationForm() {
             />
           </div>
 
-          <div className="w-200">
+          <div className="">
             <Controller
               name="endTime"
               control={control}
@@ -146,7 +179,7 @@ function ReservationForm() {
                   <Dropdown.Wrapper>
                     <Dropdown.ManualItem>직접 입력</Dropdown.ManualItem>
                     {TIME_SLOT_ITEMS.map((item) => (
-                      <Dropdown.Item itemValue={item} />
+                      <Dropdown.Item key={item} itemValue={item} />
                     ))}
                   </Dropdown.Wrapper>
                 </Dropdown>
@@ -154,11 +187,13 @@ function ReservationForm() {
             />
           </div>
         </fieldset>
+
+        {/* TODO 멀티 셀렉으로 변경 */}
         <Input id="p" label="참여자" />
 
         <div className="mt-auto">
           <Button variant="primary" type="submit">
-            예약하기
+            {actionType === "create" ? "예약하기" : "예약 수정"}
           </Button>
         </div>
       </form>
