@@ -1,5 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { Schema } from "@repo/backend/amplify/data/resource";
 import TIME_SLOT from "@repo/constants/constants/timeSlot";
+import { createReservation } from "@repo/lib/api/reservation";
 import {
   getAvailableTimeSlots,
   getCurrentTime,
@@ -12,6 +14,9 @@ import { Controller, FormProvider, useForm } from "react-hook-form";
 
 const TIME_SLOT_ITEMS = getAvailableTimeSlots(TIME_SLOT, getCurrentTime());
 
+type Reservation = Schema["Reservation"]["type"];
+type CreateReservation = Omit<Reservation, "resource">;
+
 function ReservationForm() {
   const methods = useForm({
     defaultValues: {
@@ -19,47 +24,39 @@ function ReservationForm() {
       resourceId: "",
       startTime: "",
       endTime: "",
-      // startTimeOption: "", // 시작 시간 옵션 (드롭다운 값)
-      // startTimeManual: "", // 시작 시간 수동 입력 값
-      // endTimeOption: "", // 종료 시간 옵션 (드롭다운 값)
-      // endTimeManual: "", // 종료 시간 수동 입력 값
-      participants: "",
+      // TODO: 멀티셀렉드롭다운 연결
+      participants: "f488fd4c-30d1-70c9-0cb6-13e25754b919",
     },
     resolver: zodResolver(reservationSchema),
-    // mode: "onChange",
-    // reValidateMode: "onChange",
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
 
   const {
     handleSubmit,
     control,
-    watch,
-    formState: { errors },
+    // watch,
+    // formState: { errors },
   } = methods;
 
-  // 폼 제출 시 처리 함수
   // ts-ignore
   // eslint-disable-next-line
-  const onSubmit = (data: any) => {
-    // // 드롭다운에서 "직접 입력"을 선택했는지 확인하고, 해당 값을 사용
-    const startTime =
-      data.startTimeOption === "manual"
-        ? data.startTimeManual
-        : data.startTimeOption;
-    const endTime =
-      data.endTimeOption === "manual" ? data.endTimeManual : data.endTimeOption;
-
-    // 최종 제출 데이터 구성
+  const onSubmit = async (data: CreateReservation) => {
+    // TODO 실제 데이터 처리
     const formData = {
       title: data.title,
-      resourceId: data.resourceId,
-      startTime,
-      endTime,
+      resourceId: "49eeb727-2660-4ea2-9cd9-a2be93184fb9",
+      startTime: data.startTime,
+      endTime: data.endTime,
       participants: data.participants,
+      status: "CONFIRMED",
+      date: "2024-10-24",
     };
 
     console.log(formData);
-    // 여기에 폼 데이터를 서버로 전송하거나 추가적인 처리를 구현
+    const dd = await createReservation(formData);
+
+    console.log(dd);
   };
 
   return (
@@ -71,10 +68,9 @@ function ReservationForm() {
         <Input
           id="title"
           label="미팅 제목"
-          {...methods.register("title", {
+          register={methods.register("title", {
             required: "미팅 제목을 입력해주세요.",
           })}
-          // error={errors.title?.message}
         />
         <Controller
           name="resourceId"
@@ -121,7 +117,7 @@ function ReservationForm() {
                   <Dropdown.Wrapper>
                     <Dropdown.ManualItem>직접 입력</Dropdown.ManualItem>
                     {TIME_SLOT_ITEMS.map((item) => (
-                      <Dropdown.Item itemValue={item} />
+                      <Dropdown.Item key={item} itemValue={item} />
                     ))}
                   </Dropdown.Wrapper>
                 </Dropdown>
@@ -146,7 +142,7 @@ function ReservationForm() {
                   <Dropdown.Wrapper>
                     <Dropdown.ManualItem>직접 입력</Dropdown.ManualItem>
                     {TIME_SLOT_ITEMS.map((item) => (
-                      <Dropdown.Item itemValue={item} />
+                      <Dropdown.Item key={item} itemValue={item} />
                     ))}
                   </Dropdown.Wrapper>
                 </Dropdown>
@@ -154,6 +150,8 @@ function ReservationForm() {
             />
           </div>
         </fieldset>
+
+        {/* TODO 멀티 셀렉으로 변경 */}
         <Input id="p" label="참여자" />
 
         <div className="mt-auto">
