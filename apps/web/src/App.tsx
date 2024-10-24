@@ -1,15 +1,32 @@
+import ToastProvider from "@src/components/commons/Toast/ToastProvider";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { BrowserRouter } from "react-router-dom";
-import MobileSizeWatcher from "./components/layout/MobileSizeWatcher";
-import ModalProvider from "./components/commons/Modal";
+
 import Router from "./Router";
+import ModalProvider from "./components/commons/Modal";
+import MobileSizeWatcher from "./components/layout/MobileSizeWatcher";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+      staleTime: 60000,
+    },
+  },
+});
 
 function App() {
   return (
-    <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <ToastProvider />
         <MobileSizeWatcher />
         <ModalProvider />
         <Router />
+        <ReactQueryDevtools initialIsOpen={false} />
       </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 

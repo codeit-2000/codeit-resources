@@ -1,6 +1,14 @@
 import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
 
 const schema = a.schema({
+  // Team Table
+  Team: a
+    .model({
+      name: a.string().required(),
+      members: a.string().array(), // 멤버 id 목록
+    })
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])]),
+
   // User Table
   User: a
     .model({
@@ -8,14 +16,14 @@ const schema = a.schema({
       username: a.string().required(),
       email: a.string().required(),
       role: a.enum(["ADMIN", "MEMBER"]),
-      team: a.string(),
+      teams: a.string().array(), // 팀 id 목록
       profileImage: a.url(),
+      createdAt: a.datetime(),
     })
-    .authorization((allow) => [allow.owner()])
+    .authorization((allow) => [allow.groups(["ADMIN", "MEMBER"])])
     .secondaryIndexes((index) => [
-      index("role"), // role에 따른 멤버들 리스트 보여줌 - 관리자 페이지
-      // TODO: team으로 1차 정렬하고, username으로 2차 정렬
-      // TODO: 최신순, 오래된순, 가나다순 정렬
+      index("role").sortKeys(["username"]).queryField("listUsersByRoleName"),
+      index("role").sortKeys(["createdAt"]).queryField("listUsersByRoleDate"),
     ]),
 
   // Resource Table
@@ -33,7 +41,10 @@ const schema = a.schema({
     // const { data, errors } = await client.models.Resource.listResourceByResourceType({
     //   resourceType: 'Seat',
     // });
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [
+      allow.authenticated().to(["read"]),
+      allow.group("ADMIN"),
+    ]),
 
   // Reservation Table
   ReservationStatus: a.enum(["CONFIRMED", "CANCELED", "PASSED"]),
