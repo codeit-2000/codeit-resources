@@ -38,7 +38,7 @@ function AuthTestPage() {
       alert(`로그아웃 실패${error}`);
     }
   };
-
+  //
   // 멤버추가
   const handleSignUp = async () => {
     try {

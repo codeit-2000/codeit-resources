@@ -41,9 +41,9 @@ export default function Layout() {
     getUser();
   }, [setUser, setIsAuthenticated]);
 
-  if (isAuthenticated === false) {
-    return <Navigate to="/sign-in" />;
-  }
+  // if (isAuthenticated === false) {
+  //   return <Navigate to="/sign-in" />;
+  // }
 
   return (
     <>
