@@ -1,5 +1,4 @@
-import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
-import { AmplifyFunction, ConstructFactory } from "@aws-amplify/plugin-types";
+import { type ClientSchema, a, defineData, defineFunction } from "@aws-amplify/backend";
 
 import { createConfirmedReservation } from "../function/createConfirmedReservation/resource";
 import { deleteReservationById } from "../function/deleteReservationById/resource";
@@ -119,16 +118,19 @@ const schema = a.schema({
 
 export type Schema = ClientSchema<typeof schema>;
 
-export const data = (authFunction: ConstructFactory<AmplifyFunction>) => defineData({
+export const data = defineData({
   schema,
   authorizationModes: {
     defaultAuthorizationMode: "userPool",
     lambdaAuthorizationMode: {
-      function: authFunction,
+      function: defineFunction({
+        entry: "./custom-authorizer.ts",
+      }),
       timeToLiveInSeconds: 300,
     },
     apiKeyAuthorizationMode: {
       expiresInDays: 30,
     },
+   
   },
 });
