@@ -18,7 +18,7 @@ const cognitoClient = new CognitoIdentityProviderClient({
 const addUserToGroup = async (email: string, groupName: string) => {
   const params = {
     GroupName: groupName,
-    UserPoolId: import.meta.env.VITE_USER_POOL_ID,
+    UserPoolId: "ap-northeast-2_JjCNX3vJl",
     Username: email,
   };
 
@@ -34,7 +34,7 @@ const addUserToGroup = async (email: string, groupName: string) => {
 // Cognito에서 바로 사용자 확인 (이메일 인증 없이 활성화)
 const confirmUserInCognito = async (email: string) => {
   const adminConfirmParams = {
-    UserPoolId: import.meta.env.VITE_USER_POOL_ID,
+    UserPoolId: "ap-northeast-2_JjCNX3vJl",
     Username: email,
   };
 
@@ -50,7 +50,7 @@ const confirmUserInCognito = async (email: string) => {
 // 이메일 확인 여부를 강제로 "예"로 설정
 const verifyUserEmail = async (email: string) => {
   const updateParams = {
-    UserPoolId: import.meta.env.VITE_USER_POOL_ID,
+    UserPoolId: "ap-northeast-2_JjCNX3vJl",
     Username: email,
     UserAttributes: [
       {
