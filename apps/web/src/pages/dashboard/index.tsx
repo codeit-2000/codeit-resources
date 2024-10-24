@@ -3,6 +3,8 @@ import MembersSelectDropdown from "@src/components/commons/Dropdown/MultiSelectD
 import TeamsSelectDrodowon from "@src/components/commons/Dropdown/MultiSelectDropdown/TeamsSelectDropdown";
 import { Member } from "@src/components/commons/Dropdown/dropdownTypes";
 import Popover from "@src/components/commons/Popover";
+import { userAtom } from "@src/store/authUserAtom";
+import { useAtomValue } from "jotai";
 import { useState } from "react";
 
 const departments = [
@@ -69,6 +71,7 @@ const members: Member[] = [
 ];
 
 export default function Dashboard() {
+  const user = useAtomValue(userAtom);
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
   const [selectedMembers, setSelectedMembers] = useState<Member[]>([]);
   // 선택된 팀을 추가하는 함수
@@ -101,7 +104,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1>This is Dashboard Page :)</h1>
+      <h1>안녕하세요 {user?.username} 님!</h1>
       <div className="w-340">
         <TeamsSelectDrodowon
           selectedTeams={selectedTeams}
