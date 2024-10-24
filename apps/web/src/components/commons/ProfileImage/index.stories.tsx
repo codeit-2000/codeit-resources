@@ -24,22 +24,15 @@ type Story = StoryObj<typeof meta>;
 // 기본 프로필 이미지 스토리
 export const Default: Story = {
   args: {
+    userId: "1",
     size: "md",
-  },
-};
-
-// 커스텀 프로필 이미지 스토리
-export const CustomImage: Story = {
-  args: {
-    imageUrl:
-      "https://us-tuna-sounds-images.voicemod.net/0ffbd88c-6c3c-45a7-9272-280811d98a8a-1712076812036.png",
-    size: "lg",
   },
 };
 
 // 작은 사이즈 스토리
 export const SmallSize: Story = {
   args: {
+    userId: "2",
     size: "sm",
   },
 };
@@ -47,6 +40,7 @@ export const SmallSize: Story = {
 // 큰 사이즈 스토리
 export const LargeSize: Story = {
   args: {
+    userId: "3",
     size: "lg",
   },
 };
