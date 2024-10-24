@@ -36,11 +36,11 @@ const schema = a.schema({
       image: a.url(),
       reservations: a.hasMany("Reservation", "resourceId"),
     })
-    .secondaryIndexes((index) => [index("resourceType")])
-    // ex) resourceType 기준으로 쿼리
-    // const { data, errors } = await client.models.Resource.listResourceByResourceType({
-    //   resourceType: 'Seat',
-    // });
+    .secondaryIndexes((index) => [
+      index("resourceType")
+        .sortKeys(["name"])
+        .queryField("listResourceByTypeAndName"),
+    ])
     .authorization((allow) => [
       allow.authenticated().to(["read"]),
       allow.group("ADMIN"),
