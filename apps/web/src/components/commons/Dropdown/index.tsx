@@ -18,25 +18,7 @@ import MeetingRoomToggle from "./Toggle/MeetingRoomToggle";
 import OrderToggle from "./Toggle/OrderToggle";
 import RoleToggle from "./Toggle/RoleToggle";
 import TimeToggle from "./Toggle/TimeToggle";
-
-interface DropdownContextType {
-  // 드랍다운의 open 여부를 나타내는 Boolean 상태
-  isOpen: boolean;
-  // 현재 값
-  value: string;
-  // 드랍다운을 열고 닫는 토글 함수
-  toggleDropdown: () => void;
-  // 드랍다운을 닫는 함수
-  closeDropdown: () => void;
-  // 값을 변경하는 함수
-  handleChange: (value: string) => void;
-  // 드랍다운의 종류를 나타내는 값 (role: 권한, order: 정렬, meetingRoom: 회의실 선택)
-  variant: "role" | "order" | "meetingRoom" | "startTime" | "endTime";
-  // 시간 입력 시 input으로 입력 받을 지를 나타내는 값
-  isInput: boolean;
-  // 시간 입력 시 input으로 입력 받을 지를 나타내는 값을 변경하는 함수
-  setIsInput: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { DropdownContextType, DropdownProps } from "./dropdownTypes";
 
 // 드롭다운 하위 컴포넌트들이 데이터를 전달 받기 위한 Context
 const DropdownContext = createContext<DropdownContextType | null>(null);
@@ -50,17 +32,6 @@ const useDropdownContext = () => {
   }
   return context;
 };
-
-interface DropdownProps {
-  /** Dropdown 안에 들어가는 자식 컴포넌트들입니다. */
-  children: React.ReactNode;
-  /** 현재 선택된 값입니다. */
-  value: string;
-  /** Dropdown 값이 변경될 때 호출되는 함수입니다. */
-  onChange: (value: string) => void;
-  /** Dropdown의 타입을 지정합니다. role, order, meetingRoom, startTime, endTime 중 하나를 선택할 수 있습니다. */
-  variant: "role" | "order" | "meetingRoom" | "startTime" | "endTime";
-}
 
 // 드랍다운 최상위 컴포넌트
 export default function Dropdown({

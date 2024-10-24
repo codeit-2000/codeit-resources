@@ -2,8 +2,10 @@ import ArrowDown from "@repo/assets/icons/icon-arrow-down.svg?react";
 import CheckedBox from "@repo/assets/icons/icon-checkbox-active.svg?react";
 import UnCheckedBox from "@repo/assets/icons/icon-checkbox.svg?react";
 import SearchIcon from "@repo/assets/icons/icon-search.svg?react";
+import Badge from "@src/components/commons/Badge";
+import ProfileImage from "@src/components/commons/ProfileImage";
 import clsx from "clsx";
-import React, {
+import {
   createContext,
   useCallback,
   useContext,
@@ -13,23 +15,18 @@ import React, {
   useState,
 } from "react";
 
-import Badge from "../../Badge";
-import ProfileImage from "../../ProfileImage";
+import {
+  Member,
+  MemberItemProps,
+  MembersSelectDropdownContextType,
+  MembersSelectDropdownProps,
+} from "../../dropdownTypes";
 
-interface MultiSelectDropdownContextType {
-  isDropdownOpen: boolean;
-  selectedValues: string[];
-  toggleDropdown: () => void;
-  closeDropdown: () => void;
-  onSelect: (value: string) => void;
-  onRemove: (value: string) => void;
-}
+const MembersSelectDropdownContext =
+  createContext<MembersSelectDropdownContextType | null>(null);
 
-const MultiSelectDropdownContext =
-  createContext<MultiSelectDropdownContextType | null>(null);
-
-const useMultiSelectDropdownContext = () => {
-  const context = useContext(MultiSelectDropdownContext);
+const useMembersSelectDropdownContextType = () => {
+  const context = useContext(MembersSelectDropdownContext);
   if (!context) {
     throw new Error(
       "useMultiSelectDropdownContext must be used within a Provider",
@@ -39,18 +36,12 @@ const useMultiSelectDropdownContext = () => {
   return context;
 };
 
-interface MultiSelectDropdownProps {
-  children: React.ReactNode;
-  selectedValues: string[];
-  onSelect: (value: string) => void;
-  onRemove: (value: string) => void;
-}
-export default function MultiSelectDropdown({
-  children,
-  selectedValues,
+export default function MembersSelectDropdown({
+  selectedMembers,
   onSelect,
   onRemove,
-}: MultiSelectDropdownProps) {
+  allMembers,
+}: MembersSelectDropdownProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -63,13 +54,13 @@ export default function MultiSelectDropdown({
   const contextProviderValue = useMemo(
     () => ({
       isDropdownOpen,
-      selectedValues,
+      selectedMembers,
       toggleDropdown,
       closeDropdown,
       onSelect,
       onRemove,
     }),
-    [isDropdownOpen, selectedValues],
+    [isDropdownOpen, selectedMembers],
   );
 
   // 드랍다운 외부를 클릭했을 때 드랍다운이 닫힘
@@ -100,24 +91,25 @@ export default function MultiSelectDropdown({
   }, [isDropdownOpen, closeDropdown]);
 
   return (
-    <MultiSelectDropdownContext.Provider value={contextProviderValue}>
+    <MembersSelectDropdownContext.Provider value={contextProviderValue}>
       <div ref={dropdownRef} className="relative">
-        {children}
+        <Toggle />
+        <SearchWrapper allMembers={allMembers} />
       </div>
-    </MultiSelectDropdownContext.Provider>
+    </MembersSelectDropdownContext.Provider>
   );
 }
 
-function Toggle({ label }: { label: string }) {
-  const { isDropdownOpen, toggleDropdown, selectedValues } =
-    useMultiSelectDropdownContext();
+function Toggle() {
+  const { isDropdownOpen, toggleDropdown, selectedMembers } =
+    useMembersSelectDropdownContextType();
 
   // 표시할 최대 항목 수
   const maxDisplayCount = 2;
 
   // 표시할 값과 나머지 항목 계산
-  const displayedValues = selectedValues.slice(0, maxDisplayCount);
-  const remainingCount = selectedValues.length - maxDisplayCount;
+  const displayedValues = selectedMembers.slice(0, maxDisplayCount);
+  const remainingCount = selectedMembers.length - maxDisplayCount;
 
   return (
     <button
@@ -126,7 +118,7 @@ function Toggle({ label }: { label: string }) {
       className="rounded-8 text-16 text-leftborder-gray-100-opacity-20 hover:border-purple-70 group relative flex w-full items-center justify-between border px-20 py-14"
     >
       <span className="text-13 left-15 text-gray-100-opacity-80 group-hover:text-purple-70 absolute top-[-9px] bg-white px-4">
-        {label}
+        참여자
       </span>
       <span
         className={clsx("text-16-400", {
@@ -137,8 +129,8 @@ function Toggle({ label }: { label: string }) {
         <div className="flex gap-2">
           {/* 선택된 값 표시 */}
           {displayedValues.map((value) => (
-            <Badge key={value} variant="secondarySmall">
-              {value}
+            <Badge key={value.id} variant="secondarySmall">
+              {value.name}
             </Badge>
           ))}
           {/* 남은 항목이 있을 경우 "외 N명" 표시 */}
@@ -156,58 +148,9 @@ function Toggle({ label }: { label: string }) {
   );
 }
 
-function Wrapper({ children }: { children: React.ReactNode }) {
-  const { isDropdownOpen } = useMultiSelectDropdownContext();
-
-  return isDropdownOpen ? (
-    <div className="bg-gray-5 rounded-8 border-gray-20 max-h-168 shadow-dropdown-wrapper absolute z-50 mt-3 flex w-full flex-col gap-3 overflow-y-auto border p-8">
-      {children}
-    </div>
-  ) : null;
-}
-
-function TeamItem({ itemValue }: { itemValue: string }) {
-  const { onSelect, onRemove, selectedValues } =
-    useMultiSelectDropdownContext();
-
-  const isSelected = selectedValues.includes(itemValue);
-
-  const handleClick = () => {
-    if (isSelected) {
-      onRemove(itemValue); // 선택 해제
-    } else {
-      onSelect(itemValue); // 선택
-    }
-  };
-
-  return (
-    <button
-      type="button"
-      className={clsx("rounded-8 text-15-500 flex items-center px-12 py-6", {
-        "bg-purple-opacity-10 text-purple-80": isSelected,
-        "text-gray-100-opacity-80 hover:bg-purple-opacity-5 hover:text-purple-80":
-          !isSelected,
-      })}
-      onClick={handleClick}
-      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && handleClick()}
-    >
-      {isSelected ? (
-        <CheckedBox className="mr-5" />
-      ) : (
-        <UnCheckedBox className="mr-5" />
-      )}
-      {itemValue}
-    </button>
-  );
-}
-
-function SearchWrapper({
-  allMembers,
-}: {
-  allMembers: { name: string; departments: string[] }[];
-}) {
-  const { isDropdownOpen, selectedValues, onSelect, onRemove } =
-    useMultiSelectDropdownContext(); // 컨텍스트 사용
+function SearchWrapper({ allMembers }: { allMembers: Member[] }) {
+  const { isDropdownOpen, selectedMembers, onSelect, onRemove } =
+    useMembersSelectDropdownContextType(); // 컨텍스트 사용
 
   const [searchQuery, setSearchQuery] = useState(""); // 검색어 상태
 
@@ -241,10 +184,11 @@ function SearchWrapper({
       {/* 필터링된 멤버 목록을 렌더링 */}
       {filteredMembers.map((member) => (
         <MemberItem
-          key={member.name}
-          itemValue={member.name}
-          departments={member.departments}
-          isSelected={selectedValues.includes(member.name)}
+          key={member.id}
+          member={member}
+          isSelected={selectedMembers.some(
+            (selectedMember) => selectedMember.name === member.name,
+          )}
           onSelect={onSelect}
           onRemove={onRemove}
         />
@@ -253,26 +197,17 @@ function SearchWrapper({
   );
 }
 
-interface MemberItemProps {
-  itemValue: string;
-  departments: string[];
-  isSelected: boolean;
-  onSelect: (member: string) => void;
-  onRemove: (member: string) => void;
-}
-
 function MemberItem({
-  itemValue,
-  departments,
+  member,
   isSelected,
   onSelect,
   onRemove,
 }: MemberItemProps) {
   const handleClick = () => {
     if (isSelected) {
-      onRemove(itemValue); // 선택 해제
+      onRemove(member); // 선택 해제
     } else {
-      onSelect(itemValue); // 선택
+      onSelect(member); // 선택
     }
   };
 
@@ -296,8 +231,8 @@ function MemberItem({
       )}
       <div className="flex items-center gap-5">
         <ProfileImage size="sm" />
-        <span className="mt-2">{itemValue}</span>
-        {departments.map((dept) => (
+        <span className="mt-2">{member.name}</span>
+        {member.departments.map((dept) => (
           <Badge key={dept} variant="secondarySmall">
             {dept}
           </Badge>
@@ -306,8 +241,3 @@ function MemberItem({
     </button>
   );
 }
-
-MultiSelectDropdown.Toggle = Toggle;
-MultiSelectDropdown.Wrapper = Wrapper;
-MultiSelectDropdown.SearchWrapper = SearchWrapper;
-MultiSelectDropdown.TeamItem = TeamItem;
