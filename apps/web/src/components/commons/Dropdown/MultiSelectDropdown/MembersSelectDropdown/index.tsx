@@ -104,43 +104,37 @@ function Toggle() {
   const { isDropdownOpen, toggleDropdown, selectedMembers } =
     useMembersSelectDropdownContextType();
 
-  // 표시할 최대 항목 수
-  const maxDisplayCount = 2;
-
-  // 표시할 값과 나머지 항목 계산
-  const displayedValues = selectedMembers.slice(0, maxDisplayCount);
-  const remainingCount = selectedMembers.length - maxDisplayCount;
-
   return (
     <button
       type="button"
       onClick={toggleDropdown}
-      className="rounded-8 text-16 text-leftborder-gray-100-opacity-20 hover:border-purple-70 group relative flex w-full items-center justify-between border px-20 py-14"
+      className="rounded-8 text-16 text-leftborder-gray-100-opacity-20 hover:border-purple-70 group relative flex h-56 w-full items-center justify-between border px-20 py-14"
     >
       <span className="text-13 left-15 text-gray-100-opacity-80 group-hover:text-purple-70 absolute top-[-9px] bg-white px-4">
         참여자
       </span>
       <span
-        className={clsx("text-16-400", {
+        className={clsx("text-16-400 min-w-0 flex-grow", {
           "text-gray-100-opacity-80 group-hover:text-gray-100": !isDropdownOpen,
           "text-gray-100": isDropdownOpen,
         })}
       >
-        <div className="flex gap-2">
-          {/* 선택된 값 표시 */}
-          {displayedValues.map((value) => (
-            <Badge key={value.id} variant="secondarySmall">
-              {value.name}
-            </Badge>
-          ))}
-          {/* 남은 항목이 있을 경우 "외 N명" 표시 */}
-          {remainingCount > 0 && (
-            <Badge variant="secondarySmall">외 {remainingCount}명</Badge>
+        <div className="flex max-h-40 max-w-full gap-2 overflow-x-auto">
+          {selectedMembers.length > 0 ? (
+            selectedMembers.map((member) => (
+              <Badge key={member.id} variant="secondarySmall">
+                {member.name}
+              </Badge>
+            ))
+          ) : (
+            <span className="text-gray-100-opacity-50">
+              참여자를 선택해 주세요.
+            </span>
           )}
         </div>
       </span>
       <ArrowDown
-        className={clsx("ml-8", {
+        className={clsx("ml-8 w-12 flex-shrink-0", {
           "rotate-180": isDropdownOpen,
         })}
       />
@@ -225,18 +219,23 @@ function MemberItem({
       onClick={handleClick}
     >
       {isSelected ? (
-        <CheckedBox className="mr-5" />
+        <CheckedBox className="mr-5 w-16 flex-shrink-0" />
       ) : (
-        <UnCheckedBox className="mr-5" />
+        <UnCheckedBox className="mr-5 w-16 flex-shrink-0" />
       )}
-      <div className="flex items-center gap-5">
+
+      <div className="flex-shrink-0">
         <ProfileImage size="sm" />
-        <span className="mt-2">{member.name}</span>
-        {member.departments.map((dept) => (
-          <Badge key={dept} variant="secondarySmall">
-            {dept}
-          </Badge>
-        ))}
+      </div>
+      <span className="mt-2 flex-shrink-0">{member.name}</span>
+      <div className="flex-grow overflow-x-auto">
+        <div className="flex gap-3">
+          {member.departments.map((dept) => (
+            <Badge key={dept} variant="secondarySmall">
+              {dept}
+            </Badge>
+          ))}
+        </div>
       </div>
     </button>
   );

@@ -104,39 +104,37 @@ function Toggle() {
   const { isDropdownOpen, toggleDropdown, selectedTeams } =
     useTeamsSelectDropdownContext();
 
-  const maxDisplayCount = 2;
-
-  const displayedValues = selectedTeams.slice(0, maxDisplayCount);
-  const remainingCount = selectedTeams.length - maxDisplayCount;
-
   return (
     <button
       type="button"
       onClick={toggleDropdown}
-      className="rounded-8 text-16 text-leftborder-gray-100-opacity-20 hover:border-purple-70 group relative flex w-full items-center justify-between border px-20 py-14"
+      className="rounded-8 text-16 border-gray-100-opacity-20 hover:border-purple-70 group relative flex h-56 w-full items-center justify-between border px-20 py-14 text-left"
     >
       <span className="text-13 left-15 text-gray-100-opacity-80 group-hover:text-purple-70 absolute top-[-9px] bg-white px-4">
         팀
       </span>
       <span
-        className={clsx("text-16-400", {
+        className={clsx("text-16-400 min-w-0 flex-grow", {
           "text-gray-100-opacity-80 group-hover:text-gray-100": !isDropdownOpen,
           "text-gray-100": isDropdownOpen,
         })}
       >
-        <div className="flex gap-2">
-          {displayedValues.map((value) => (
-            <Badge key={value} variant="secondarySmall">
-              {value}
-            </Badge>
-          ))}
-          {remainingCount > 0 && (
-            <Badge variant="secondarySmall">외 {remainingCount}개</Badge>
+        <div className="flex max-h-40 max-w-full gap-2 overflow-x-auto">
+          {selectedTeams.length > 0 ? (
+            selectedTeams.map((value) => (
+              <Badge key={value} variant="secondarySmall">
+                {value}
+              </Badge>
+            ))
+          ) : (
+            <span className="text-gray-100-opacity-50">
+              팀을 선택해 주세요.
+            </span>
           )}
         </div>
       </span>
       <ArrowDown
-        className={clsx("ml-8", {
+        className={clsx("ml-8 w-12 flex-shrink-0", {
           "rotate-180": isDropdownOpen,
         })}
       />

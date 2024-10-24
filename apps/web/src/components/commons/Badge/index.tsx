@@ -14,7 +14,7 @@ function Badge({ children, variant = "primary" }: BadgeProps) {
       variant === "primary",
     "rounded-32 border-gray-100-opacity-5 text-15-700 border bg-purple-5 px-12 py-6 text-purple-50 text-nowrap":
       variant === "secondary",
-    "rounded-32 border-gray-100-opacity-5 text-13-500 border bg-purple-5 px-8 py-4 text-purple-50 text-nowrap":
+    "rounded-32 border-gray-100-opacity-5 text-11-500 border bg-purple-5 px-8 py-2 text-purple-50 text-nowrap":
       variant === "secondarySmall", // 새로운 variant 추가
   });
 
