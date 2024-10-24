@@ -35,7 +35,7 @@ function Input(
           required
           type={type}
           {...register}
-          className={clsx("input-base peer", {
+          className={clsx("input-base autofill-target peer", {
             "border-status-negative": errorMessage,
             "border-gray-100-opacity-60 placeholder-shown:border-gray-100-opacity-20 focus:border-purple-70 focus:bg-purple-5":
               !errorMessage,
