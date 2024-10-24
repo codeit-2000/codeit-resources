@@ -4,26 +4,25 @@ import type { Schema } from "./../../shared-backend/amplify/data/resource";
 
 const client = generateClient<Schema>();
 
-type CreateTeamParams = {
-  name: string;
+/**
+ * @description [팀 이름 중복 확인]
+ */
+export const isTeamNameExists = async (name: string) => {
+  const result = await client.models.Team.list({
+    filter: { name: { eq: name } },
+  });
+  return result.data.length > 0;
 };
+
 /**
  * @description [팀 생성하기]
  *
  * name 값만 입력 받습니다.
  */
-export const createTeamData = async (param: CreateTeamParams) => {
-  return client.models.Team.create(param);
-};
-
-/**
- * @description [팀 이름 중복 확인]
- */
-export const getTeamByName = async (name: string) => {
-  const result = await client.models.Team.list({
-    filter: { name: { eq: name } },
-  });
-  return result.data.length > 0;
+export const createTeamData = async (name: string) => {
+  if (await isTeamNameExists(name))
+    throw new Error("이미 존재하는 팀 이름 입니다.");
+  return client.models.Team.create({ name });
 };
 
 /**
@@ -49,5 +48,7 @@ export const deleteTeamData = async (id: string) => {
  * @description [팀 이름 수정하기]
  */
 export const updateTeamName = async (id: string, name: string) => {
+  if (await isTeamNameExists(name))
+    throw new Error("이미 존재하는 팀 이름 입니다.");
   return client.models.Team.update({ id, name });
 };

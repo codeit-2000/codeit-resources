@@ -1,5 +1,7 @@
 import useModal from "@src/hooks/useModal";
 import AddTeamModal from "@src/pages/admin/team/components/AddTeamModal";
+import DeleteTeamModal from "@src/pages/admin/team/components/DeleteTeamModal";
+import UpdateTeamModal from "@src/pages/admin/team/components/UpdateTeamModal";
 import { useEffect, useRef, useState } from "react";
 
 import MoveSeatConfirmModal from "./MoveSeatConfirmModal";
@@ -31,6 +33,8 @@ function ModalProvider() {
   const modalComponents: Record<string, React.ElementType> = {
     moveSeatConfirm: MoveSeatConfirmModal,
     addTeamModal: AddTeamModal,
+    updateTeamModal: UpdateTeamModal,
+    deleteTeamModal: DeleteTeamModal,
   };
 
   const SpecificModal = modalType ? modalComponents[modalType] : null;
@@ -57,7 +61,7 @@ function ModalProvider() {
     }
   };
 
-  const modalClasses = `fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-20 transition-opacity duration-300 ${
+  const modalClasses = `fixed cursor-default inset-0 z-40 flex items-center justify-center bg-black bg-opacity-20 transition-opacity duration-300 ${
     isVisible ? "opacity-100" : "opacity-0"
   }`;
 
