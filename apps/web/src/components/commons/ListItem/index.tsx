@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { ReactNode } from "react";
 
 import Right from "./components/Right";
-import Title from "./components/title";
+import Title from "./components/Title";
 
 interface ListItemProps {
   children: ReactNode;
