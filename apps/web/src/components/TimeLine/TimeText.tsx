@@ -21,7 +21,7 @@ export function TimeText({
           className={clsx(
             "text-12-700 md:text-14-700 ml-[-14px] md:ml-[-17px]",
             {
-              "text-gray-50": !isTestCurrentTime,
+              "text-[#979698]": !isTestCurrentTime,
               "text-black": isTestCurrentTime,
             },
           )}

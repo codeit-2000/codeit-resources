@@ -1,14 +1,14 @@
+import useIsMobile from "@src/hooks/useIsMobile";
 import { createTimeSlots, getCurrentTime } from "@src/utils/createTime";
 
-import DesktopTimeLineContent from "./DesktopTimeLineContent";
+import ThirtyMinutesTimeBox from "./ThirtyMinutesTimeBox";
 
-export default DesktopTimeLine;
-
-function DesktopTimeLine() {
-  const testCurrentTime = "10:00";
+function TimeLine() {
+  const testCurrentTime = "10:00"; // 테스트용 현재 시각
   const currentTime = getCurrentTime();
 
   const timeSlots = createTimeSlots().map((slot) => {
+    // 10:00 ~ 10:30 예약 테스트
     const hasReservation = slot.time === "10:00";
     const reservation = hasReservation
       ? {
@@ -25,22 +25,28 @@ function DesktopTimeLine() {
     };
   });
 
+  const isMobile = useIsMobile();
+
+  const timelineWidth = isMobile
+    ? `${timeSlots.length * 48}px`
+    : `${timeSlots.length * 72}px`;
+
   return (
-    <ul
-      className="h-75 hover:bg-gray-10 hover:rounded-16 flex items-center hover:shadow-[inset_0_0_0_1px_#e5e5ea]"
-      style={{ width: `${timeSlots.length * 72}px` }}
-    >
-      {timeSlots.map((slot) => (
-        <div key={slot.time} className="relative w-72">
-          <DesktopTimeLineContent
+    <div className="pl-30 no-scrollbar relative mb-[-1px] overflow-x-auto md:overflow-visible">
+      <ul className="flex h-full" style={{ width: timelineWidth }}>
+        {timeSlots.map((slot) => (
+          <ThirtyMinutesTimeBox
+            key={slot.time}
             isHalfHour={slot.isHalfHour}
             isCurrentTime={slot.isCurrentTime}
             isTestCurrentTime={slot.isTestCurrentTime}
             time={!slot.isHalfHour ? slot.time : undefined}
             reservation={slot.reservation}
           />
-        </div>
-      ))}
-    </ul>
+        ))}
+      </ul>
+    </div>
   );
 }
+
+export default TimeLine;
